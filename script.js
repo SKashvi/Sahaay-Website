@@ -52,10 +52,21 @@ if (sticky && 'IntersectionObserver' in window) {
   });
 }
 
+/* 100-visitor dot grid: 3 green dots buy, 97 leave */
+const dots = document.getElementById('dots');
+if (dots) {
+  const buyers = new Set([23, 58, 86]);
+  for (let i = 0; i < 100; i++) {
+    const d = document.createElement('i');
+    if (buyers.has(i)) d.className = 'buy';
+    dots.appendChild(d);
+  }
+}
+
 /* Gentle reveal on scroll */
 if ('IntersectionObserver' in window) {
   const targets = document.querySelectorAll(
-    '.section__head, .stats, .bridge, .journey li, .step, .feature, .dash, .numbers__grid > div, .quote, .pilot__copy, .pilot__card, .faq'
+    '.section__head, .visitors, .stat, .bridge, .journey li, .step, .feature, .numbers__grid > div, .quote, .pilot__copy, .pilot__card, .faq, .final__card'
   );
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {

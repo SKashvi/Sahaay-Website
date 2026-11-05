@@ -18,7 +18,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/tokens.css">
   <link rel="stylesheet" href="styles.css">
@@ -30,77 +30,111 @@
   <header class="nav" id="top">
     <div class="wrap nav__inner">
       <a href="#top" class="nav__brand" aria-label="Sahaay home">
-        <img src="assets/logo/sahaay-wordmark-violet.svg" alt="Sahaay" width="140" height="27">
+        <img src="assets/logo/sahaay-wordmark-violet.svg" alt="Sahaay" width="124" height="24">
       </a>
       <nav class="nav__links" aria-label="Primary">
         <a href="#problem">Problem</a>
-        <a href="#solution">Solution</a>
+        <a href="#solution">How it works</a>
         <a href="#features">Features</a>
-        <a href="#pilot">Pilot</a>
+        <a href="#faq">FAQ</a>
       </nav>
-      <a href="#pilot" class="btn btn--primary btn--sm" data-cta="nav">Claim free pilot</a>
+      <div class="nav__cta">
+        <a href="#pilot" class="nav__demo" data-book>Book a demo</a>
+        <a href="#pilot" class="btn btn--primary btn--sm" data-cta="nav">Claim free pilot</a>
+      </div>
     </div>
   </header>
 
   <main id="main">
 
     <!-- ============ HERO ============ -->
-    <section class="hero" id="hero">
-      <div class="wrap hero__grid">
-        <div class="hero__copy">
-          <p class="pill-tag"><span class="dot" aria-hidden="true"></span> Free 14-day pilot · first 10 brands</p>
-          <h1>Stop paying for clicks <em>that never buy.</em></h1>
-          <p class="lead">Sahaay is the AI sales agent for your online store. It greets shoppers, answers every question about your products, recovers carts and handles “where’s my order?”, 24/7, in your brand’s voice.</p>
-          <div class="cta-row">
-            <a href="#pilot" class="btn btn--primary" data-cta="hero">Claim your free pilot</a>
-            <a href="#pilot" class="btn btn--ghost" data-book data-cta="hero-demo">Book a 20-min demo</a>
-          </div>
-          <ul class="trust">
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7"/></svg>No card required</li>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7"/></svg>Live in under 24 hours</li>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7"/></svg>You approve every action</li>
-          </ul>
+    <section class="hero dotgrid" id="hero">
+      <div class="wrap hero__copy">
+        <p class="pill-tag"><span class="dot" aria-hidden="true"></span> Free 14-day pilot for the first 10 brands</p>
+        <h1>Stop paying for clicks<br><span class="accent">that never buy.</span></h1>
+        <p class="lead">Sahaay is the AI sales agent for your online store. It greets shoppers, answers every product question, recovers carts and handles “where’s my order?”, 24/7.</p>
+        <div class="cta-row cta-row--center">
+          <a href="#pilot" class="btn btn--primary" data-cta="hero">Claim your free pilot <span aria-hidden="true">→</span></a>
+          <a href="#pilot" class="btn btn--outline" data-book data-cta="hero-demo">Book a 20-min demo</a>
         </div>
+        <ul class="trust">
+          <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7"/></svg>No card required</li>
+          <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7"/></svg>Live in under 24 hours</li>
+          <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7"/></svg>You approve every action</li>
+        </ul>
+      </div>
 
-        <div class="hero__visual" aria-hidden="true">
-          <div class="device">
+      <!-- Hero illustration: a storefront with Sahaay open on it -->
+      <div class="wrap">
+        <div class="stage" aria-hidden="true">
+          <div class="browser">
+            <div class="browser__bar">
+              <i></i><i></i><i></i>
+              <span class="browser__url">velour.in/collections/dresses</span>
+            </div>
+            <div class="store">
+              <div class="store__head"><b>VELOUR</b><span></span><span></span><span></span></div>
+              <div class="store__grid">
+                <div class="tile tile--a"><svg viewBox="0 0 100 110"><path d="M38 12l12 7 12-7 7 26-9 4 18 60H22l18-60-9-4z"/></svg><span></span><span class="short"></span></div>
+                <div class="tile tile--b"><svg viewBox="0 0 100 110"><path d="M38 12l12 7 12-7 7 26-9 4 18 60H22l18-60-9-4z"/></svg><span></span><span class="short"></span></div>
+                <div class="tile tile--c"><svg viewBox="0 0 100 110"><path d="M38 12l12 7 12-7 7 26-9 4 18 60H22l18-60-9-4z"/></svg><span></span><span class="short"></span></div>
+              </div>
+            </div>
+            <svg class="cursor-path" viewBox="0 0 300 200" preserveAspectRatio="none"><path d="M40 190 C 80 120, 120 80, 190 14"/></svg>
+            <svg class="cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
+          </div>
+          <div class="widget">
             <img src="assets/img/widget-welcome.webp" alt="" width="500" height="721" fetchpriority="high">
           </div>
           <div class="bubble bubble--ask">Leaving already?<br>Let me help.</div>
           <div class="bubble bubble--sale">+1 sale <svg viewBox="0 0 20 20"><path d="M5 10.5l3 3 7-7"/></svg></div>
+          <div class="bubble bubble--chip"><span class="pulse"></span>Exit intent detected</div>
         </div>
       </div>
     </section>
+
+    <!-- What shoppers ask -->
+    <div class="marquee" aria-label="Questions Sahaay answers">
+      <div class="marquee__track">
+        <span>“What would you recommend for me?”</span><span>“Do you have this in XS?”</span><span>“Where’s my order?”</span><span>“What’s your return policy?”</span><span>“Is the fabric breathable?”</span><span>“When will it arrive in 560001?”</span><span>“Can I return a damaged item?”</span><span>“Which colour is in stock?”</span>
+        <span aria-hidden="true">“What would you recommend for me?”</span><span aria-hidden="true">“Do you have this in XS?”</span><span aria-hidden="true">“Where’s my order?”</span><span aria-hidden="true">“What’s your return policy?”</span><span aria-hidden="true">“Is the fabric breathable?”</span><span aria-hidden="true">“When will it arrive in 560001?”</span><span aria-hidden="true">“Can I return a damaged item?”</span><span aria-hidden="true">“Which colour is in stock?”</span>
+      </div>
+    </div>
 
     <!-- ============ PROBLEM ============ -->
     <section class="section" id="problem">
       <div class="wrap">
         <div class="section__head">
           <p class="eyebrow">The problem</p>
-          <h2>Your ads bring them in.<br><em>Nobody’s there to say hello.</em></h2>
-          <p class="sub">In a real store, someone greets you, answers your question and helps you choose. Online, shoppers get a silent page. So they leave, and the money you spent bringing them in leaves with them.</p>
+          <h2>Your ads bring them in. <span class="accent">Nobody’s there to say hello.</span></h2>
+          <p class="sub">In a real store, someone greets you, answers your question and helps you choose. Online, shoppers get a silent page. So they leave, and your ad spend leaves with them.</p>
         </div>
 
-        <div class="stats">
-          <div class="stat">
-            <p class="stat__num">97%</p>
-            <p class="stat__label">of visitors leave without buying</p>
-            <p class="stat__src">Monetate</p>
+        <div class="problem">
+          <div class="visitors card">
+            <div class="dots" id="dots" aria-hidden="true"></div>
+            <div class="visitors__copy">
+              <p class="visitors__num">97 <span>of 100</span></p>
+              <p>visitors your ads bring in leave without buying. The other 3 are the <b class="green">green dots</b>.</p>
+              <p class="src">Source: Monetate</p>
+            </div>
           </div>
-          <div class="stat">
-            <p class="stat__num">70%</p>
-            <p class="stat__label">of carts are abandoned</p>
-            <p class="stat__src">Baymard Institute</p>
-          </div>
-          <div class="stat">
-            <p class="stat__num stat__num--violet">3.5x</p>
-            <p class="stat__label">higher conversion with proactive chat</p>
-            <p class="stat__src">McKinsey</p>
-          </div>
-          <div class="stat">
-            <p class="stat__num stat__num--green">26%</p>
-            <p class="stat__label">revenue lift from AI recommendations</p>
-            <p class="stat__src">Salesforce</p>
+          <div class="stats">
+            <div class="stat card">
+              <p class="stat__num">70%</p>
+              <p class="stat__label">of carts are abandoned</p>
+              <p class="src">Baymard Institute</p>
+            </div>
+            <div class="stat card">
+              <p class="stat__num accent">3.5x</p>
+              <p class="stat__label">higher conversion with proactive chat</p>
+              <p class="src">McKinsey</p>
+            </div>
+            <div class="stat card">
+              <p class="stat__num green">26%</p>
+              <p class="stat__label">revenue lift from AI recommendations</p>
+              <p class="src">Salesforce</p>
+            </div>
           </div>
         </div>
 
@@ -108,72 +142,62 @@
           <blockquote>“Half the money I spend on advertising is wasted; the trouble is I don’t know which half.”</blockquote>
           <figcaption><strong>John Wanamaker</strong> · Retail pioneer (attributed)</figcaption>
         </figure>
-        <p class="bridge__answer">Here’s which half: the 97 out of 100 visitors who had a question nobody answered.</p>
+        <p class="bridge__answer">Here’s which half: the visitors who had a question nobody answered.</p>
       </div>
     </section>
 
     <!-- ============ SOLUTION ============ -->
-    <section class="section section--soft" id="solution">
+    <section class="section section--tint dotgrid" id="solution">
       <div class="wrap">
         <div class="section__head">
           <p class="eyebrow">The solution</p>
-          <h2>Meet your best salesperson.<br><em>It never misses a shift.</em></h2>
-          <p class="sub">Sahaay lives on your store as a chat assistant that speaks first. It knows every size, colour, fabric and stock level in your catalog, guides shoppers to the right product and takes them all the way to checkout, without leaving the chat.</p>
+          <h2>Meet your best salesperson. <span class="accent">It never misses a shift.</span></h2>
+          <p class="sub">Sahaay sits on your store as a chat assistant that speaks first. It knows every size, colour, fabric and stock level, guides shoppers to the right product, and takes them all the way to checkout without leaving the chat.</p>
         </div>
 
         <ol class="journey">
-          <li>
-            <figure>
-              <img src="assets/img/widget-recommend.webp" alt="Sahaay recommending a Wrap Midi Dress with price, fabric and available colours" width="487" height="725" loading="lazy">
-              <figcaption><span>01</span> Recommends the right product</figcaption>
-            </figure>
+          <li class="journey__card tint-violet">
+            <p class="journey__n">01</p>
+            <h3>Recommends</h3>
+            <img src="assets/img/widget-recommend.webp" alt="Sahaay recommending a Wrap Midi Dress with price, fabric and available colours" width="487" height="725" loading="lazy">
           </li>
-          <li>
-            <figure>
-              <img src="assets/img/widget-product.webp" alt="Product card in chat with size and colour pickers" width="502" height="723" loading="lazy">
-              <figcaption><span>02</span> Helps pick size &amp; colour</figcaption>
-            </figure>
+          <li class="journey__card tint-mint">
+            <p class="journey__n">02</p>
+            <h3>Helps choose</h3>
+            <img src="assets/img/widget-product.webp" alt="Product card in chat with size and colour pickers" width="502" height="723" loading="lazy">
           </li>
-          <li>
-            <figure>
-              <img src="assets/img/checkout.webp" alt="In-chat checkout with address, offer code and pay securely button" width="502" height="722" loading="lazy">
-              <figcaption><span>03</span> Checks out inside the chat</figcaption>
-            </figure>
+          <li class="journey__card tint-amber">
+            <p class="journey__n">03</p>
+            <h3>Checks out</h3>
+            <img src="assets/img/checkout.webp" alt="In-chat checkout with address, offer code and pay securely button" width="502" height="722" loading="lazy">
           </li>
-          <li>
-            <figure>
-              <img src="assets/img/widget-tracking.webp" alt="Order tracking timeline showing the order as shipped" width="501" height="728" loading="lazy">
-              <figcaption><span>04</span> Answers “where’s my order?”</figcaption>
-            </figure>
+          <li class="journey__card tint-rose">
+            <p class="journey__n">04</p>
+            <h3>Tracks orders</h3>
+            <img src="assets/img/widget-tracking.webp" alt="Order tracking timeline showing the order as shipped" width="501" height="728" loading="lazy">
           </li>
         </ol>
 
         <div class="steps">
           <div class="step">
             <p class="step__n">1</p>
-            <div>
-              <h3>Share your store link</h3>
-              <p>We pull in your catalog, policies and brand voice. No scripts to write.</p>
-            </div>
+            <h3>Share your store link</h3>
+            <p>We pull in your catalog, policies and brand voice. No scripts to write.</p>
           </div>
           <div class="step">
             <p class="step__n">2</p>
-            <div>
-              <h3>Trained in under 24 hours</h3>
-              <p>Sahaay learns every product overnight and answers in under 2 seconds.</p>
-            </div>
+            <h3>Trained in under 24 hours</h3>
+            <p>Sahaay learns every product overnight and answers in under 2 seconds.</p>
           </div>
           <div class="step">
             <p class="step__n">3</p>
-            <div>
-              <h3>Go live, watch orders come in</h3>
-              <p>One snippet on your store. Conversations start turning into sales.</p>
-            </div>
+            <h3>Go live</h3>
+            <p>One snippet on your store. Conversations start turning into orders.</p>
           </div>
         </div>
 
         <div class="center">
-          <a href="#pilot" class="btn btn--primary" data-cta="solution">Put Sahaay on my store</a>
+          <a href="#pilot" class="btn btn--primary" data-cta="solution">Put Sahaay on my store <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -183,58 +207,176 @@
       <div class="wrap">
         <div class="section__head">
           <p class="eyebrow">Features</p>
-          <h2>From the first “hi” <em>to the last refund.</em></h2>
+          <h2>From the first “hi” <span class="accent">to the last refund.</span></h2>
         </div>
 
         <div class="features">
-          <article class="feature feature--violet">
-            <span class="feature__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+          <!-- 1. Proactive triggers -->
+          <article class="feature">
+            <div class="feature__art tint-violet">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <rect x="34" y="18" width="200" height="118" rx="12" class="f-card"/>
+                <circle cx="48" cy="31" r="3" class="f-dot"/><circle cx="58" cy="31" r="3" class="f-dot"/><circle cx="68" cy="31" r="3" class="f-dot"/>
+                <rect x="48" y="44" width="72" height="78" rx="8" class="f-pale"/>
+                <path d="M78 56l6 3.5 6-3.5 3.5 13-4.5 2 9 30H70l9-30-4.5-2z" class="f-dress"/>
+                <rect x="132" y="50" width="86" height="8" rx="4" class="f-line"/>
+                <rect x="132" y="66" width="60" height="8" rx="4" class="f-line"/>
+                <rect x="132" y="96" width="58" height="18" rx="9" class="f-violet"/>
+                <path d="M150 128 C 190 100, 230 60, 262 22" class="f-dash"/>
+                <path d="M260 8v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H274z" class="f-cursor"/>
+                <g transform="translate(172 92)">
+                  <rect x="4" y="4" width="128" height="46" rx="14" class="f-ink"/>
+                  <rect width="128" height="46" rx="14" class="f-card f-card--ink"/>
+                  <text x="14" y="20" class="f-t f-t--b">Leaving already?</text>
+                  <text x="14" y="35" class="f-t">Let me help.</text>
+                </g>
+                <g class="f-pills">
+                  <rect x="34" y="150" width="72" height="20" rx="10"/><text x="70" y="164">Exit intent</text>
+                  <rect x="112" y="150" width="80" height="20" rx="10"/><text x="152" y="164">Scroll depth</text>
+                  <rect x="198" y="150" width="86" height="20" rx="10"/><text x="241" y="164">Time on page</text>
+                </g>
+              </svg>
+            </div>
             <h3>Proactive sales triggers</h3>
             <p>Exit intent, time on page, scroll depth and cart value each fire the right nudge at the right moment.</p>
           </article>
-          <article class="feature feature--mint">
-            <span class="feature__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg></span>
+
+          <!-- 2. Cart recovery -->
+          <article class="feature">
+            <div class="feature__art tint-mint">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <rect x="22" y="22" width="180" height="136" rx="12" class="f-card"/>
+                <text x="38" y="46" class="f-t f-t--b">Your cart</text>
+                <rect x="38" y="58" width="34" height="40" rx="6" class="f-pale"/>
+                <path d="M51 63l4 2.4 4-2.4 2.4 8.6-3 1.4 6 22H44.6l6-22-3-1.4z" class="f-dress"/>
+                <text x="82" y="72" class="f-t f-t--b">Wrap Midi Dress</text>
+                <text x="82" y="88" class="f-t f-t--m">XS · Terracotta</text>
+                <text x="82" y="106" class="f-t f-t--b">₹2,599</text>
+                <rect x="38" y="120" width="96" height="24" rx="12" class="f-violet"/>
+                <text x="86" y="136" class="f-t f-t--w f-t--b" text-anchor="middle">Checkout</text>
+                <g transform="translate(170 30)">
+                  <rect width="134" height="54" rx="14" class="f-violet"/>
+                  <path d="M20 53l-8 11 20-11z" class="f-violet"/>
+                  <text x="14" y="23" class="f-t f-t--w">Unsure about the size?</text>
+                  <text x="14" y="39" class="f-t f-t--w">XS fits true to size.</text>
+                </g>
+                <g transform="translate(196 112)">
+                  <rect width="104" height="30" rx="15" class="f-green"/>
+                  <path d="M16 15.5l4 4 8-8" class="f-check"/>
+                  <text x="36" y="20" class="f-t f-t--w f-t--b">Cart saved</text>
+                </g>
+              </svg>
+            </div>
             <h3>AI cart recovery</h3>
             <p>Contextual nudges that know what’s in the cart and why the shopper paused.</p>
           </article>
-          <article class="feature feature--amber">
-            <span class="feature__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+
+          <!-- 3. Trained in 24h -->
+          <article class="feature">
+            <div class="feature__art tint-amber">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <text x="66" y="16" class="f-t f-t--m" text-anchor="middle">Catalog · Policies · Voice</text>
+                <rect x="28" y="24" width="76" height="40" rx="8" class="f-card"/><rect x="36" y="32" width="22" height="24" rx="4" class="f-pale"/><rect x="64" y="35" width="32" height="6" rx="3" class="f-line"/><rect x="64" y="47" width="20" height="6" rx="3" class="f-line"/>
+                <rect x="28" y="72" width="76" height="40" rx="8" class="f-card"/><rect x="36" y="80" width="22" height="24" rx="4" class="f-pale"/><rect x="64" y="83" width="32" height="6" rx="3" class="f-line"/><rect x="64" y="95" width="20" height="6" rx="3" class="f-line"/>
+                <rect x="28" y="120" width="76" height="40" rx="8" class="f-card"/><rect x="36" y="128" width="22" height="24" rx="4" class="f-pale"/><rect x="64" y="131" width="32" height="6" rx="3" class="f-line"/><rect x="64" y="143" width="20" height="6" rx="3" class="f-line"/>
+                <path d="M110 44 C 150 44, 160 84, 192 88" class="f-dash"/>
+                <path d="M110 92 H 190" class="f-dash"/>
+                <path d="M110 140 C 150 140, 160 98, 192 94" class="f-dash"/>
+                <circle cx="240" cy="86" r="58" class="f-ring"/>
+                <circle cx="240" cy="86" r="44" class="f-violet"/>
+                <image href="assets/logo/sahaay-monogram-white.svg" x="225" y="66" width="30" height="40"/>
+                <g transform="translate(200 142)">
+                  <rect width="80" height="26" rx="13" class="f-ink"/>
+                  <text x="40" y="17.5" class="f-t f-t--w f-t--b" text-anchor="middle">&lt; 24 hours</text>
+                </g>
+              </svg>
+            </div>
             <h3>Trained in under 24 hours</h3>
             <p>Your full catalog and brand voice, learned overnight. Answers in under 2 seconds.</p>
           </article>
-          <article class="feature feature--purple">
-            <span class="feature__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
+
+          <!-- 4. Post-purchase -->
+          <article class="feature">
+            <div class="feature__art tint-rose">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <rect x="24" y="20" width="160" height="140" rx="12" class="f-card"/>
+                <text x="40" y="44" class="f-t f-t--b">VEL-ACE0F49A</text>
+                <path d="M46 62 V 136" class="f-track"/>
+                <path d="M46 62 V 87" class="f-track f-track--on"/>
+                <circle cx="46" cy="62" r="6" class="f-violet"/><text x="62" y="66" class="f-t">Ordered</text>
+                <circle cx="46" cy="87" r="6" class="f-violet"/><text x="62" y="91" class="f-t f-t--b">Shipped</text>
+                <circle cx="46" cy="112" r="5" class="f-ring2"/><text x="62" y="116" class="f-t f-t--m">Out for delivery</text>
+                <circle cx="46" cy="136" r="5" class="f-dot"/><text x="62" y="140" class="f-t f-t--m">Delivered</text>
+                <g transform="translate(196 34)">
+                  <rect width="104" height="112" rx="12" class="f-card"/>
+                  <rect x="10" y="10" width="84" height="56" rx="8" class="f-pale"/>
+                  <path d="M52 20l18 9v20l-18 9-18-9V29z M34 29l18 9 18-9 M52 38v20" class="f-box"/>
+                  <text x="12" y="84" class="f-t f-t--b">Photo check</text>
+                  <rect x="12" y="92" width="80" height="8" rx="4" class="f-line"/>
+                  <rect x="12" y="92" width="62" height="8" rx="4" class="f-green"/>
+                </g>
+              </svg>
+            </div>
             <h3>Post-purchase on autopilot</h3>
             <p>Tracking, returns and refunds, with AI-scored damage photo verification. 80% resolved without a human.</p>
           </article>
-          <article class="feature feature--blue">
-            <span class="feature__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg></span>
+
+          <!-- 5. Approve every action -->
+          <article class="feature">
+            <div class="feature__art tint-blue">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <rect x="30" y="24" width="260" height="132" rx="14" class="f-card"/>
+                <text x="50" y="50" class="f-t f-t--m">Refund request</text>
+                <g transform="translate(192 36)"><rect width="82" height="22" rx="11" class="f-pale"/><text x="41" y="15" class="f-t f-t--v f-t--b" text-anchor="middle">Awaiting you</text></g>
+                <text x="50" y="78" class="f-t f-t--lg">₹2,599 · Wrap Midi Dress</text>
+                <text x="50" y="97" class="f-t f-t--m">Damaged item · photo verified</text>
+                <rect x="50" y="112" width="96" height="30" rx="15" class="f-violet"/>
+                <text x="98" y="131" class="f-t f-t--w f-t--b" text-anchor="middle">Approve</text>
+                <rect x="156" y="112" width="84" height="30" rx="15" class="f-card f-card--ink"/>
+                <text x="198" y="131" class="f-t f-t--b" text-anchor="middle">Decline</text>
+                <path d="M128 128v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H142z" class="f-cursor"/>
+              </svg>
+            </div>
             <h3>You approve every action</h3>
             <p>Nothing executes until you say so. Every refund, return and cancellation waits for your OK.</p>
           </article>
-          <article class="feature feature--rose">
-            <span class="feature__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+
+          <!-- 6. Revenue -->
+          <article class="feature">
+            <div class="feature__art tint-violet">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <rect x="26" y="20" width="268" height="140" rx="14" class="f-card"/>
+                <text x="44" y="46" class="f-t f-t--b">Revenue from Sahaay</text>
+                <g transform="translate(206 32)"><rect width="74" height="22" rx="11" class="f-green-pale"/><path d="M12 14l5-6 5 6" class="f-up"/><text x="28" y="15" class="f-t f-t--g f-t--b">This week</text></g>
+                <g class="f-bars">
+                  <rect x="48" y="112" width="22" height="30" rx="5"/>
+                  <rect x="82" y="104" width="22" height="38" rx="5"/>
+                  <rect x="116" y="96" width="22" height="46" rx="5"/>
+                  <rect x="150" y="100" width="22" height="42" rx="5"/>
+                  <rect x="184" y="84" width="22" height="58" rx="5"/>
+                  <rect x="218" y="74" width="22" height="68" rx="5" class="on"/>
+                  <rect x="252" y="66" width="22" height="76" rx="5" class="on"/>
+                </g>
+                <path d="M59 100 L93 92 L127 84 L161 88 L195 72 L229 62 L263 54" class="f-trend"/>
+                <circle cx="263" cy="54" r="4.5" class="f-green"/>
+              </svg>
+            </div>
             <h3>Revenue you can see</h3>
             <p>A full dashboard of conversations, saved carts and the revenue Sahaay brought in.</p>
           </article>
         </div>
-
-        <figure class="dash">
-          <img src="assets/img/admin-dashboard.webp" alt="Sahaay merchant admin showing a returns and cancellations queue awaiting approval" width="1000" height="330" loading="lazy" decoding="async">
-          <figcaption>Your admin: every return, refund and cancellation waits for your approval.</figcaption>
-        </figure>
       </div>
     </section>
 
     <!-- ============ NUMBERS ============ -->
-    <section class="numbers" aria-labelledby="numbers-title">
+    <section class="numbers section--tint dotgrid" aria-labelledby="numbers-title">
       <div class="wrap">
         <h2 id="numbers-title" class="numbers__title">What Sahaay brings to your store</h2>
         <div class="numbers__grid">
-          <div><p class="big">&lt;2s</p><p>Response time</p></div>
-          <div><p class="big">80%</p><p>Post-purchase queries, no human</p></div>
-          <div><p class="big">24/7</p><p>Selling, sale nights too</p></div>
-          <div><p class="big">&lt;24h</p><p>To learn your catalog</p></div>
+          <div class="card"><p class="big">&lt;2s</p><p>Response time</p></div>
+          <div class="card"><p class="big green">80%</p><p>Post-purchase queries, no human</p></div>
+          <div class="card"><p class="big">24/7</p><p>Selling, sale nights too</p></div>
+          <div class="card"><p class="big">&lt;24h</p><p>To learn your catalog</p></div>
         </div>
       </div>
     </section>
@@ -244,35 +386,42 @@
       <div class="wrap">
         <div class="section__head">
           <p class="eyebrow">Why we built it</p>
-          <h2>Selling has always been <em>a conversation.</em></h2>
+          <h2>Selling has always been <span class="accent">a conversation.</span></h2>
         </div>
 
-        <!-- Founder quote: draft copy. Replace with the founder's own words and name before launch. -->
-        <figure class="quote quote--founder">
-          <img src="assets/logo/sahaay-monogram-white.svg" alt="" class="quote__mark" width="44" height="57">
-          <blockquote>“Every D2C founder we met was brilliant at bringing people to their store, and then lost them in silence. Sahaay is the salesperson every online store deserves: one that greets every visitor, knows every product and never clocks out.”</blockquote>
-          <figcaption><strong>Founder, Sahaay</strong> · Rize &amp; Shine</figcaption>
-        </figure>
-
         <div class="quotes">
+          <!-- Founder quote: draft copy. Replace with the founder's own words and name before launch. -->
+          <figure class="quote quote--founder">
+            <blockquote>“Every D2C founder we met was brilliant at bringing people to their store, and then lost them in silence. Sahaay is the salesperson every online store deserves: one that greets every visitor, knows every product and never clocks out.”</blockquote>
+            <figcaption>
+              <span class="avatar avatar--brand"><img src="assets/logo/sahaay-monogram-violet.svg" alt="" width="16" height="21"></span>
+              <span><strong>Founder, Sahaay</strong><br>Rize &amp; Shine</span>
+            </figcaption>
+          </figure>
           <figure class="quote">
             <blockquote>“We see our customers as invited guests to a party, and we are the hosts. It’s our job every day to make every important aspect of the customer experience a little bit better.”</blockquote>
-            <figcaption><strong>Jeff Bezos</strong> · Founder, Amazon</figcaption>
+            <figcaption>
+              <span class="avatar">JB</span>
+              <span><strong>Jeff Bezos</strong><br>Founder, Amazon</span>
+            </figcaption>
           </figure>
           <figure class="quote">
             <blockquote>“The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.”</blockquote>
-            <figcaption><strong>Peter Drucker</strong> · Management thinker</figcaption>
+            <figcaption>
+              <span class="avatar">PD</span>
+              <span><strong>Peter Drucker</strong><br>Management thinker</span>
+            </figcaption>
           </figure>
         </div>
       </div>
     </section>
 
     <!-- ============ PILOT / CONVERSION ============ -->
-    <section class="section section--soft" id="pilot">
+    <section class="section section--tint dotgrid" id="pilot">
       <div class="wrap pilot">
         <div class="pilot__copy">
           <p class="eyebrow">Founding pilot</p>
-          <h2>Get Sahaay selling on your store, <em>free for 14 days.</em></h2>
+          <h2>Get Sahaay selling on your store, <span class="accent">free for 14 days.</span></h2>
           <p class="sub">We’re onboarding the first 10 brands by hand. Share your store link and we’ll have Sahaay trained on your catalog within 24 hours.</p>
           <ul class="checks">
             <li>100 real conversations</li>
@@ -289,13 +438,13 @@
           </div>
           <form class="form" id="pilot-form" novalidate>
             <label for="f-store">Your store URL</label>
-            <input id="f-store" name="store" type="url" inputmode="url" placeholder="https://yourstore.com" required autocomplete="url">
+            <input id="f-store" name="store" type="url" inputmode="url" placeholder="yourstore.com" required autocomplete="url">
             <label for="f-email">Work email</label>
             <input id="f-email" name="email" type="email" placeholder="you@yourbrand.com" required autocomplete="email">
-            <button type="submit" class="btn btn--primary btn--block" data-cta="form">Claim my pilot spot</button>
+            <button type="submit" class="btn btn--primary btn--block" data-cta="form">Claim my pilot spot <span aria-hidden="true">→</span></button>
             <p class="form__note" role="status" aria-live="polite">We reply within one working day.</p>
           </form>
-          <p class="pilot__alt">Rather talk first? <a href="#pilot" data-book data-cta="pilot-demo">Book a 20-minute call</a> and see Sahaay running on your own catalog.</p>
+          <p class="pilot__alt">Rather talk first? <a href="#pilot" data-book data-cta="pilot-demo">Book a 20-minute call</a> and see Sahaay on your own catalog.</p>
         </div>
       </div>
     </section>
@@ -330,25 +479,26 @@
 
     <!-- ============ FINAL CTA ============ -->
     <section class="final">
-      <div class="wrap final__inner">
-        <h2>Your next customer is on your store <em>right now.</em></h2>
-        <p>Make sure someone says hello.</p>
-        <div class="cta-row cta-row--center">
-          <a href="#pilot" class="btn btn--light" data-cta="final">Claim your free pilot</a>
-          <a href="#pilot" class="btn btn--ghost-light" data-book data-cta="final-demo">Book a demo</a>
+      <div class="wrap">
+        <div class="final__card">
+          <h2>Your next customer is on your store right now.</h2>
+          <p>Make sure someone says hello.</p>
+          <div class="cta-row cta-row--center">
+            <a href="#pilot" class="btn btn--light" data-cta="final">Claim your free pilot <span aria-hidden="true">→</span></a>
+            <a href="#pilot" class="btn btn--outline-light" data-book data-cta="final-demo">Book a demo</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="footer">
+  <footer class="footer dotgrid">
     <div class="wrap">
       <div class="footer__top">
         <div class="footer__about">
-          <img src="assets/logo/sahaay-monogram-white.svg" alt="Sahaay" width="34" height="44">
-          <p>The AI sales agent that turns your store traffic into paying customers.</p>
-          <p class="footer__meaning"><span lang="hi">सहाय</span> <em>(sahaay)</em> · help, support.</p>
+          <p class="footer__pitch">The AI sales agent that turns your store traffic into paying customers.</p>
+          <a href="#pilot" class="btn btn--primary btn--sm">Claim free pilot <span aria-hidden="true">→</span></a>
         </div>
         <nav class="footer__col" aria-label="Footer">
           <p class="footer__h">Product</p>
@@ -363,7 +513,7 @@
           <a href="#pilot" data-book>Book a demo</a>
         </div>
         <div class="footer__col">
-          <p class="footer__h">Follow</p>
+          <p class="footer__h">Follow us</p>
           <div class="socials">
             <a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener" aria-label="Sahaay on LinkedIn">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.36h-4v-4.75c0-1.13-.02-2.59-1.58-2.59-1.58 0-1.82 1.23-1.82 2.5v4.84h-4v-11z"/></svg>
@@ -382,8 +532,8 @@
 
       <div class="footer__bottom">
         <p class="footer__submark">Rize &amp; Shine <span>·</span> ESTD 2026</p>
+        <p class="footer__meaning"><span lang="hi">सहाय</span> <em>(sahaay)</em> · help, support</p>
         <p>© <span id="year">2026</span> Sahaay. All rights reserved.</p>
-        <a href="#top" class="footer__top-link">Back to top ↑</a>
       </div>
     </div>
   </footer>
