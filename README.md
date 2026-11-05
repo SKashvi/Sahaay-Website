@@ -13,6 +13,8 @@ assets/logo/      SVG logos + favicons, copied from Design-system/brand/logo/
 assets/img/       product screenshots (WebP), from Design-system/assets/graphics and brand/screenshots
 ```
 
+**Look:** layout modelled on the Wispr Flow site (serif headlines, floating nav, rounded colour bands, sticky how-it-works, scattered quote cards, two-pane FAQ, giant footer wordmark), filled with Sahaay's own copy, brand and illustrations. EB Garamond for headlines, Plus Jakarta Sans for everything else; Electric Violet `#6C5FFF` accent on white and Ink `#111126`. The blurred backgrounds (`assets/img/blur-*.webp`) are made from the Velour demo-store product shot.
+
 ## Run locally
 
 ```bash
