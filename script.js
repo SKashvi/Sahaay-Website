@@ -25,100 +25,192 @@ if (tplCatalog) {
   document.querySelectorAll('[data-tpl="catalog"]').forEach((slot) => slot.appendChild(tplCatalog.content.cloneNode(true)));
 }
 
-/* ---------- Hero demo: one clock drives the trigger bar, the page, the badge and the pop-up ---------- */
-const DEMO = [
-  { badge: 'Exit intent', msg: 'Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?', btn: 'Help me pick' },
-  { badge: '45s on page', msg: 'Still deciding? It’s viscose crepe, light enough for a summer wedding. Ask me anything about it.', btn: 'Ask a question' },
-  { badge: '70% scrolled', msg: 'Checking delivery? It reaches you in 4 to 7 business days, and returns are accepted within 14 days.', btn: 'Check my PIN code' },
-  { badge: 'Cart ₹2,599', msg: 'Your order ships free. Want a layer to go with it? The Utility Bomber Jacket is ₹3,499.', btn: 'Show me' },
-];
-// Timeline of one trigger, in ms from the moment it starts.
-const T = { swap: 280, act: 120, fire: 900, pop: 1050, next: 5600 };
-
-const demoScreen = document.getElementById('demo-screen');
-const trigs = [...document.querySelectorAll('.trig')];
-if (demoScreen && trigs.length) {
-  const badge = document.getElementById('demo-badge');
-  const pop = document.getElementById('demo-pop');
-  const msg = document.getElementById('demo-msg');
-  const btn = document.getElementById('demo-btn');
-  const addBtn = demoScreen.querySelector('.pdp__add');
-  const bars = trigs.map((t) => t.querySelector('.trig__bar'));
-
-  let cur = 0;
-  let elapsed = 0;        // ms into the current trigger
-  let last = 0;           // last frame timestamp
-  let running = false;    // on screen and tab visible
-  let flags = {};
-
-  const enter = (i) => {
-    cur = i;
-    elapsed = 0;
-    flags = {};
-    trigs.forEach((t, k) => {
-      const on = k === i;
-      t.classList.toggle('is-on', on);
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-    });
-    bars.forEach((b) => b.style.setProperty('--p', 0));
-    demoScreen.classList.remove('is-fired', 'is-acting');
-    pop.classList.add('is-out');
-    badge.textContent = i === 1 ? '0s on page' : 'Watching…';
-    addBtn.textContent = 'Add to cart';
-    demoScreen.dataset.state = String(i);
-    if (reduceMotion) step(T.pop + 1);
+/* ---------- Questions band: hover or tap a question to see Sahaay's answer ---------- */
+const asks = document.querySelectorAll('.ask');
+const askAnswer = document.getElementById('asks-answer');
+if (asks.length && askAnswer) {
+  const box = askAnswer.parentElement;
+  const show = (btn) => {
+    asks.forEach((b) => b.classList.toggle('is-on', b.textContent === btn.textContent));
+    askAnswer.innerHTML = '';
+    const q = document.createElement('span');
+    q.className = 'asks__q';
+    q.textContent = btn.textContent;
+    askAnswer.append(q, document.createTextNode(btn.dataset.a));
+    box.classList.remove('is-new'); void box.offsetWidth; box.classList.add('is-new');
   };
+  asks.forEach((b) => {
+    b.addEventListener('mouseenter', () => show(b));
+    b.addEventListener('focus', () => show(b));
+    b.addEventListener('click', () => show(b));
+  });
+}
 
-  // Apply everything that should have happened by time `e`.
-  const step = (e) => {
-    elapsed = e;
-    if (!flags.swap && e >= T.swap) { flags.swap = true; msg.textContent = DEMO[cur].msg; btn.textContent = DEMO[cur].btn; }
-    if (!flags.act && e >= T.act) {
-      flags.act = true;
-      demoScreen.classList.add('is-acting');           // cursor moves, page scrolls, item goes in the cart
-      if (cur === 3) addBtn.textContent = 'Added to cart ✓';
+/* ---------- Cost-of-silence calculator ---------- */
+const calc = document.querySelector('.calc');
+if (calc) {
+  const $ = (id) => document.getElementById(id);
+  const inr = (n) => {
+    if (n >= 1e7) return `₹${(n / 1e7).toFixed(n >= 1e8 ? 0 : 1)}Cr`;
+    if (n >= 1e5) return `₹${(n / 1e5).toFixed(n >= 1e6 ? 0 : 1)}L`;
+    return `₹${Math.round(n).toLocaleString('en-IN')}`;
+  };
+  const num = (n) => Math.round(n).toLocaleString('en-IN');
+  const shown = { leave: 0, orders: 0, rev: 0 };
+  let anim = null;
+  const update = () => {
+    const visitors = +$('c-visitors').value;
+    const aov = +$('c-aov').value;
+    const rate = +$('c-rate').value;
+    $('o-visitors').textContent = num(visitors);
+    $('o-aov').textContent = `₹${num(aov)}`;
+    $('o-rate').textContent = `${rate}%`;
+    const target = { leave: visitors * 0.97, orders: visitors * 0.97 * (rate / 100) };
+    target.rev = target.orders * aov;
+    $('r-year').textContent = `a month · ${inr(target.rev * 12)} a year`;
+    // Count towards the new numbers so the change is felt, not just read.
+    cancelAnimationFrame(anim);
+    const from = { ...shown };
+    const t0 = performance.now();
+    const step = (now) => {
+      const k = reduceMotion ? 1 : Math.min(1, (now - t0) / 450);
+      const e = 1 - Math.pow(1 - k, 3);
+      for (const key of Object.keys(target)) shown[key] = from[key] + (target[key] - from[key]) * e;
+      $('r-leave').textContent = num(shown.leave);
+      $('r-orders').textContent = num(shown.orders);
+      $('r-rev').textContent = inr(shown.rev);
+      if (k < 1) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  };
+  calc.querySelectorAll('input[type="range"]').forEach((r) => r.addEventListener('input', update));
+  update();
+}
+
+/* ---------- Proactive sandbox: the visitor plays the shopper ---------- */
+const play = document.getElementById('play');
+if (play) {
+  const MSG = {
+    exit: { why: 'Exit intent', msg: 'Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?', btn: 'Help me pick' },
+    time: { why: '8s on page', msg: 'Still deciding? It’s viscose crepe, light enough for a summer wedding. Ask me anything about it.', btn: 'Ask a question' },
+    scroll: { why: 'Scroll depth', msg: 'Checking delivery? It reaches you in 4 to 7 business days, and returns are accepted within 14 days.', btn: 'Check my PIN code' },
+    cart: { why: 'Cart ₹2,599', msg: 'Your order ships free. Want a layer to go with it? The Utility Bomber Jacket is ₹3,499.', btn: 'Show me' },
+  };
+  const ORDER = ['exit', 'time', 'scroll', 'cart'];
+  const win = document.getElementById('play-win');
+  const page = document.getElementById('play-page');
+  const pop = document.getElementById('play-pop');
+  const badge = document.getElementById('play-badge');
+  const status = document.getElementById('play-status');
+  const nEl = document.getElementById('play-n');
+  const addBtn = document.getElementById('play-add');
+  const cart = play.querySelector('.play__cart');
+  const delivery = document.getElementById('play-delivery');
+  const pills = Object.fromEntries([...play.querySelectorAll('.play__found li')].map((li) => [li.dataset.t, li]));
+  const enabled = { exit: true, time: true, scroll: true, cart: true };
+  const found = new Set();
+  let seconds = 0;
+  let visible = false;
+  let lastY = null;
+  let hideTimer = null;
+
+  const fire = (t) => {
+    if (!enabled[t] || found.has(t)) return;
+    found.add(t);
+    const m = MSG[t];
+    document.getElementById('play-why').textContent = m.why;
+    document.getElementById('play-msg').textContent = m.msg;
+    document.getElementById('play-btn').textContent = m.btn;
+    pop.classList.remove('is-out');
+    badge.textContent = m.why;
+    badge.classList.remove('is-live'); void badge.offsetWidth; badge.classList.add('is-live');
+    pills[t].classList.add('is-found', 'is-hit');
+    if (t === 'scroll') delivery.classList.add('is-hit');
+    nEl.textContent = String(found.size);
+    const live = ORDER.filter((k) => enabled[k]).length;
+    if (found.size >= live) {
+      status.classList.add('is-done');
+      status.innerHTML = live === 4
+        ? 'All four moments caught. That’s what Sahaay does on your store, all day. <a href="#pilot">Try it free</a>'
+        : `All ${live} live triggers caught. Switch the others back on below.`;
+    } else {
+      status.innerHTML = `<b>${found.size}</b> of ${live} moments caught`;
     }
-    if (cur === 1 && e < T.fire) badge.textContent = `${Math.round((45 * e) / T.fire)}s on page`;
-    if (!flags.fire && e >= T.fire) { flags.fire = true; badge.textContent = DEMO[cur].badge; demoScreen.classList.add('is-fired'); }
-    if (!flags.pop && e >= T.pop) { flags.pop = true; pop.classList.remove('is-out'); }
-    bars[cur].style.setProperty('--p', reduceMotion ? 1 : Math.min(1, e / T.next).toFixed(4));
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => pop.classList.add('is-out'), 7000);
   };
+  document.getElementById('play-btn').addEventListener('click', () => pop.classList.add('is-out'));
 
-  const frame = (now) => {
-    if (!running) return;
-    const dt = last ? Math.min(now - last, 100) : 0; // clamp so a stalled tab doesn't skip ahead
-    last = now;
-    step(elapsed + dt);
-    if (elapsed >= T.next) enter((cur + 1) % trigs.length);
-    requestAnimationFrame(frame);
-  };
-  const play = () => { if (running || reduceMotion) return; running = true; last = 0; requestAnimationFrame(frame); };
-  const pause = () => { running = false; };
+  // Exit intent: the cursor moves quickly up into the browser bar, leaves through the top, or hits back/close.
+  win.addEventListener('mousemove', (e) => {
+    const r = win.getBoundingClientRect();
+    const y = e.clientY - r.top;
+    if (lastY !== null && y < 34 && lastY - y > 6) fire('exit');
+    lastY = y;
+  });
+  win.addEventListener('mouseleave', (e) => { if (e.clientY <= win.getBoundingClientRect().top + 4) fire('exit'); lastY = null; });
+  play.querySelectorAll('[data-exit]').forEach((b) => b.addEventListener('click', () => fire('exit')));
 
-  trigs.forEach((t, i) => {
-    t.addEventListener('click', () => enter(i));
-    t.addEventListener('keydown', (e) => {
-      const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (!k) return;
-      e.preventDefault();
-      const n = (i + k + trigs.length) % trigs.length;
-      enter(n);
-      trigs[n].focus();
-    });
+  // Scroll depth: the delivery details come into view inside the page.
+  page.addEventListener('scroll', () => {
+    if (page.scrollTop + page.clientHeight >= delivery.offsetTop + 30) fire('scroll');
+  }, { passive: true });
+
+  // Cart value: adding the dress crosses the ₹2,000 threshold.
+  addBtn.addEventListener('click', () => {
+    addBtn.textContent = 'Added to cart ✓';
+    addBtn.classList.add('is-added');
+    cart.classList.add('is-full');
+    document.getElementById('play-count').textContent = '1';
+    fire('cart');
+  });
+  play.querySelectorAll('.pdp__sizes button').forEach((b) => b.addEventListener('click', () => {
+    play.querySelectorAll('.pdp__sizes button').forEach((x) => x.classList.toggle('on', x === b));
+  }));
+
+  // Time on page: counts while the store is on screen; fires at 8 seconds.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting && e.intersectionRatio >= 0.5; }, { threshold: [0, 0.5, 1] }).observe(win);
+  }
+  setInterval(() => {
+    if (!visible || document.hidden) return;
+    seconds += 1;
+    if (!pop.classList.contains('is-out')) return;
+    if (!found.has('time')) badge.textContent = `${seconds}s on page`;
+    if (seconds >= 8) fire('time');
+  }, 1000);
+
+  // Rules: switching a trigger off keeps it quiet in the sandbox.
+  const liveChip = document.getElementById('rules-live');
+  document.querySelectorAll('.tog[data-rule]').forEach((tog) => tog.addEventListener('click', () => {
+    const on = tog.getAttribute('aria-checked') !== 'true';
+    tog.setAttribute('aria-checked', String(on));
+    tog.classList.toggle('is-on', on);
+    enabled[tog.dataset.rule] = on;
+    pills[tog.dataset.rule].classList.toggle('is-off', !on);
+    const live = ORDER.filter((k) => enabled[k]).length;
+    liveChip.textContent = `${live} trigger${live === 1 ? '' : 's'} live`;
+    if (!status.classList.contains('is-done')) status.innerHTML = `<b>${[...found].filter((k) => enabled[k]).length}</b> of ${live} moments caught`;
+  }));
+
+  // For visitors who'd rather watch: act out each trigger in turn.
+  const auto = document.getElementById('play-auto');
+  auto.addEventListener('click', () => {
+    auto.disabled = true;
+    const todo = ORDER.filter((t) => enabled[t] && !found.has(t));
+    const act = {
+      exit: () => fire('exit'),
+      time: () => { seconds = 8; fire('time'); },
+      scroll: () => { page.scrollTo({ top: delivery.offsetTop - 40, behavior: reduceMotion ? 'auto' : 'smooth' }); setTimeout(() => fire('scroll'), 600); },
+      cart: () => { page.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); setTimeout(() => addBtn.click(), 500); },
+    };
+    todo.forEach((t, i) => setTimeout(() => { pop.classList.add('is-out'); setTimeout(act[t], 300); }, i * 3200));
+    setTimeout(() => { auto.disabled = false; }, todo.length * 3200);
   });
 
-  let onScreen = true;
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => {
-      onScreen = e.isIntersecting;
-      onScreen && !document.hidden ? play() : pause();
-    }).observe(demoScreen);
+  if (window.matchMedia('(hover: none)').matches) {
+    play.querySelector('.play__how').textContent = 'Be the shopper: tap ← or ×, wait a few seconds, scroll the page, or add the dress to your cart.';
   }
-  document.addEventListener('visibilitychange', () => (document.hidden || !onScreen ? pause() : play()));
-
-  enter(0);
-  play();
 }
 
 /* ---------- Hero story: shopper about to leave -> Sahaay speaks first -> sale saved ---------- */
@@ -276,10 +368,26 @@ const tabs = document.querySelectorAll('.faq__qs [role="tab"]');
 const echo = document.getElementById('faq-echo');
 const bubble = document.getElementById('faq-bubble');
 const panel = document.getElementById('faq-answer');
+// Answers arrive the way a chat reply does: a beat of typing, then the words.
+let typing = null;
+const typeOut = (el, text) => {
+  clearInterval(typing);
+  if (reduceMotion) { el.textContent = text; return; }
+  el.innerHTML = '<span class="sw__dots"><i></i><i></i><i></i></span>';
+  let i = 0;
+  setTimeout(() => {
+    el.textContent = '';
+    typing = setInterval(() => {
+      i = Math.min(text.length, i + 3);
+      el.textContent = text.slice(0, i);
+      if (i >= text.length) clearInterval(typing);
+    }, 16);
+  }, 450);
+};
 const select = (tab) => {
   tabs.forEach((t) => { t.setAttribute('aria-selected', String(t === tab)); t.tabIndex = t === tab ? 0 : -1; });
   echo.textContent = tab.textContent;
-  bubble.textContent = tab.dataset.a;
+  typeOut(bubble, tab.dataset.a);
   panel.setAttribute('aria-labelledby', tab.id);
 };
 tabs.forEach((tab, i) => {

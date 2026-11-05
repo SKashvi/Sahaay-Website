@@ -109,8 +109,8 @@
   /* =====================================================================
    * Website assistant
    * ===================================================================== */
-  const GREETING = 'Hi! I’m Sahaay’s assistant. Ask me how Sahaay works, what the free pilot includes, or how it fits your store.';
-  const SUGGESTIONS = ['How does the free pilot work?', 'Do you charge per order?', 'How long does setup take?', 'What happens after purchase?'];
+  const GREETING = 'Hi! Ask me anything about Sahaay.';
+  const SUGGESTIONS = ['How does the pilot work?', 'Do you charge per order?', 'How long is setup?'];
 
   // Built-in answers, used when the live assistant can't be reached. Same facts as knowledge/sahaay.md.
   const LOCAL = [
@@ -154,25 +154,19 @@
   const root = document.createElement('div');
   root.className = 'sw';
   root.innerHTML = `
-    <p class="sw__teaser" hidden>Questions about Sahaay? Ask me.</p>
+    <p class="sw__teaser" hidden>Questions? Ask me.</p>
     <section class="sw__panel" id="sw-panel" role="dialog" aria-label="Sahaay assistant" hidden>
       <header class="sw__head">
         <span class="sw__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="14" height="18"></span>
-        <span class="sw__who"><b>Sahaay</b><span><i></i>Answers about Sahaay, the pilot and pricing</span></span>
+        <span class="sw__who"><b>Sahaay</b><span><i></i>AI-powered</span></span>
         <button type="button" class="sw__x" aria-label="Close chat">×</button>
       </header>
       <div class="sw__log" role="log" aria-live="polite"></div>
-      <div class="sw__chips"></div>
-      <div class="sw__actions">
-        <button type="button" data-act="pilot">Claim free pilot</button>
-        <button type="button" data-act="demo">Book a demo</button>
-      </div>
       <form class="sw__form">
         <label class="sr" for="sw-input">Your question</label>
-        <textarea id="sw-input" rows="1" maxlength="1000" placeholder="Ask anything about Sahaay"></textarea>
+        <textarea id="sw-input" rows="1" maxlength="1000" placeholder="Type a question…"></textarea>
         <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-2-7z"/></svg></button>
       </form>
-      <p class="sw__foot">Powered by Sahaay · AI answers can be wrong</p>
     </section>
     <button type="button" class="sw__launch" aria-controls="sw-panel" aria-expanded="false" aria-label="Chat with Sahaay">
       <img class="sw__mono" src="assets/logo/sahaay-monogram-white.svg" alt="" width="20" height="26">
@@ -183,7 +177,8 @@
   const panel = $('.sw__panel', root);
   const launch = $('.sw__launch', root);
   const log = $('.sw__log', root);
-  const chips = $('.sw__chips', root);
+  const chips = document.createElement('div');
+  chips.className = 'sw__chips';
   const form = $('.sw__form', root);
   const input = $('#sw-input', root);
   const teaser = $('.sw__teaser', root);
@@ -199,6 +194,29 @@
     return el;
   }
 
+  // Small next-step links under answers that point somewhere: no standing buttons.
+  function addActions(after, text) {
+    const wantsPilot = /pilot|free|sign up|trial/i.test(text);
+    const wantsDemo = /demo|call|book/i.test(text);
+    if (!wantsPilot && !wantsDemo) return;
+    const row = document.createElement('div');
+    row.className = 'sw__acts';
+    if (wantsPilot) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = 'Claim free pilot →';
+      b.addEventListener('click', () => { setOpen(false); document.getElementById('pilot')?.scrollIntoView({ behavior: 'smooth' }); });
+      row.appendChild(b);
+    }
+    if (wantsDemo) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = 'Book a demo →';
+      b.addEventListener('click', () => openBooking());
+      row.appendChild(b);
+    }
+    after.after(row);
+    log.scrollTop = log.scrollHeight;
+  }
+
   function setOpen(open) {
     panel.hidden = !open;
     root.classList.toggle('is-open', open);
@@ -206,7 +224,7 @@
     launch.setAttribute('aria-label', open ? 'Close chat' : 'Chat with Sahaay');
     teaser.hidden = true;
     if (open) {
-      if (!log.children.length) addMsg('assistant', GREETING);
+      if (!log.children.length) { addMsg('assistant', GREETING); log.appendChild(chips); }
       input.focus();
     }
   }
@@ -223,7 +241,7 @@
     q = q.trim();
     if (!q || busy) return;
     busy = true;
-    chips.hidden = true;
+    chips.remove();
     addMsg('user', q);
     history.push({ role: 'user', content: q });
     const bot = addMsg('assistant', '');
@@ -265,6 +283,7 @@
       bot.innerHTML = render(text);
     }
     history.push({ role: 'assistant', content: text });
+    addActions(bot, text);
     busy = false;
     log.scrollTop = log.scrollHeight;
   }
@@ -276,8 +295,6 @@
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
   input.addEventListener('input', () => { input.style.height = ''; input.style.height = Math.min(input.scrollHeight, 110) + 'px'; });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden && !(dialog && dialog.open)) setOpen(false); });
-  root.querySelector('[data-act="pilot"]').addEventListener('click', () => { setOpen(false); document.getElementById('pilot')?.scrollIntoView({ behavior: 'smooth' }); });
-  root.querySelector('[data-act="demo"]').addEventListener('click', () => openBooking());
 
   // A one-time nudge after a short read.
   let seen = false;
