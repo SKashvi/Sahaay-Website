@@ -121,6 +121,102 @@ if (demoScreen && trigs.length) {
   play();
 }
 
+/* ---------- Hero story: shopper about to leave -> Sahaay speaks first -> sale saved ---------- */
+const story = document.getElementById('story');
+if (story) {
+  const win = story.querySelector('.win');
+  const cursor = story.querySelector('.story__cursor');
+  const badge = story.querySelector('.story__badge');
+  const cartCount = story.querySelector('.story__cart b');
+  const addBtn = story.querySelector('.story__add');
+  const help = story.querySelector('.sbox__btn--help');
+  const add = story.querySelector('.sbox__btn--add');
+  const me = story.querySelector('.sbox__me');
+  const typing = story.querySelector('.sbox__typing');
+  const bot = story.querySelector('.sbox__bot');
+  const stepEls = [...story.querySelectorAll('.story__steps li')];
+  const stepBars = stepEls.map((li) => li.querySelector('.story__bar'));
+  // When each step starts and ends (ms), and the full loop length.
+  const STEPS = [[0, 2400], [2400, 6000], [6000, 10400]];
+  const LOOP = 11200;
+
+  // Put the cursor on an element (fx, fy = point inside it, 0..1) or on a raw point.
+  const moveTo = (target, fx = 0.5, fy = 0.5) => {
+    const w = win.getBoundingClientRect();
+    let x; let y;
+    if (target instanceof Element) {
+      const r = target.getBoundingClientRect();
+      x = r.left - w.left + r.width * fx; y = r.top - w.top + r.height * fy;
+    } else { x = target.x * w.width; y = target.y * w.height; }
+    cursor.style.left = `${x.toFixed(0)}px`;
+    cursor.style.top = `${y.toFixed(0)}px`;
+  };
+  const press = (el) => {
+    el.classList.add('is-press'); cursor.classList.add('is-press');
+    setTimeout(() => { el.classList.remove('is-press'); cursor.classList.remove('is-press'); }, 180);
+  };
+  const sizes = story.querySelectorAll('.pdp__sizes span');
+
+  const EVENTS = [
+    [0, () => {
+      story.className = 'story';
+      [me, typing, bot, add].forEach((el) => el.classList.remove('is-in'));
+      badge.textContent = 'Browsing';
+      cartCount.textContent = '0';
+      addBtn.textContent = 'Add to cart';
+      moveTo(story.querySelector('.pdp__name'), 0.3, 0.6);
+    }],
+    [700, () => moveTo(sizes[2], 0.5, 0.6)],
+    [1500, () => moveTo({ x: 0.93, y: 0.02 })],                       // heads for the close tab
+    [2300, () => { badge.textContent = 'Exit intent'; story.classList.add('is-exit'); }],
+    [2500, () => story.classList.add('is-pop')],                      // Sahaay speaks first
+    [3500, () => moveTo(help, 0.5, 0.6)],
+    [4250, () => press(help)],
+    [4500, () => { story.classList.add('is-chat'); me.classList.add('is-in'); }],
+    [5000, () => typing.classList.add('is-in')],
+    [5900, () => { typing.classList.remove('is-in'); bot.classList.add('is-in'); add.classList.add('is-in'); }],
+    [6700, () => moveTo(add, 0.5, 0.6)],
+    [7450, () => press(add)],
+    [7600, () => { story.classList.add('is-saved'); badge.textContent = 'Sale saved'; cartCount.textContent = '1'; addBtn.textContent = 'Added to cart ✓'; }],
+  ];
+
+  let t = 0; let last = 0; let next = 0; let running = false;
+  const paint = () => {
+    stepEls.forEach((li, k) => {
+      const [a, b] = STEPS[k];
+      li.classList.toggle('is-on', t >= a && t < b);
+      li.classList.toggle('is-done', t >= b);
+      stepBars[k].style.setProperty('--p', Math.max(0, Math.min(1, (t - a) / (b - a))).toFixed(4));
+    });
+  };
+  const frame = (now) => {
+    if (!running) return;
+    t += last ? Math.min(now - last, 100) : 0;
+    last = now;
+    while (next < EVENTS.length && t >= EVENTS[next][0]) EVENTS[next++][1]();
+    if (t >= LOOP) { t = 0; next = 0; }
+    paint();
+    requestAnimationFrame(frame);
+  };
+  const play = () => { if (running) return; running = true; last = 0; requestAnimationFrame(frame); };
+  const pause = () => { running = false; };
+
+  if (reduceMotion) {
+    // One still frame: the conversation and the saved sale.
+    EVENTS.forEach(([, fn]) => fn());
+    cursor.hidden = true;
+    t = LOOP - 1; paint();
+  } else {
+    let visible = true;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible && !document.hidden ? play() : pause(); }).observe(story);
+    }
+    document.addEventListener('visibilitychange', () => (document.hidden || !visible ? pause() : play()));
+    window.addEventListener('resize', () => { t = 0; next = 0; });
+    play();
+  }
+}
+
 /* ---------- Scroll-linked state: how-it-works step, nav segment, quote drift ---------- */
 const steps = [...document.querySelectorAll('.how__step')];
 const listItems = [...document.querySelectorAll('.how__list li')];

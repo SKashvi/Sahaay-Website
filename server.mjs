@@ -1,10 +1,11 @@
 // Sahaay website server: serves the static site and three small APIs.
 //   POST /api/lead         pilot sign-ups and demo requests -> Airtable
 //   POST /api/lead/booked  marks a demo lead as booked after Calendly confirms
-//   POST /api/chat         the website assistant (Claude), streamed as server-sent events
+//   POST /api/chat         the website assistant (Gemini or Groq), streamed as server-sent events
 //
 // Environment (see README):
-//   ANTHROPIC_API_KEY                       chat assistant
+//   GEMINI_API_KEY or GROQ_API_KEY          chat assistant (LLM_PROVIDER picks one if both are set)
+//   GEMINI_MODEL / GROQ_MODEL (optional)    model overrides
 //   AIRTABLE_TOKEN, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID   lead storage
 //   CALENDLY_TOKEN (optional)               fills in the booked time on demo leads
 //   LEAD_SECRET (optional)                  signs lead ids handed to the browser
@@ -16,11 +17,9 @@ import { readFileSync, appendFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
-import Anthropic from "@anthropic-ai/sdk";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 8080);
-const MODEL = "claude-opus-5-5";
 
 const AIRTABLE = {
   token: process.env.AIRTABLE_TOKEN || "",
@@ -30,7 +29,21 @@ const AIRTABLE = {
 const CALENDLY_TOKEN = process.env.CALENDLY_TOKEN || "";
 const LEAD_SECRET = process.env.LEAD_SECRET || crypto.randomBytes(32).toString("hex");
 
-const anthropic = process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN ? new Anthropic() : null;
+/* ---------- Chat model provider: Gemini or Groq ---------- */
+const LLM = (() => {
+  const gemini = process.env.GEMINI_API_KEY || "";
+  const groq = process.env.GROQ_API_KEY || "";
+  // Use LLM_PROVIDER when its key is present; otherwise whichever key is set (Gemini first).
+  const wanted = (process.env.LLM_PROVIDER || "").toLowerCase();
+  const pick = (wanted === "groq" && groq) || (!gemini && groq) ? "groq" : gemini ? "gemini" : "";
+  if (pick === "gemini") {
+    return { name: "gemini", key: gemini, model: process.env.GEMINI_MODEL || "gemini-2.5-flash", base: process.env.GEMINI_BASE_URL || "https://generativelanguage.googleapis.com" };
+  }
+  if (pick === "groq") {
+    return { name: "groq", key: groq, model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile", base: process.env.GROQ_BASE_URL || "https://api.groq.com" };
+  }
+  return null;
+})();
 
 /* ---------- Assistant prompt (frozen at boot so it caches) ---------- */
 const KNOWLEDGE = readFileSync(path.join(here, "knowledge", "sahaay.md"), "utf8");
@@ -175,8 +188,77 @@ async function handleBooked(req, res) {
   send(res, 200, { ok: true });
 }
 
+// Read a server-sent-event response and yield each `data:` payload.
+async function* sseData(res) {
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let buf = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i;
+    while ((i = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, i).trim();
+      buf = buf.slice(i + 1);
+      if (line.startsWith("data:")) yield line.slice(5).trim();
+    }
+  }
+}
+
+// Each provider yields { text } chunks and, if the model declined, { blocked: true }.
+async function* streamGemini(messages, signal) {
+  const generationConfig = { temperature: 0.3, maxOutputTokens: 1024 };
+  // 2.5 Flash models think by default; a short FAQ answer doesn't need it and replies faster without.
+  if (/2\.5-flash/.test(LLM.model)) generationConfig.thinkingConfig = { thinkingBudget: 0 };
+  const res = await fetch(`${LLM.base}/v1beta/models/${encodeURIComponent(LLM.model)}:streamGenerateContent?alt=sse`, {
+    method: "POST",
+    signal,
+    headers: { "content-type": "application/json", "x-goog-api-key": LLM.key },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: messages.map((m) => ({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] })),
+      generationConfig,
+    }),
+  });
+  if (!res.ok) throw Object.assign(new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 300)}`), { status: res.status });
+  for await (const data of sseData(res)) {
+    let chunk;
+    try { chunk = JSON.parse(data); } catch { continue; }
+    if (chunk.promptFeedback?.blockReason) { yield { blocked: true }; return; }
+    const cand = chunk.candidates?.[0];
+    const text = (cand?.content?.parts || []).map((part) => (part.thought ? "" : part.text || "")).join("");
+    if (text) yield { text };
+    if (["SAFETY", "PROHIBITED_CONTENT", "BLOCKLIST", "SPII", "RECITATION"].includes(cand?.finishReason)) { yield { blocked: true }; return; }
+  }
+}
+
+async function* streamGroq(messages, signal) {
+  const res = await fetch(`${LLM.base}/openai/v1/chat/completions`, {
+    method: "POST",
+    signal,
+    headers: { "content-type": "application/json", authorization: `Bearer ${LLM.key}` },
+    body: JSON.stringify({
+      model: LLM.model,
+      stream: true,
+      temperature: 0.3,
+      max_tokens: 1024,
+      messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
+    }),
+  });
+  if (!res.ok) throw Object.assign(new Error(`Groq ${res.status}: ${(await res.text()).slice(0, 300)}`), { status: res.status });
+  for await (const data of sseData(res)) {
+    if (data === "[DONE]") return;
+    let chunk;
+    try { chunk = JSON.parse(data); } catch { continue; }
+    const choice = chunk.choices?.[0];
+    if (choice?.delta?.content) yield { text: choice.delta.content };
+    if (choice?.finish_reason === "content_filter") { yield { blocked: true }; return; }
+  }
+}
+
 async function handleChat(req, res) {
-  if (!anthropic) return send(res, 503, { error: "Assistant offline", fallback: true });
+  if (!LLM) return send(res, 503, { error: "Assistant offline", fallback: true });
   if (limited(`chat:${clientIp(req)}`, 30, 10 * 60 * 1000)) return send(res, 429, { error: "You're sending messages quickly. Try again in a few minutes." });
 
   const body = await readJson(req);
@@ -189,31 +271,20 @@ async function handleChat(req, res) {
 
   res.writeHead(200, { "content-type": "text/event-stream; charset=utf-8", "cache-control": "no-cache, no-transform", connection: "keep-alive" });
   const emit = (obj) => res.write(`data: ${JSON.stringify(obj)}\n\n`);
+  const abort = new AbortController();
+  req.on("close", () => abort.abort());
 
   try {
-    const stream = anthropic.beta.messages.stream({
-      model: MODEL,
-      max_tokens: 4096,
-      output_config: { effort: "low" },
-      // Re-runs a classifier-declined request on Anthropic's recommended fallback model.
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
-      messages,
-    });
-    req.on("close", () => stream.abort());
-    for await (const event of stream) {
-      if (event.type === "content_block_delta" && event.delta.type === "text_delta") emit({ t: event.delta.text });
-    }
-    const final = await stream.finalMessage();
-    if (final.stop_reason === "refusal") {
-      emit({ replace: "I can’t help with that one. Ask me about Sahaay, the free pilot or booking a demo." });
+    const stream = LLM.name === "gemini" ? streamGemini(messages, abort.signal) : streamGroq(messages, abort.signal);
+    for await (const part of stream) {
+      if (part.text) emit({ t: part.text });
+      if (part.blocked) emit({ replace: "I can’t help with that one. Ask me about Sahaay, the free pilot or booking a demo." });
     }
     emit({ done: true });
   } catch (err) {
-    if (err instanceof Anthropic.RateLimitError) emit({ error: "The assistant is busy right now. Try again in a minute." });
-    else if (err instanceof Anthropic.APIError) { console.error("chat api error", err.status, err.message); emit({ error: "The assistant hit a problem. Try again." }); }
-    else if (err?.name !== "AbortError" && !(err instanceof Anthropic.APIUserAbortError)) { console.error("chat error", err); emit({ error: "The assistant hit a problem. Try again." }); }
+    if (err?.name === "AbortError") return res.end();
+    console.error("chat error", err.message || err);
+    emit({ error: err.status === 429 ? "The assistant is busy right now. Try again in a minute." : "The assistant hit a problem. Try again." });
   }
   res.end();
 }
@@ -254,6 +325,6 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Sahaay site on http://localhost:${PORT}`);
-  if (!anthropic) console.warn("ANTHROPIC_API_KEY not set: the chat widget will use its built-in answers.");
+  console.log(LLM ? `Chat assistant: ${LLM.name} (${LLM.model})` : "No GEMINI_API_KEY or GROQ_API_KEY: the chat widget will use its built-in answers.");
   if (!AIRTABLE.token) console.warn("AIRTABLE_TOKEN not set: leads are written to data/leads.jsonl.");
 });

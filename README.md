@@ -4,7 +4,7 @@ Landing page for [Sahaay](https://www.linkedin.com/company/sahaay-sales), the AI
 
 - **Pilot sign-ups and demo requests** saved to Airtable (base *Sahaay Website Leads*, table *Leads*).
 - **Demo booking** through Calendly ([calendly.com/ka1sh8vi/sahaay-demo](https://calendly.com/ka1sh8vi/sahaay-demo)), embedded in a dialog. Bookings mark the lead as *Demo booked*.
-- **A website assistant**: a Sahaay-branded chat widget that answers visitor questions with Claude, using only `knowledge/sahaay.md`.
+- **A website assistant**: a Sahaay-branded chat widget that answers visitor questions with Gemini or Groq, using only `knowledge/sahaay.md`.
 
 ```
 index.html, styles.css   the page
@@ -19,12 +19,10 @@ assets/                  tokens, logos and product screenshots from the design s
 ## Run locally
 
 ```bash
-npm install
-```
-
-```bash
 npm start
 ```
+
+There are no dependencies to install (Node 20+).
 
 Open http://localhost:8080. With no keys set, leads go to `data/leads.jsonl` and the chat widget answers from its built-in replies.
 
@@ -32,7 +30,10 @@ Open http://localhost:8080. With no keys set, leads go to `data/leads.jsonl` and
 
 | Variable | Needed for | Where to get it |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | live chat answers | console.anthropic.com → API keys |
+| `GEMINI_API_KEY` | live chat answers (option 1) | aistudio.google.com → Get API key |
+| `GROQ_API_KEY` | live chat answers (option 2) | console.groq.com → API Keys |
+| `LLM_PROVIDER` (optional) | `gemini` or `groq` when both keys are set (default: Gemini) | |
+| `GEMINI_MODEL` / `GROQ_MODEL` (optional) | model override (defaults `gemini-2.5-flash`, `llama-3.3-70b-versatile`) | check the provider's current model list |
 | `AIRTABLE_TOKEN` | saving leads | airtable.com/create/tokens: scope `data.records:write`, access to *Sahaay Website Leads* |
 | `AIRTABLE_BASE_ID`, `AIRTABLE_TABLE_ID` | saving leads | preset in `render.yaml` |
 | `CALENDLY_TOKEN` (optional) | filling *Booking time* on booked leads | calendly.com/integrations/api_webhooks → personal access token |
@@ -42,7 +43,7 @@ Open http://localhost:8080. With no keys set, leads go to `data/leads.jsonl` and
 
 1. Push this repo to GitHub.
 2. In Render: **New → Blueprint**, pick the repo. It reads `render.yaml`.
-3. Set `ANTHROPIC_API_KEY`, `AIRTABLE_TOKEN` and optionally `CALENDLY_TOKEN` when prompted.
+3. Set `GEMINI_API_KEY` (or `GROQ_API_KEY`), `AIRTABLE_TOKEN` and optionally `CALENDLY_TOKEN` when prompted.
 
 The free plan sleeps after inactivity, so the first visit after a while takes a few seconds.
 
@@ -50,7 +51,7 @@ The free plan sleeps after inactivity, so the first visit after a while takes a 
 
 - **Pilot form** → `POST /api/lead` (intent *Pilot*) → Airtable row with status *New*.
 - **Book a demo** → dialog asks name, email and store → `POST /api/lead` (intent *Demo*) → Calendly opens prefilled → on `calendly.event_scheduled` the page calls `POST /api/lead/booked`, which sets status *Demo booked* and the Calendly event (and booking time if `CALENDLY_TOKEN` is set).
-- **Chat** → `POST /api/chat` streams Claude's answer (Claude Opus 5.5, low effort, server-side refusal fallback on). The prompt allows only facts from `knowledge/sahaay.md`, so update that file when the product, pilot or pricing changes. Rate limits: 30 chat messages per 10 minutes and 10 leads per hour, per IP.
+- **Chat** → `POST /api/chat` streams the model's answer from Gemini (`streamGenerateContent`) or Groq (OpenAI-compatible chat completions). Blocked answers are replaced with a polite redirect. The prompt allows only facts from `knowledge/sahaay.md`, so update that file when the product, pilot or pricing changes. Rate limits: 30 chat messages per 10 minutes and 10 leads per hour, per IP.
 
 ## Before launch
 

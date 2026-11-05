@@ -5,7 +5,7 @@ services:
     name: sahaay-website
     runtime: node
     plan: free
-    buildCommand: npm ci
+    buildCommand: echo "no build step"
     startCommand: node server.mjs
     healthCheckPath: /healthz
     envVars:
@@ -17,7 +17,11 @@ services:
         value: tbluTNvXKDXTbsJ1l
       - key: AIRTABLE_TOKEN
         sync: false
-      - key: ANTHROPIC_API_KEY
+      # Chat assistant: set one of these keys (Gemini is used if both are set,
+      # unless you add LLM_PROVIDER=groq).
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
         sync: false
       - key: CALENDLY_TOKEN
         sync: false

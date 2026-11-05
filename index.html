@@ -39,10 +39,11 @@
         <img src="assets/logo/sahaay-wordmark-violet.svg" alt="Sahaay" width="112" height="22">
       </a>
       <div class="seg" role="group" aria-label="Jump to">
-        <a href="#how" class="seg__item is-on">Pre-purchase</a>
+        <a href="#proactive" class="seg__item is-on">Pre-purchase</a>
         <a href="#easy" class="seg__item">Post-purchase</a>
       </div>
       <nav class="nav__links" aria-label="Primary">
+        <a href="#proactive">Speaks first</a>
         <a href="#how">How it works</a>
         <a href="#pilot">Pilot</a>
         <a href="#faq">FAQ</a>
@@ -57,14 +58,110 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero__copy">
-        <p class="eyebrow">Sahaay · AI sales agent</p>
-        <h1>Stop paying for clicks <em>that never buy.</em></h1>
-        <p class="hero__sub">The AI sales agent that greets every shopper, answers every question and turns your store traffic into orders.</p>
-        <a href="#pilot" class="btn btn--lav" data-cta="hero">Claim your free pilot</a>
+        <p class="eyebrow">The proactive AI sales agent for online stores</p>
+        <h1>Don’t wait for shoppers to ask. <em>Sahaay speaks first.</em></h1>
+        <p class="hero__sub">It spots the shopper who’s about to leave, starts the right conversation and turns the doubt into an order. Around the clock, in your brand’s voice.</p>
+        <div class="hero__ctas">
+          <a href="#pilot" class="btn btn--lav" data-cta="hero">Claim your free pilot</a>
+          <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" class="btn btn--plain" data-book data-cta="hero-demo">Book a 20-min demo</a>
+        </div>
         <p class="hero__small">Free for 14 days · No card · Live in under 24 hours</p>
       </div>
 
-      <!-- Live demo: Sahaay speaks first on a product page -->
+      <!-- The story of one save: shopper about to leave -> Sahaay speaks first -> added to cart -->
+      <div class="story" id="story" data-phase="0">
+        <ol class="story__steps" aria-label="What happens in the demo">
+          <li class="is-on"><span class="story__n">1</span><span><b>Spots the moment</b>The cursor heads for the close tab.</span><i class="story__bar"></i></li>
+          <li><span class="story__n">2</span><span><b>Speaks first</b>Sahaay opens with help, not a discount.</span><i class="story__bar"></i></li>
+          <li><span class="story__n">3</span><span><b>Saves the sale</b>The right size goes in the cart.</span><i class="story__bar"></i></li>
+        </ol>
+
+        <div class="story__stage" aria-hidden="true">
+          <div class="win">
+            <div class="win__bar">
+              <i></i><i></i><i></i>
+              <span class="win__url">velour.store/products/wrap-midi-dress</span>
+              <span class="win__badge story__badge">Browsing</span>
+            </div>
+            <div class="pdp">
+              <div class="pdp__img"><img src="assets/img/dress.webp" alt="" width="405" height="442"></div>
+              <div class="pdp__info">
+                <p class="pdp__brand">Velour</p>
+                <p class="pdp__name">Wrap Midi Dress</p>
+                <p class="pdp__price">₹2,599</p>
+                <div class="pdp__sizes"><span>XS</span><span class="story__size">S</span><span>M</span><span>L</span></div>
+                <span class="pdp__add story__add">Add to cart</span>
+              </div>
+              <span class="story__cart"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg><b>0</b></span>
+            </div>
+
+            <div class="sbox">
+              <p class="pop__who"><span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>Sahaay</p>
+              <p class="sbox__open">Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?</p>
+              <span class="sbox__btn sbox__btn--help">Help me pick</span>
+              <div class="sbox__thread">
+                <p class="sbox__me">I’m usually an S. Will it fit?</p>
+                <p class="sbox__typing"><i></i><i></i><i></i></p>
+                <p class="sbox__bot">S fits true to size, and it’s in stock in Terracotta. Add it to your cart?</p>
+                <span class="sbox__btn sbox__btn--add">Add S to cart</span>
+              </div>
+            </div>
+            <span class="story__toast">+1 sale saved · ₹2,599</span>
+            <svg class="story__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUESTIONS BAND ============ -->
+    <section class="band band--ink" aria-labelledby="asks-title">
+      <p class="eyebrow eyebrow--light" id="asks-title">What shoppers ask, answered in under 2 seconds</p>
+      <div class="marquee">
+        <div class="marquee__track">
+          <span>What would you recommend for me?</span><span>Do you have this in XS?</span><span>Where’s my order?</span><span>What’s your return policy?</span><span>Is the fabric breathable?</span><span>When will it reach 560001?</span><span>Can I return a damaged item?</span><span>Which colour is in stock?</span>
+          <span aria-hidden="true">What would you recommend for me?</span><span aria-hidden="true">Do you have this in XS?</span><span aria-hidden="true">Where’s my order?</span><span aria-hidden="true">What’s your return policy?</span><span aria-hidden="true">Is the fabric breathable?</span><span aria-hidden="true">When will it reach 560001?</span><span aria-hidden="true">Can I return a damaged item?</span><span aria-hidden="true">Which colour is in stock?</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIFT (violet) ============ -->
+    <section class="band band--violet" id="problem">
+      <h2 class="display display--light">3.5x more conversions <em>when your store speaks first</em></h2>
+      <p class="band__sub">Shoppers who get an answer buy. Sahaay greets every visitor, answers in under 2 seconds and never logs off, so the visitors who used to leave get a reason to stay.</p>
+
+      <div class="compare">
+        <div class="compare__card compare__card--before">
+          <p class="compare__label">Silent store</p>
+          <p class="compare__num">3 in 100</p>
+          <p class="compare__note">visitors buy</p>
+          <div class="chat chat--silent" aria-hidden="true">
+            <p class="msg msg--me">Do you ship to Pune?</p>
+            <p class="msg__meta">No reply</p>
+          </div>
+        </div>
+        <div class="compare__card compare__card--after">
+          <p class="compare__label">With Sahaay</p>
+          <p class="compare__num">&lt;2 seconds</p>
+          <p class="compare__note">to every answer, 24/7</p>
+          <div class="chat" aria-hidden="true">
+            <p class="msg msg--me">Do you ship to Pune?</p>
+            <p class="msg msg--bot">Yes! Delivery to Pune takes 4 to 7 business days, and shipping is free on orders above ₹1,999.</p>
+            <p class="msg__meta msg__meta--ok">Answered in 1.6s</p>
+          </div>
+        </div>
+      </div>
+      <p class="band__src">Sources: Monetate (3 in 100 visitors buy), McKinsey (3.5x higher conversion with proactive chat). Answers shown are from the Velour demo store.</p>
+    </section>
+
+    <!-- ============ PROACTIVE ============ -->
+    <section class="pro" id="proactive">
+      <div class="section-head">
+        <p class="eyebrow">Proactive selling</p>
+        <h2 class="display">Most chat widgets wait. <em>Sahaay walks up.</em></h2>
+        <p class="sub">97 in 100 shoppers leave without asking anything, so a chat box that waits only ever talks to the other 3. Sahaay watches for the moments that come before a lost sale and starts the conversation itself.</p>
+      </div>
+
+      <!-- Interactive: each trigger and what Sahaay says -->
       <div class="demo" id="demo">
         <div class="demo__triggers" role="tablist" aria-label="What makes Sahaay speak first">
           <button class="trig is-on" role="tab" aria-selected="true" aria-controls="demo-screen" data-i="0">
@@ -113,46 +210,34 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- ============ QUESTIONS BAND ============ -->
-    <section class="band band--ink" aria-labelledby="asks-title">
-      <p class="eyebrow eyebrow--light" id="asks-title">What shoppers ask, answered in under 2 seconds</p>
-      <div class="marquee">
-        <div class="marquee__track">
-          <span>What would you recommend for me?</span><span>Do you have this in XS?</span><span>Where’s my order?</span><span>What’s your return policy?</span><span>Is the fabric breathable?</span><span>When will it reach 560001?</span><span>Can I return a damaged item?</span><span>Which colour is in stock?</span>
-          <span aria-hidden="true">What would you recommend for me?</span><span aria-hidden="true">Do you have this in XS?</span><span aria-hidden="true">Where’s my order?</span><span aria-hidden="true">What’s your return policy?</span><span aria-hidden="true">Is the fabric breathable?</span><span aria-hidden="true">When will it reach 560001?</span><span aria-hidden="true">Can I return a damaged item?</span><span aria-hidden="true">Which colour is in stock?</span>
+      <div class="pro__grid">
+        <div class="pro__card">
+          <div class="pro__head"><h3>You set the rules</h3><span class="chip chip--ok">4 triggers live</span></div>
+          <ul class="rules">
+            <li><span class="tog is-on" aria-hidden="true"></span><span><b>Exit intent</b>Product pages · Offer help with sizing</span></li>
+            <li><span class="tog is-on" aria-hidden="true"></span><span><b>On page for 40s</b>Any product · Answer fabric and fit</span></li>
+            <li><span class="tog is-on" aria-hidden="true"></span><span><b>Scrolled to delivery</b>Product pages · Share delivery and returns</span></li>
+            <li><span class="tog is-on" aria-hidden="true"></span><span><b>Cart over ₹2,000</b>Cart · Suggest a matching item</span></li>
+          </ul>
+          <p class="pro__note">Choose which signals fire, on which pages, and what Sahaay leads with. Every message comes from your own catalog and policies.</p>
+        </div>
+        <div class="pro__card pro__card--compare">
+          <div class="pro__head"><h3>Waiting vs speaking first</h3></div>
+          <table class="vs">
+            <thead><tr><th scope="col"></th><th scope="col">Chat that waits</th><th scope="col">Sahaay</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Who starts</th><td>The shopper</td><td>Sahaay, at the right moment</td></tr>
+              <tr><th scope="row">Who it reaches</th><td>The few who ask</td><td>Everyone showing a signal</td></tr>
+              <tr><th scope="row">When</th><td>After they’re stuck</td><td>Before they leave</td></tr>
+              <tr><th scope="row">What you get</th><td>Support tickets</td><td>Saved carts and orders</td></tr>
+            </tbody>
+          </table>
+          <p class="pro__note">Proactive chat converts 3.5x better than waiting for the shopper (McKinsey).</p>
         </div>
       </div>
-    </section>
 
-    <!-- ============ LIFT (violet) ============ -->
-    <section class="band band--violet" id="problem">
-      <h2 class="display display--light">3.5x more conversions <em>when your store speaks first</em></h2>
-      <p class="band__sub">Shoppers who get an answer buy. Sahaay greets every visitor, answers in under 2 seconds and never logs off, so the visitors who used to leave get a reason to stay.</p>
-
-      <div class="compare">
-        <div class="compare__card compare__card--before">
-          <p class="compare__label">Silent store</p>
-          <p class="compare__num">3 in 100</p>
-          <p class="compare__note">visitors buy</p>
-          <div class="chat chat--silent" aria-hidden="true">
-            <p class="msg msg--me">Do you ship to Pune?</p>
-            <p class="msg__meta">No reply</p>
-          </div>
-        </div>
-        <div class="compare__card compare__card--after">
-          <p class="compare__label">With Sahaay</p>
-          <p class="compare__num">&lt;2 seconds</p>
-          <p class="compare__note">to every answer, 24/7</p>
-          <div class="chat" aria-hidden="true">
-            <p class="msg msg--me">Do you ship to Pune?</p>
-            <p class="msg msg--bot">Yes! Delivery to Pune takes 4 to 7 business days, and shipping is free on orders above ₹1,999.</p>
-            <p class="msg__meta msg__meta--ok">Answered in 1.6s</p>
-          </div>
-        </div>
-      </div>
-      <p class="band__src">Sources: Monetate (3 in 100 visitors buy), McKinsey (3.5x higher conversion with proactive chat). Answers shown are from the Velour demo store.</p>
+      <div class="center"><a href="#pilot" class="btn btn--lav" data-cta="proactive">Turn it on for your store</a></div>
     </section>
 
     <!-- ============ HOW IT WORKS ============ -->
@@ -422,7 +507,7 @@
     </div>
 
     <div class="footer__cols">
-      <div><p class="footer__h">Product</p><a href="#how">How it works</a><a href="#easy">Features</a><a href="#voices">Why we built it</a><a href="#faq">FAQ</a></div>
+      <div><p class="footer__h">Product</p><a href="#proactive">Proactive selling</a><a href="#how">How it works</a><a href="#easy">Features</a><a href="#voices">Why we built it</a><a href="#faq">FAQ</a></div>
       <div><p class="footer__h">Get started</p><a href="#pilot">Free 14-day pilot</a><a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" data-book>Book a demo</a></div>
       <div><p class="footer__h">Follow</p><a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/sahaay_sells/" target="_blank" rel="noopener">Instagram</a></div>
       <div><p class="footer__h">The name</p><p class="footer__note"><span lang="hi">सहाय</span> (sahaay) means help. That’s the job.</p></div>
