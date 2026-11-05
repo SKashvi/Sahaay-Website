@@ -1,0 +1,25 @@
+# Render Blueprint: one Node web service that serves the site and its APIs.
+# Secrets are marked sync: false - set them in the Render dashboard, never in this file.
+services:
+  - type: web
+    name: sahaay-website
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: node server.mjs
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: AIRTABLE_BASE_ID
+        value: appEBjX24TllUkG3S
+      - key: AIRTABLE_TABLE_ID
+        value: tbluTNvXKDXTbsJ1l
+      - key: AIRTABLE_TOKEN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CALENDLY_TOKEN
+        sync: false
+      - key: LEAD_SECRET
+        generateValue: true

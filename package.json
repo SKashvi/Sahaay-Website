@@ -1,0 +1,17 @@
+{
+  "name": "sahaay-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sahaay landing page with lead capture (Airtable), demo booking (Calendly) and a website assistant (Claude).",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0"
+  }
+}
