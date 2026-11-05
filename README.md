@@ -1,6 +1,6 @@
 # Sahaay website
 
-Landing page for [Sahaay](https://www.linkedin.com/company/sahaay-sales), the AI sales agent for e-commerce brands, by Rize & Shine.
+Landing page for [Sahaay](https://www.linkedin.com/company/sahaay-sales), the AI sales agent for e-commerce brands.
 
 Plain static site: no build step, no dependencies.
 

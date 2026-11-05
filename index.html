@@ -63,29 +63,55 @@
         <p class="hero__small">Free for 14 days · No card · Live in under 24 hours</p>
       </div>
 
-      <!-- A shopper's question flows into Sahaay and comes out as the answer -->
-      <svg class="flow" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-        <defs>
-          <path id="flow-in" d="M -40 742 C 90 736, 210 690, 282 616 C 352 544, 356 430, 270 404 C 182 380, 132 470, 166 560 C 214 690, 430 792, 660 816"/>
-          <path id="flow-out" d="M 780 816 C 1000 812, 1240 752, 1500 628"/>
-        </defs>
-        <text class="flow__in"><textPath href="#flow-in" id="tp-in">hi do you have the wrap midi dress in xs and will it reach 560001 before friday? it's for my cousin's wedding and i'm not sure about the colour, terracotta or ink blue? also what if it doesn't fit </textPath></text>
-        <use href="#flow-out" class="flow__ribbon"/>
-        <text class="flow__out"><textPath href="#flow-out" id="tp-out">Yes! The Wrap Midi Dress is in stock in XS, in Terracotta and Ink Blue. Order today and it reaches 560001 by Thursday. Terracotta is our most-loved colour for weddings. Shall I add XS in Terracotta to your cart? </textPath></text>
+      <!-- Live demo: Sahaay speaks first on a product page -->
+      <div class="demo" id="demo">
+        <div class="demo__triggers" role="tablist" aria-label="What makes Sahaay speak first">
+          <button class="trig is-on" role="tab" aria-selected="true" aria-controls="demo-screen" data-i="0">
+            <span class="trig__n">01</span><span class="trig__t"><b>Exit intent</b><span>The cursor heads for the close tab or back button.</span></span><i class="trig__bar"></i>
+          </button>
+          <button class="trig" role="tab" aria-selected="false" aria-controls="demo-screen" data-i="1">
+            <span class="trig__n">02</span><span class="trig__t"><b>Time on page</b><span>A shopper lingers on a product without acting.</span></span><i class="trig__bar"></i>
+          </button>
+          <button class="trig" role="tab" aria-selected="false" aria-controls="demo-screen" data-i="2">
+            <span class="trig__n">03</span><span class="trig__t"><b>Scroll depth</b><span>They scroll down to delivery and returns.</span></span><i class="trig__bar"></i>
+          </button>
+          <button class="trig" role="tab" aria-selected="false" aria-controls="demo-screen" data-i="3">
+            <span class="trig__n">04</span><span class="trig__t"><b>Cart value</b><span>The cart crosses a threshold you set.</span></span><i class="trig__bar"></i>
+          </button>
+        </div>
 
-        <g class="flow__chip" id="flow-chip" transform="translate(720 730)">
-          <rect x="-78" y="-17" width="156" height="34" rx="17"/>
-          <path d="M-58 0l5 5 9-10" class="flow__chip-tick"/>
-          <text x="8" y="5" text-anchor="middle" id="flow-chip-text">Stock confirmed</text>
-        </g>
-        <g class="flow__pill" transform="translate(720 816)">
-          <rect x="-66" y="-36" width="132" height="72" rx="36"/>
-          <image href="assets/logo/sahaay-monogram-violet.svg" x="-42" y="-17" width="26" height="34"/>
-          <circle class="flow__dot" cx="6" cy="0" r="5"/>
-          <circle class="flow__dot" cx="24" cy="0" r="5"/>
-          <circle class="flow__dot" cx="42" cy="0" r="5"/>
-        </g>
-      </svg>
+        <div class="demo__screen" id="demo-screen" role="tabpanel" data-state="0">
+          <div class="win">
+            <div class="win__bar">
+              <i></i><i></i><i></i>
+              <span class="win__url">velour.store/products/wrap-midi-dress</span>
+              <span class="win__badge" id="demo-badge">Exit intent</span>
+            </div>
+            <div class="pdp">
+              <div class="pdp__img"><img src="assets/img/dress.webp" alt="Wrap Midi Dress in Terracotta on the Velour demo store" width="405" height="442"></div>
+              <div class="pdp__info">
+                <p class="pdp__brand">Velour</p>
+                <p class="pdp__name">Wrap Midi Dress</p>
+                <p class="pdp__price">₹2,599</p>
+                <div class="pdp__sizes"><span>XS</span><span class="on">S</span><span>M</span><span>L</span></div>
+                <span class="pdp__add">Add to cart</span>
+                <div class="pdp__more">
+                  <p><b>Delivery</b> 4 to 7 business days across India</p>
+                  <p><b>Returns</b> Within 14 days, unworn with tags</p>
+                </div>
+              </div>
+              <span class="pdp__cart" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg><b>1</b></span>
+            </div>
+            <svg class="demo__cursor" viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
+            <div class="pop" id="demo-pop">
+              <p class="pop__who"><span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>Sahaay</p>
+              <p class="pop__msg" id="demo-msg">Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?</p>
+              <span class="pop__btn" id="demo-btn">Help me pick</span>
+            </div>
+            <span class="launcher" aria-hidden="true"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="16" height="21"></span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ============ QUESTIONS BAND ============ -->
@@ -109,19 +135,23 @@
           <p class="compare__label">Silent store</p>
           <p class="compare__num">3 in 100</p>
           <p class="compare__note">visitors buy</p>
-          <div class="compare__strip" aria-hidden="true"><span>is this true to size… do you ship to pune… is cod available… what fabric is this… hello? … is anyone there…&nbsp;</span><span>is this true to size… do you ship to pune… is cod available… what fabric is this… hello? … is anyone there…&nbsp;</span></div>
+          <div class="chat chat--silent" aria-hidden="true">
+            <p class="msg msg--me">Do you ship to Pune?</p>
+            <p class="msg__meta">No reply</p>
+          </div>
         </div>
         <div class="compare__card compare__card--after">
           <p class="compare__label">With Sahaay</p>
           <p class="compare__num">&lt;2 seconds</p>
           <p class="compare__note">to every answer, 24/7</p>
-          <svg class="compare__flow" viewBox="0 0 640 220" preserveAspectRatio="none" aria-hidden="true">
-            <defs><path id="cmp-path" d="M -20 190 C 140 120, 300 92, 400 118 C 500 144, 560 170, 680 150"/></defs>
-            <text class="compare__text"><textPath href="#cmp-path" id="tp-cmp">XS fits true to size · We ship to Pune in 3 days · Cash on delivery is available · It’s 100% viscose crepe · XS fits true to size · We ship to Pune in 3 days · </textPath></text>
-          </svg>
+          <div class="chat" aria-hidden="true">
+            <p class="msg msg--me">Do you ship to Pune?</p>
+            <p class="msg msg--bot">Yes! Delivery to Pune takes 4 to 7 business days, and shipping is free on orders above ₹1,999.</p>
+            <p class="msg__meta msg__meta--ok">Answered in 1.6s</p>
+          </div>
         </div>
       </div>
-      <p class="band__src">Sources: Monetate (3 in 100 visitors buy), McKinsey (3.5x higher conversion with proactive chat). Answer examples are from the Velour demo store.</p>
+      <p class="band__src">Sources: Monetate (3 in 100 visitors buy), McKinsey (3.5x higher conversion with proactive chat). Answers shown are from the Velour demo store.</p>
     </section>
 
     <!-- ============ HOW IT WORKS ============ -->
@@ -134,32 +164,39 @@
 
       <div class="how__grid">
         <ol class="how__list" aria-hidden="true">
-          <li class="is-on">Speaks first</li>
-          <li>Knows your catalog</li>
+          <li class="is-on">Learns your catalog</li>
+          <li>Answers every question</li>
           <li>Closes the sale</li>
+          <li>Handles the after</li>
         </ol>
 
         <div class="how__media" aria-hidden="true">
-          <figure class="shot is-on"><img src="assets/img/widget-welcome.webp" alt="" width="500" height="721" loading="lazy"><span class="tag">Exit intent detected</span></figure>
+          <figure class="shot is-on"><div class="mock mock--catalog" data-tpl="catalog"></div><span class="tag">Catalog learned</span></figure>
           <figure class="shot"><img src="assets/img/widget-recommend.webp" alt="" width="487" height="725" loading="lazy"><span class="tag">Stock confirmed</span></figure>
           <figure class="shot"><img src="assets/img/checkout.webp" alt="" width="502" height="722" loading="lazy"><span class="tag">Checked out in chat</span></figure>
+          <figure class="shot"><img src="assets/img/widget-tracking.webp" alt="" width="501" height="728" loading="lazy"><span class="tag">Order tracked</span></figure>
         </div>
 
         <div class="how__steps">
           <article class="how__step" data-step="0">
-            <figure class="shot shot--m"><img src="assets/img/widget-welcome.webp" alt="Sahaay greeting a shopper on the Velour store with suggested questions" width="500" height="721" loading="lazy"><span class="tag">Exit intent detected</span></figure>
-            <h3>Speaks first</h3>
-            <p>Exit intent, scroll depth, time on page and cart value tell Sahaay when a shopper is about to leave. It says hello at the right moment, in your brand’s voice.</p>
+            <figure class="shot shot--m"><div class="mock mock--catalog" data-tpl="catalog"></div><span class="tag">Catalog learned</span></figure>
+            <h3>Learns your catalog</h3>
+            <p>Share your store link. Sahaay reads every product, size, colour, price and fabric, plus your shipping and returns policies, in under 24 hours.</p>
           </article>
           <article class="how__step" data-step="1">
-            <figure class="shot shot--m"><img src="assets/img/widget-recommend.webp" alt="Sahaay recommending a Wrap Midi Dress with price, fabric and colours in stock" width="487" height="725" loading="lazy"><span class="tag">Stock confirmed</span></figure>
-            <h3>Knows your catalog</h3>
-            <p>Sizes, colours, fabric and stock for every product, learned from your store in under 24 hours. It recommends what fits and answers in under 2 seconds.</p>
+            <figure class="shot shot--m"><img src="assets/img/widget-recommend.webp" alt="Sahaay recommending the Wrap Midi Dress with price, fabric and colours in stock" width="487" height="725" loading="lazy"><span class="tag">Stock confirmed</span></figure>
+            <h3>Answers every question</h3>
+            <p>“What would you recommend?”, “Is this in XS?”, “Is the fabric breathable?” Sahaay answers from your catalog in under 2 seconds and suggests what fits.</p>
           </article>
           <article class="how__step" data-step="2">
             <figure class="shot shot--m"><img src="assets/img/checkout.webp" alt="In-chat checkout with address, offer code and a pay securely button" width="502" height="722" loading="lazy"><span class="tag">Checked out in chat</span></figure>
             <h3>Closes the sale</h3>
-            <p>Shoppers add to cart and pay inside the chat, with your offers applied. When someone hesitates, Sahaay brings them back with the answer they were missing.</p>
+            <p>Shoppers add to cart and pay inside the chat, with your offer codes applied. No hunting for the checkout button.</p>
+          </article>
+          <article class="how__step" data-step="3">
+            <figure class="shot shot--m"><img src="assets/img/widget-tracking.webp" alt="Order tracking in chat showing an order as shipped" width="501" height="728" loading="lazy"><span class="tag">Order tracked</span></figure>
+            <h3>Handles the after</h3>
+            <p>“Where’s my order?” gets a live tracking answer in chat, so your team stops copy-pasting AWB numbers.</p>
           </article>
         </div>
       </div>
@@ -173,110 +210,76 @@
       </div>
 
       <div class="rows">
-        <!-- Cart recovery -->
+        <!-- Cart recovery: a cart with Sahaay's nudge -->
         <div class="row">
           <div class="row__art">
-            <svg viewBox="0 0 320 180" aria-hidden="true">
-              <rect x="22" y="22" width="180" height="136" rx="12" class="f-card"/>
-              <text x="38" y="46" class="f-t f-t--b">Your cart</text>
-              <rect x="38" y="58" width="34" height="40" rx="6" class="f-pale"/>
-              <path d="M51 63l4 2.4 4-2.4 2.4 8.6-3 1.4 6 22H44.6l6-22-3-1.4z" class="f-dress"/>
-              <text x="82" y="72" class="f-t f-t--b">Wrap Midi Dress</text>
-              <text x="82" y="88" class="f-t f-t--m">XS · Terracotta</text>
-              <text x="82" y="106" class="f-t f-t--b">₹2,599</text>
-              <rect x="38" y="120" width="96" height="24" rx="8" class="f-ink"/>
-              <text x="86" y="136" class="f-t f-t--w f-t--b" text-anchor="middle">Checkout</text>
-              <g transform="translate(170 30)">
-                <rect width="134" height="54" rx="14" class="f-violet"/>
-                <path d="M20 53l-8 11 20-11z" class="f-violet"/>
-                <text x="14" y="23" class="f-t f-t--w">Unsure about the size?</text>
-                <text x="14" y="39" class="f-t f-t--w">XS fits true to size.</text>
-              </g>
-              <g transform="translate(196 112)">
-                <rect width="104" height="30" rx="15" class="f-green"/>
-                <path d="M16 15.5l4 4 8-8" class="f-check"/>
-                <text x="36" y="20" class="f-t f-t--w f-t--b">Cart saved</text>
-              </g>
-            </svg>
+            <div class="scr scr--cart">
+              <p class="scr__title">Your cart</p>
+              <div class="cartline">
+                <img src="assets/img/dress.webp" alt="" width="405" height="442">
+                <div><b>Wrap Midi Dress</b><span>XS · Terracotta × 1</span></div>
+                <b class="cartline__price">₹2,599</b>
+              </div>
+              <span class="scr__btn">Checkout</span>
+              <div class="nudge">
+                <p class="pop__who"><span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>Sahaay</p>
+                <p>Unsure about the fit? XS runs true to size, and returns are accepted within 14 days.</p>
+              </div>
+              <span class="chip chip--ok">Cart saved</span>
+            </div>
           </div>
           <div class="row__copy">
             <h3>AI cart recovery</h3>
-            <p>Contextual nudges that know what’s in the cart and why the shopper paused. Sizing doubts, delivery dates and offers get answered before the tab closes.</p>
+            <p>Contextual nudges that know what’s in the cart and why the shopper paused. Sizing doubts, delivery dates and return worries get answered before the tab closes.</p>
           </div>
         </div>
 
-        <!-- Trained in 24h -->
+        <!-- Knowledge base -->
         <div class="row">
           <div class="row__art">
-            <svg viewBox="0 0 320 180" aria-hidden="true">
-              <text x="66" y="16" class="f-t f-t--m" text-anchor="middle">Catalog · Policies · Voice</text>
-              <rect x="28" y="24" width="76" height="40" rx="8" class="f-card"/><rect x="36" y="32" width="22" height="24" rx="4" class="f-pale"/><rect x="64" y="35" width="32" height="6" rx="3" class="f-line"/><rect x="64" y="47" width="20" height="6" rx="3" class="f-line"/>
-              <rect x="28" y="72" width="76" height="40" rx="8" class="f-card"/><rect x="36" y="80" width="22" height="24" rx="4" class="f-pale"/><rect x="64" y="83" width="32" height="6" rx="3" class="f-line"/><rect x="64" y="95" width="20" height="6" rx="3" class="f-line"/>
-              <rect x="28" y="120" width="76" height="40" rx="8" class="f-card"/><rect x="36" y="128" width="22" height="24" rx="4" class="f-pale"/><rect x="64" y="131" width="32" height="6" rx="3" class="f-line"/><rect x="64" y="143" width="20" height="6" rx="3" class="f-line"/>
-              <path d="M110 44 C 150 44, 160 84, 192 88" class="f-dash"/>
-              <path d="M110 92 H 190" class="f-dash"/>
-              <path d="M110 140 C 150 140, 160 98, 192 94" class="f-dash"/>
-              <circle cx="240" cy="86" r="44" class="f-violet"/>
-              <image href="assets/logo/sahaay-monogram-white.svg" x="225" y="66" width="30" height="40"/>
-              <g transform="translate(200 142)">
-                <rect width="80" height="26" rx="13" class="f-ink"/>
-                <text x="40" y="17.5" class="f-t f-t--w f-t--b" text-anchor="middle">&lt; 24 hours</text>
-              </g>
-            </svg>
+            <div class="scr scr--kb">
+              <div class="scr__head"><p class="scr__title">Knowledge base</p><span class="chip chip--ok">Learned overnight</span></div>
+              <dl class="kb">
+                <div><dt>Shipping</dt><dd>Delivered in 4 to 7 business days across India. Free above ₹1,999.</dd></div>
+                <div><dt>Returns</dt><dd>Accepted within 14 days of delivery, unworn with tags attached.</dd></div>
+                <div><dt>Sizing</dt><dd>Tees and joggers run true to size. Jackets are cut slightly relaxed.</dd></div>
+                <div><dt>Fabric care</dt><dd>Machine wash cold, inside out, with similar colours.</dd></div>
+              </dl>
+            </div>
           </div>
           <div class="row__copy">
-            <h3>Trained overnight</h3>
-            <p>Share your store link. Sahaay learns your full catalog, policies and brand voice in under 24 hours. No scripts, no decision trees.</p>
+            <h3>Trained on your policies</h3>
+            <p>Shipping, returns, sizing and care, learned from your store and answered in your brand’s voice. Update an entry and Sahaay uses it on the next chat.</p>
           </div>
         </div>
 
-        <!-- Post-purchase -->
+        <!-- Post-purchase: real report-an-issue screen -->
         <div class="row">
           <div class="row__art">
-            <svg viewBox="0 0 320 180" aria-hidden="true">
-              <rect x="24" y="20" width="160" height="140" rx="12" class="f-card"/>
-              <text x="40" y="44" class="f-t f-t--b">VEL-ACE0F49A</text>
-              <path d="M46 62 V 136" class="f-track"/>
-              <path d="M46 62 V 87" class="f-track f-track--on"/>
-              <circle cx="46" cy="62" r="6" class="f-violet"/><text x="62" y="66" class="f-t">Ordered</text>
-              <circle cx="46" cy="87" r="6" class="f-violet"/><text x="62" y="91" class="f-t f-t--b">Shipped</text>
-              <circle cx="46" cy="112" r="5" class="f-ring2"/><text x="62" y="116" class="f-t f-t--m">Out for delivery</text>
-              <circle cx="46" cy="136" r="5" class="f-dot"/><text x="62" y="140" class="f-t f-t--m">Delivered</text>
-              <g transform="translate(196 34)">
-                <rect width="104" height="112" rx="12" class="f-card"/>
-                <rect x="10" y="10" width="84" height="56" rx="8" class="f-pale"/>
-                <path d="M52 20l18 9v20l-18 9-18-9V29z M34 29l18 9 18-9 M52 38v20" class="f-box"/>
-                <text x="12" y="84" class="f-t f-t--b">Photo check</text>
-                <rect x="12" y="92" width="80" height="8" rx="4" class="f-line"/>
-                <rect x="12" y="92" width="62" height="8" rx="4" class="f-green"/>
-              </g>
-            </svg>
+            <div class="scr scr--shot">
+              <img src="assets/img/report-crop.webp" alt="Report an issue in chat with the reason list open and Damaged item selected" width="501" height="350" loading="lazy">
+              <span class="chip chip--ok chip--float">Photo verified</span>
+            </div>
           </div>
           <div class="row__copy">
             <h3>Post-purchase on autopilot</h3>
-            <p>“Where’s my order?”, returns and refunds, with AI-scored damage photo verification. 80% of post-purchase queries resolved without a human.</p>
+            <p>Tracking, returns and refunds in chat, with AI-scored damage photo verification. 80% of post-purchase queries resolved without a human.</p>
           </div>
         </div>
 
-        <!-- Revenue -->
+        <!-- Revenue dashboard -->
         <div class="row">
           <div class="row__art">
-            <svg viewBox="0 0 320 180" aria-hidden="true">
-              <rect x="26" y="20" width="268" height="140" rx="14" class="f-card"/>
-              <text x="44" y="46" class="f-t f-t--b">Revenue from Sahaay</text>
-              <g transform="translate(206 32)"><rect width="74" height="22" rx="11" class="f-green-pale"/><path d="M12 14l5-6 5 6" class="f-up"/><text x="28" y="15" class="f-t f-t--g f-t--b">This week</text></g>
-              <g class="f-bars">
-                <rect x="48" y="112" width="22" height="30" rx="5"/>
-                <rect x="82" y="104" width="22" height="38" rx="5"/>
-                <rect x="116" y="96" width="22" height="46" rx="5"/>
-                <rect x="150" y="100" width="22" height="42" rx="5"/>
-                <rect x="184" y="84" width="22" height="58" rx="5"/>
-                <rect x="218" y="74" width="22" height="68" rx="5" class="on"/>
-                <rect x="252" y="66" width="22" height="76" rx="5" class="on"/>
-              </g>
-              <path d="M59 100 L93 92 L127 84 L161 88 L195 72 L229 62 L263 54" class="f-trend"/>
-              <circle cx="263" cy="54" r="4.5" class="f-green"/>
-            </svg>
+            <div class="scr scr--dash">
+              <div class="scr__head"><p class="scr__title">Revenue from Sahaay</p><span class="scr__hint">Sample data</span></div>
+              <div class="kpis">
+                <p><span>Conversations</span><b>1,284</b></p>
+                <p><span>Carts saved</span><b>96</b></p>
+                <p><span>Revenue</span><b>₹2.4L</b></p>
+              </div>
+              <div class="bars" aria-hidden="true"><i style="--h:38%"></i><i style="--h:46%"></i><i style="--h:42%"></i><i style="--h:58%"></i><i style="--h:64%"></i><i class="on" style="--h:78%"></i><i class="on" style="--h:92%"></i></div>
+              <div class="bars__x" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </div>
           </div>
           <div class="row__copy">
             <h3>Revenue you can see</h3>
@@ -310,7 +313,6 @@
         <figure class="qcard qcard--founder" data-depth="0.04">
           <div class="qcard__body">
             <p class="qcard__name">Founder, Sahaay</p>
-            <p class="qcard__role">Rize &amp; Shine</p>
             <blockquote>“Every D2C founder we met was brilliant at bringing people to their store, and then lost them in silence. Sahaay is the salesperson every online store deserves.”</blockquote>
             <a href="#pilot" class="link">Claim a pilot spot <span aria-hidden="true">›</span></a>
           </div>
@@ -418,19 +420,35 @@
       <div><p class="footer__h">Product</p><a href="#how">How it works</a><a href="#easy">Features</a><a href="#voices">Why we built it</a><a href="#faq">FAQ</a></div>
       <div><p class="footer__h">Get started</p><a href="#pilot">Free 14-day pilot</a><a href="#pilot" data-book>Book a demo</a></div>
       <div><p class="footer__h">Follow</p><a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/sahaay_sells/" target="_blank" rel="noopener">Instagram</a></div>
-      <div><p class="footer__h">Company</p><p class="footer__note">Sahaay is built by Rize &amp; Shine, est. 2026. <span lang="hi">सहाय</span> means help.</p></div>
+      <div><p class="footer__h">The name</p><p class="footer__note"><span lang="hi">सहाय</span> (sahaay) means help. That’s the job.</p></div>
     </div>
 
     <div class="footer__word" role="img" aria-label="Sahaay"></div>
 
     <div class="footer__bottom">
-      <p>© <span id="year">2026</span> Sahaay · Rize &amp; Shine · ESTD 2026</p>
+      <p>© <span id="year">2026</span> Sahaay. All rights reserved.</p>
       <div class="socials">
         <a href="https://www.instagram.com/sahaay_sells/" target="_blank" rel="noopener" aria-label="Sahaay on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.08a3.18 3.18 0 1 1 0-6.36 3.18 3.18 0 0 1 0 6.36zm5.1-9.43a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z"/></svg></a>
         <a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener" aria-label="Sahaay on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.36h-4v-4.75c0-1.13-.02-2.59-1.58-2.59-1.58 0-1.82 1.23-1.82 2.5v4.84h-4v-11z"/></svg></a>
       </div>
     </div>
   </footer>
+
+  <!-- Catalog screen, shared by the sticky and the mobile how-it-works step -->
+  <template id="tpl-catalog">
+    <div class="scr scr--catalog">
+      <div class="scr__head"><p class="scr__title">Catalog</p><span class="chip chip--ok">3 products learned</span></div>
+      <table>
+        <thead><tr><th>Product</th><th>Price</th><th>Sizes</th></tr></thead>
+        <tbody>
+          <tr><td>Wrap Midi Dress</td><td>₹2,599</td><td>XS, S, M, L</td></tr>
+          <tr><td>Utility Bomber Jacket</td><td>₹3,499</td><td>S, M, L, XL</td></tr>
+          <tr><td>Everyday Joggers</td><td>₹1,399</td><td>S, M, L, XL</td></tr>
+        </tbody>
+      </table>
+      <div class="scr__sync"><span class="pulse"></span>Synced from velour.store · Policies, sizing and fabric included</div>
+    </div>
+  </template>
 
   <!-- Mobile sticky CTA -->
   <div class="sticky-cta" aria-hidden="true">

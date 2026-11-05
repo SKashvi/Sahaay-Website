@@ -26,63 +26,69 @@ if (CONFIG.bookingUrl) {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
-/* ---------- Flowing text along SVG paths (hero + compare card) ---------- */
-function flowText(id, speed) {
-  const tp = document.getElementById(id);
-  if (!tp) return null;
-  // Repeat the copy so the path is always filled, then scroll by one copy's length.
-  const copy = tp.textContent;
-  tp.textContent = copy + copy + copy;
-  let unit = 0;
-  const measure = () => { unit = tp.parentNode.getComputedTextLength() / 3; };
-  return {
-    tick(t) {
-      if (!unit) measure();
-      if (!unit) return;
-      const offset = ((t * speed) % unit) - unit;
-      tp.setAttribute('startOffset', offset.toFixed(1));
-    },
-    measure,
-  };
-}
-const flows = [flowText('tp-in', 0.045), flowText('tp-out', 0.05), flowText('tp-cmp', 0.04)].filter(Boolean);
-if (flows.length) {
-  if (reduceMotion) {
-    flows.forEach((f) => f.tick(1200 / 0.045));
-  } else {
-    const loop = (t) => { flows.forEach((f) => f.tick(t)); requestAnimationFrame(loop); };
-    requestAnimationFrame(loop);
-  }
-  document.fonts && document.fonts.ready.then(() => flows.forEach((f) => f.measure()));
+/* ---------- Catalog screen: one template, used in the sticky and mobile how-it-works steps ---------- */
+const tplCatalog = document.getElementById('tpl-catalog');
+if (tplCatalog) {
+  document.querySelectorAll('[data-tpl="catalog"]').forEach((slot) => slot.appendChild(tplCatalog.content.cloneNode(true)));
 }
 
-/* Hero chip cycles through what Sahaay just did */
-const chip = document.getElementById('flow-chip');
-const chipText = document.getElementById('flow-chip-text');
-const sizeChip = () => {
-  if (!chip || !chipText || !chipText.getBBox) return;
-  const w = chipText.getBBox().width;
-  const rect = chip.querySelector('rect');
-  const tick = chip.querySelector('.flow__chip-tick');
-  const total = w + 54;
-  rect.setAttribute('x', (-total / 2).toFixed(1));
-  rect.setAttribute('width', total.toFixed(1));
-  tick.setAttribute('transform', `translate(${(-total / 2 + 20 + 58).toFixed(1)} 0)`);
-  chipText.setAttribute('x', (-total / 2 + 40).toFixed(1));
-};
-if (chipText) { chipText.setAttribute('text-anchor', 'start'); sizeChip(); document.fonts && document.fonts.ready.then(sizeChip); }
-if (chip && chipText && !reduceMotion) {
-  const steps = ['Stock confirmed', 'Size checked', 'Delivery estimated', 'Added to cart'];
-  let i = 0;
-  setInterval(() => {
-    chip.style.opacity = '0';
+/* ---------- Hero demo: each trigger makes Sahaay speak first ---------- */
+const DEMO = [
+  { badge: 'Exit intent', msg: 'Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?', btn: 'Help me pick' },
+  { badge: '45s on page', msg: 'Still deciding? It’s viscose crepe, light enough for a summer wedding. Ask me anything about it.', btn: 'Ask a question' },
+  { badge: '70% scrolled', msg: 'Checking delivery? It reaches you in 4 to 7 business days, and returns are accepted within 14 days.', btn: 'Check my PIN code' },
+  { badge: 'Cart ₹2,599', msg: 'Your order ships free. Want a layer to go with it? The Utility Bomber Jacket is ₹3,499.', btn: 'Show me' },
+];
+const demoScreen = document.getElementById('demo-screen');
+const trigs = document.querySelectorAll('.trig');
+if (demoScreen && trigs.length) {
+  const badge = document.getElementById('demo-badge');
+  const pop = document.getElementById('demo-pop');
+  const msg = document.getElementById('demo-msg');
+  const btn = document.getElementById('demo-btn');
+  const addBtn = demoScreen.querySelector('.pdp__add');
+  const DUR = 4500;
+  let cur = 0;
+  let timer = null;
+  const show = (i) => {
+    cur = i;
+    trigs.forEach((t, k) => {
+      t.classList.toggle('is-on', k === i);
+      t.setAttribute('aria-selected', String(k === i));
+      t.tabIndex = k === i ? 0 : -1;
+    });
+    demoScreen.dataset.state = String(i);
+    badge.textContent = DEMO[i].badge;
+    addBtn.textContent = i === 3 ? 'Added to cart ✓' : 'Add to cart';
+    pop.classList.add('is-out');
     setTimeout(() => {
-      i = (i + 1) % steps.length;
-      chipText.textContent = steps[i];
-      sizeChip();
-      chip.style.opacity = '1';
-    }, 300);
-  }, 2600);
+      msg.textContent = DEMO[i].msg;
+      btn.textContent = DEMO[i].btn;
+      pop.classList.remove('is-out');
+    }, reduceMotion ? 0 : 450);
+  };
+  const auto = () => {
+    clearInterval(timer);
+    if (reduceMotion) return;
+    timer = setInterval(() => show((cur + 1) % trigs.length), DUR);
+  };
+  document.documentElement.style.setProperty('--dur', DUR + 'ms');
+  trigs.forEach((t, i) => {
+    t.addEventListener('click', () => { show(i); auto(); });
+    t.addEventListener('keydown', (e) => {
+      const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (!k) return;
+      e.preventDefault();
+      const n = (i + k + trigs.length) % trigs.length;
+      show(n); auto(); trigs[n].focus();
+    });
+  });
+  // Pause while the demo is off screen.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) auto(); else clearInterval(timer); }).observe(demoScreen);
+  } else {
+    auto();
+  }
 }
 
 /* ---------- How it works: sticky media follows the step in view ---------- */
