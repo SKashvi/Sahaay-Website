@@ -1,0 +1,36 @@
+/*
+ * Sahaay brand tokens for web (website, landing pages, web ads).
+ * Mirrors design-system/DESIGN-SYSTEM.md -- change both together.
+ * Email HTML can't rely on CSS variables; copy the literal hex values there.
+ */
+:root {
+  /* Brand accents */
+  --sahaay-violet:     #6C5FFF; /* Electric Violet: primary accent, logo */
+  --sahaay-periwinkle: #8B82FF; /* Bright Periwinkle: secondary, hover */
+  --sahaay-royal:      #221B5C; /* Royal Violet: CTA buttons, hero headlines */
+  --sahaay-green:      #10B981; /* Signal Green: positive indicators */
+  --sahaay-red:        #EF4444; /* Alert Red: urgency only */
+
+  /* Text */
+  --sahaay-ink:    #111126; /* Ink Navy: headings, logo on light */
+  --sahaay-body:   #2E2B4A;
+  --sahaay-muted:  #6B6B82;
+  --sahaay-footer: #8E8EA3;
+
+  /* Surfaces */
+  --sahaay-page:    #F4F3FA;
+  --sahaay-card:    #FFFFFF;
+  --sahaay-soft:    #F7F6FF;
+  --sahaay-hero:    #ECEBFF;
+  --sahaay-dot:     #D9D6F7;
+  --sahaay-divider: #E4E2F5;
+
+  /* Type */
+  --sahaay-font-display: 'Bodoni Moda', 'Times New Roman', Times, serif;
+  --sahaay-font-body:    'Inter', Helvetica, Arial, sans-serif;
+
+  /* Shape */
+  --sahaay-radius-card:    20px;
+  --sahaay-radius-feature: 14px;
+  --sahaay-radius-pill:    999px;
+}
