@@ -289,6 +289,15 @@ async function handleChat(req, res) {
   res.end();
 }
 
+// Every deploy gets its own version stamp, built from the code files' contents. index.html links to
+// styles.css?v=<stamp> etc., so a browser can never combine a new page with old cached CSS or JS.
+const CODE_FILES = ["styles.css", "script.js", "widget.js", "assets/tokens.css"];
+const BUILD = crypto.createHash("sha256").update(CODE_FILES.map((f) => readFileSync(path.join(here, f))).join("\0")).digest("hex").slice(0, 10);
+const INDEX_HTML = readFileSync(path.join(here, "index.html"), "utf8").replace(
+  /(href|src)="(styles\.css|script\.js|widget\.js|assets\/tokens\.css)"/g,
+  (_, attr, file) => `${attr}="${file}?v=${BUILD}"`,
+);
+
 async function serveStatic(req, res) {
   let urlPath = decodeURIComponent(new URL(req.url, "http://x").pathname);
   if (urlPath === "/") urlPath = "/index.html";
@@ -296,10 +305,16 @@ async function serveStatic(req, res) {
   if (!allowed) return send(res, 404, "Not found");
   try {
     const file = path.join(here, urlPath);
-    const data = await fs.readFile(file);
+    const data = urlPath === "/index.html" ? Buffer.from(INDEX_HTML) : await fs.readFile(file);
     const ext = path.extname(file);
-    const cache = ext === ".html" ? "no-cache" : "public, max-age=86400";
-    res.writeHead(200, { "content-type": MIME[ext] || "application/octet-stream", "cache-control": cache, "x-content-type-options": "nosniff" });
+    // Page and code: always revalidate (cheap with the ETag). Images and fonts: cache for a day.
+    const cache = [".html", ".css", ".js"].includes(ext) ? "no-cache" : "public, max-age=86400";
+    const etag = `"${crypto.createHash("sha1").update(data).digest("base64url").slice(0, 16)}"`;
+    if (req.headers["if-none-match"] === etag) {
+      res.writeHead(304, { etag, "cache-control": cache });
+      return res.end();
+    }
+    res.writeHead(200, { "content-type": MIME[ext] || "application/octet-stream", "cache-control": cache, etag, "x-content-type-options": "nosniff" });
     res.end(req.method === "HEAD" ? undefined : data);
   } catch {
     send(res, 404, "Not found");
