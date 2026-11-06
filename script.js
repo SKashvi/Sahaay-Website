@@ -340,107 +340,28 @@ const syncSeg = () => {
   seg[1].classList.toggle('is-on', post);
 };
 
-// Why-we-built-it cards start stacked in the middle and fan out to their places as the section scrolls in.
 const board = document.querySelector('.board');
-const cards = [...document.querySelectorAll('.qcard')];
-const placeCards = () => {
-  if (!board) return;
-  const cx = board.clientWidth / 2;
-  const cy = 260;
-  cards.forEach((c) => {
-    const x = c.offsetLeft + c.offsetWidth / 2;
-    const y = c.offsetTop + c.offsetHeight / 2;
-    c.style.setProperty('--dx', `${(cx - x).toFixed(0)}px`);
-    c.style.setProperty('--dy', `${(cy - y).toFixed(0)}px`);
-  });
-};
+const cards = document.querySelectorAll('.qcard[data-depth]');
 const drift = () => {
-  if (!board) return;
-  if (reduceMotion || window.innerWidth <= 1080) { cards.forEach((c) => c.style.setProperty('--k', 1)); return; }
-  const r = board.getBoundingClientRect();
-  const vh = window.innerHeight;
-  // 0 when the board's top is at the bottom of the screen, 1 once it's a third of the way up.
-  const k = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.72)));
-  const eased = 1 - Math.pow(1 - k, 3);
-  cards.forEach((c) => c.style.setProperty('--k', eased.toFixed(3)));
-};
-placeCards();
-window.addEventListener('resize', placeCards);
-
-/* ---------- The problem: 100 visitors; scroll and watch 97 of them leave ---------- */
-const leak = document.getElementById('why');
-const crowd = leak ? [...leak.querySelectorAll('.crowd i')] : [];
-const BUYERS = new Set([23, 58, 86]);
-// A fixed shuffled order, so the crowd thins out unevenly like a real store.
-const leaveOrder = crowd.map((_, i) => i).filter((i) => !BUYERS.has(i)).sort((a, b) => ((a * 37) % 101) - ((b * 37) % 101));
-const leakBeats = leak ? [...leak.querySelectorAll('.leak__beats li')] : [];
-const leftEl = document.getElementById('leak-left');
-const boughtEl = document.getElementById('leak-bought');
-const paintLeak = (p) => {
-  const beat = p < 0.28 ? 0 : p < 0.5 ? 1 : 2;
-  leakBeats.forEach((li, k) => li.classList.toggle('is-on', k <= beat));
-  leak.classList.toggle('has-qs', p >= 0.28);
-  leak.classList.toggle('is-leaving', p >= 0.55);
-  const gone = Math.round(Math.max(0, Math.min(1, (p - 0.55) / 0.33)) * 97);
-  leaveOrder.forEach((idx, k) => crowd[idx].classList.toggle('is-gone', k < gone));
-  const bought = p >= 0.9;
-  BUYERS.forEach((idx) => crowd[idx].classList.toggle('is-buy', bought));
-  leftEl.textContent = String(gone);
-  boughtEl.textContent = bought ? '3' : '0';
-};
-const syncLeak = () => {
-  if (!leak) return;
-  if (window.innerWidth <= 820) return; // phones get a timed version instead
-  const r = leak.getBoundingClientRect();
-  const p = Math.max(0, Math.min(1, -r.top / (r.height - window.innerHeight)));
-  paintLeak(reduceMotion ? 1 : p);
-};
-if (leak && 'IntersectionObserver' in window) {
-  let played = false;
-  new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting || played || window.innerWidth > 820) return;
-    played = true;
-    if (reduceMotion) return paintLeak(1);
-    const t0 = performance.now();
-    const run = (now) => { const p = Math.min(1, (now - t0) / 5200); paintLeak(p); if (p < 1) requestAnimationFrame(run); };
-    requestAnimationFrame(run);
-  }, { threshold: 0.4 }).observe(leak.querySelector('.leak__viz'));
-}
-
-/* ---------- Waiting vs speaking first: both stores on one clock ---------- */
-const vsx = document.getElementById('vsx');
-if (vsx) {
-  const section = vsx.closest('.vsx');
-  const PHASES = [[0, 0], [1400, 1], [2300, 2], [3500, 3], [4600, 4], [5800, 5]];
-  const LOOP = 9000;
-  let t = 0; let last = 0; let running = false;
-  const frame = (now) => {
-    if (!running) return;
-    t = (t + (last ? Math.min(now - last, 100) : 0)) % LOOP;
-    last = now;
-    let ph = 0;
-    for (const [at, n] of PHASES) if (t >= at) ph = n;
-    if (section.dataset.phase !== String(ph)) section.dataset.phase = String(ph);
-    requestAnimationFrame(frame);
-  };
-  if (reduceMotion) section.dataset.phase = '5';
-  else if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !running) { running = true; last = 0; requestAnimationFrame(frame); }
-      else if (!e.isIntersecting) running = false;
-    }).observe(vsx);
+  if (!board || reduceMotion || window.innerWidth <= 1080) {
+    cards.forEach((c) => c.style.removeProperty('--py'));
+    return;
   }
-}
+  const r = board.getBoundingClientRect();
+  const d = r.top + r.height / 2 - window.innerHeight / 2;
+  const clamp = (v) => Math.max(-48, Math.min(48, v));
+  cards.forEach((c) => c.style.setProperty('--py', clamp(d * Number(c.dataset.depth)).toFixed(1) + 'px'));
+};
 
 let ticking = false;
 const onScroll = () => {
   if (ticking) return;
   ticking = true;
-  requestAnimationFrame(() => { syncSteps(); syncSeg(); drift(); syncLeak(); ticking = false; });
+  requestAnimationFrame(() => { syncSteps(); syncSeg(); drift(); ticking = false; });
 };
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', onScroll);
-syncSteps(); syncSeg(); drift(); syncLeak();
+syncSteps(); syncSeg(); drift();
 
 /* ---------- FAQ: questions on the left, answer bubble on the right ---------- */
 const tabs = document.querySelectorAll('.faq__qs [role="tab"]');
