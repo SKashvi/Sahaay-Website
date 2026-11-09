@@ -1,0 +1,219 @@
+<title>Sahaay Night Shift</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Concept C: one day on a store, 9 AM to 9 AM, driven by scroll. The sky is the layout. */
+:root {
+  --ink: #111126; --violet: #6C5FFF; --green: #10B981;
+  --serif: 'Newsreader', Georgia, serif; --sans: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
+  --gl: max(20px, env(safe-area-inset-left, 0px)); --gr: max(20px, env(safe-area-inset-right, 0px));
+  --sky: #FFF6EA; --fg: #111126; --soft: rgba(17,17,38,.6); --card: rgba(255,255,255,.72); --cardline: rgba(255,255,255,.9);
+  --orb: radial-gradient(circle at 30% 25%, rgba(255,255,255,.75), rgba(255,255,255,0) 45%), conic-gradient(from var(--spin, 0deg), #6C5FFF, #F2A6FF, #8FD8FF, #8B82FF, #6C5FFF);
+  color-scheme: light;
+}
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: #0E0D22; color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+p, h1, h2 { margin: 0; }
+h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; text-wrap: balance; }
+em { font-style: italic; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+.chip-concept { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: 50%; z-index: 30; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: rgba(17,17,38,.82); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+.day { position: relative; height: 900vh; }
+.sky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--sky); color: var(--fg); }
+.stars { position: absolute; inset: 0; opacity: var(--stars, 0); background-image: radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 30% 8%, #fff, transparent), radial-gradient(1.5px 1.5px at 52% 22%, #fff, transparent), radial-gradient(1px 1px at 68% 12%, #fff, transparent), radial-gradient(1.5px 1.5px at 84% 26%, #fff, transparent), radial-gradient(1px 1px at 92% 6%, #fff, transparent), radial-gradient(1px 1px at 22% 34%, #fff, transparent), radial-gradient(1.5px 1.5px at 76% 40%, #fff, transparent), radial-gradient(1px 1px at 44% 38%, #fff, transparent), radial-gradient(1px 1px at 6% 46%, #fff, transparent); }
+.sun { position: absolute; width: clamp(80px, 10vw, 140px); aspect-ratio: 1; border-radius: 50%; translate: -50% -50%; filter: blur(.3px); }
+
+.wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 80px var(--gr) 40px var(--gl); }
+.left { display: flex; flex-direction: column; gap: 18px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--soft); }
+.clock { font: 400 clamp(72px, 11vw, 168px)/.9 var(--serif); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.clock small { margin-left: 10px; font: 500 .26em var(--sans); letter-spacing: 0; color: var(--soft); }
+.line { max-width: 460px; font: 400 clamp(20px, 2.2vw, 28px)/1.3 var(--serif); }
+.you { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; padding: 7px 13px; border-radius: 999px; background: var(--card); border: 1px solid var(--cardline); font-size: 13px; font-weight: 600; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.you i { width: 8px; height: 8px; border-radius: 50%; background: #F59E0B; }
+.you.is-asleep i { background: #8B82FF; }
+.tally { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 8px 28px; margin-top: 6px; }
+.tally p { display: flex; flex-direction: column; font-size: 12.5px; color: var(--soft); }
+.tally b { font: 400 clamp(28px, 3vw, 40px)/1.05 var(--serif); color: var(--fg); font-variant-numeric: tabular-nums; }
+.tally b.ok { color: var(--green); }
+
+.feed { position: relative; height: min(70vh, 560px); overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent); }
+.feed__track { position: absolute; left: 0; right: 0; bottom: 18%; display: flex; flex-direction: column; gap: 10px; transition: transform .5s ease; }
+.ev { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--cardline); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3); box-shadow: 0 20px 40px -28px rgba(0,0,0,.6); animation: in .45s ease; }
+@keyframes in { from { opacity: 0; transform: translateY(14px); } }
+.ev .orb { width: 28px; height: 28px; flex: none; margin-top: 2px; }
+.ev--you .orb { background: #fff; animation: none; }
+.ev__t { font-size: 11.5px; font-weight: 700; letter-spacing: .6px; color: var(--soft); text-transform: uppercase; }
+.ev__txt { font-size: 15px; font-weight: 600; line-height: 1.4; }
+.ev__amt { margin-left: auto; padding-left: 8px; color: var(--green); font-weight: 800; white-space: nowrap; }
+.ev__tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 6px; background: rgba(108,95,255,.15); color: var(--violet); font-size: 10.5px; font-weight: 700; vertical-align: 1px; }
+.orb { display: inline-grid; place-items: center; border-radius: 50%; background: var(--orb); animation: spin 8s linear infinite; box-shadow: inset 0 1px 1px rgba(255,255,255,.6); }
+.orb img { filter: drop-shadow(0 1px 2px rgba(17,17,38,.35)); }
+.fine { position: absolute; z-index: 2; left: 0; right: 0; bottom: 14px; text-align: center; font-size: 12px; color: var(--soft); }
+.hint { animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(4px); } }
+
+.morning { padding: clamp(88px, 12vw, 140px) var(--gr) clamp(88px, 12vw, 140px) var(--gl); background: #FFF6EA; text-align: center; }
+.morning h2 { max-width: 820px; margin: 0 auto; font-size: clamp(36px, 5vw, 68px); line-height: 1.02; }
+.morning h2 b { font-weight: 400; color: var(--green); }
+.morning__sub { margin-top: 16px; color: #6B6B82; }
+.wl { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 520px; margin: 32px auto 0; }
+.wl input { flex: 1 1 220px; min-height: 54px; padding: 0 16px; border: 1.5px solid #E8E6F3; border-radius: 12px; font: 500 16px var(--sans); background: #fff; color: var(--ink); }
+.wl input:focus { outline: none; border-color: var(--violet); }
+.btn { min-height: 54px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--violet); color: #fff; font: 600 16px var(--sans); cursor: pointer; box-shadow: 0 12px 24px -14px rgba(108,95,255,.9); }
+.note { margin-top: 14px; font-size: 13.5px; color: #6B6B82; }
+
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: 1fr; align-content: start; gap: 18px; padding-top: 70px; }
+  .left { gap: 10px; }
+  .line { font-size: 19px; }
+  .tally { grid-template-columns: repeat(3, 1fr); gap: 6px 14px; }
+  .feed { height: 38vh; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+
+<p class="chip-concept">Concept C of 4 · The night shift · prototype</p>
+
+<section class="day" id="day" aria-label="A day on a store">
+  <div class="sky" id="sky">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="sun" id="sun" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="left">
+        <p class="eyebrow">A day on Velour, a demo store · with Sahaay</p>
+        <p class="clock" id="clock" aria-live="off">9:00<small id="ampm">AM</small></p>
+        <p class="line" id="line">Your store opens. So does Sahaay.</p>
+        <p class="you" id="you"><i></i><span id="you-txt">You: at work</span></p>
+        <div class="tally">
+          <p><b id="t-conv">0</b>conversations</p>
+          <p><b class="ok" id="t-saved">0</b>carts saved</p>
+          <p><b class="ok" id="t-rev">₹0</b>recovered</p>
+        </div>
+      </div>
+      <div class="feed" aria-live="polite"><div class="feed__track" id="track"></div></div>
+    </div>
+    <p class="fine"><span class="hint" id="hint">Scroll to move through the day ↓ · </span>Illustrative day on a demo store</p>
+  </div>
+</section>
+
+<section class="morning" id="join">
+  <h2>Good morning. While you slept, Sahaay saved <b id="slept">₹0</b>.</h2>
+  <p class="morning__sub">Sales on any store. Orders, returns and refunds on Shopify. Flat monthly price, no commission.</p>
+  <form class="wl" id="wl" novalidate>
+    <input id="wl-email" type="email" placeholder="you@yourbrand.com" autocomplete="email" aria-label="Work email" required>
+    <button class="btn" type="submit">Join the waitlist</button>
+  </form>
+  <p class="note">First 10 brands get a free 14-day pilot.</p>
+</section>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // hour: 9 = 9:00 AM, 33 = 9:00 AM next day
+  const EVENTS = [
+    [9.23, 'Asked about delivery to Pune. Answered in 1.4s.', 0],
+    [10.5, 'Lingered on the size chart. Sahaay helped pick M.', 2599],
+    [12.1, '“Is the fabric breathable?” Viscose crepe, light and airy.', 0],
+    [13.5, 'Lunch-break browser added a matching bag.', 1299],
+    [15.8, 'Compared two dresses for 3 minutes. Sahaay settled it.', 2599],
+    [18.4, 'Headed for the close tab at checkout. Cart saved.', 3499],
+    [19.6, 'Sale-night rush: 42 conversations in one hour.', 0, 40],
+    [21.2, '“Will this reach Jaipur by Friday?” Yes, with 2 days to spare.', 2599],
+    [23.6, 'You logged off for the night.', 0, 0, 'you'],
+    [25.2, '“Where’s my order?” Tracked in chat.', 0, 0, 'shopify'],
+    [26.23, '“Will it fit?” asked at 2:14 AM. Cart saved.', 2599],
+    [27.4, 'Night owl from Dubai, shipping question answered.', 3499],
+    [28.1, 'Return request with a photo. Verified, waiting for your OK.', 0, 0, 'shopify'],
+    [30.4, 'Early riser bought the Ink Blue dress.', 2599],
+    [32.7, 'You’re back. 1 return waits for your approval.', 0, 0, 'you'],
+  ];
+  const LINES = [[9, 'Your store opens. So does Sahaay.'], [12, 'Midday. Shoppers browse between meetings.'], [17.5, 'Evening. The busiest hours of the day.'], [22.5, 'Your team goes home.'], [24.5, 'Midnight. The store is still open.'], [28, 'Deep night. Somebody is always shopping.'], [31, 'Dawn. Almost time for you.']];
+  // sky keyframes: [hour, bg, sun color, text is light?]
+  const SKY = [[9, '#FFF6EA', '#FFD08A', 0], [13, '#FBFAFF', '#FFE6A6', 0], [17.5, '#FFE3CF', '#FFB27A', 0], [19.5, '#F4A6B8', '#FF8A6B', 0], [21, '#4E3F8F', '#C9C2FF', 1], [23.5, '#1A1838', '#E8E6FF', 1], [27, '#0E0D22', '#F1F0FF', 1], [30, '#2E2A6B', '#D9D6FF', 1], [31.6, '#F7C9B0', '#FFC28A', 0], [33, '#FFF6EA', '#FFD08A', 0]];
+  const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, k) => `rgb(${hex(a).map((v, i) => Math.round(v + (hex(b)[i] - v) * k)).join(',')})`;
+  const day = document.getElementById('day');
+  const sky = document.getElementById('sky');
+  const sun = document.getElementById('sun');
+  const track = document.getElementById('track');
+  const fmt = (h) => { const hh = Math.floor(h) % 24; const mm = Math.floor((h % 1) * 60); return [`${((hh + 11) % 12) + 1}:${String(mm).padStart(2, '0')}`, hh < 12 ? 'AM' : 'PM']; };
+  const inr = (n) => n >= 1e5 ? `₹${(n / 1e5).toFixed(2)}L` : `₹${n.toLocaleString('en-IN')}`;
+  let shown = 0;
+
+  const render = (h) => {
+    // sky
+    let i = 0; while (i < SKY.length - 2 && h > SKY[i + 1][0]) i++;
+    const [h0, b0, s0, l0] = SKY[i]; const [h1, b1, s1, l1] = SKY[i + 1];
+    const k = Math.max(0, Math.min(1, (h - h0) / (h1 - h0)));
+    sky.style.setProperty('--sky', mix(b0, b1, k));
+    const light = (k < .5 ? l0 : l1) === 1;
+    sky.style.setProperty('--fg', light ? '#F4F3FF' : '#111126');
+    sky.style.setProperty('--soft', light ? 'rgba(244,243,255,.66)' : 'rgba(17,17,38,.6)');
+    sky.style.setProperty('--card', light ? 'rgba(255,255,255,.1)' : 'rgba(255,255,255,.72)');
+    sky.style.setProperty('--cardline', light ? 'rgba(255,255,255,.18)' : 'rgba(255,255,255,.9)');
+    const night = h > 21 && h < 31 ? Math.min(1, Math.min(h - 21, 31 - h) / 1.5) : 0;
+    sky.style.setProperty('--stars', night.toFixed(2));
+    // sun by day (9-20), moon by night (20-32): an arc across the top
+    const isMoon = h >= 20 && h < 32;
+    const a = isMoon ? (h - 20) / 12 : ((h >= 32 ? h - 32 : h - 8) / 12);
+    sun.style.left = `${8 + a * 84}%`;
+    sun.style.top = `${42 - Math.sin(Math.PI * Math.max(0, Math.min(1, a))) * 30}%`;
+    sun.style.background = isMoon ? `radial-gradient(circle at 35% 35%, #fff, ${mix(s0, s1, k)})` : `radial-gradient(circle, ${mix(s0, s1, k)}, rgba(255,200,120,.0) 70%)`;
+    sun.style.boxShadow = isMoon ? '0 0 60px 10px rgba(201,194,255,.35)' : 'none';
+    // clock + line
+    const [t, ap] = fmt(h);
+    document.getElementById('clock').firstChild.nodeValue = t;
+    document.getElementById('ampm').textContent = ap;
+    let line = LINES[0][1]; LINES.forEach(([lh, txt]) => { if (h >= lh) line = txt; });
+    document.getElementById('line').textContent = line;
+    const asleep = h >= 23.6 && h < 32.7;
+    document.getElementById('you').classList.toggle('is-asleep', asleep);
+    document.getElementById('you-txt').textContent = asleep ? 'You: asleep' : h >= 32.7 ? 'You: back at work' : 'You: at work';
+    // events
+    const due = EVENTS.filter((e) => e[0] <= h);
+    if (due.length !== shown) {
+      track.innerHTML = '';
+      due.slice(-6).forEach(([eh, txt, amt, , kind]) => {
+        const el = document.createElement('div');
+        el.className = 'ev' + (kind === 'you' ? ' ev--you' : '');
+        const tag = kind === 'shopify' ? '<span class="ev__tag">Shopify</span>' : '';
+        el.innerHTML = `<span class="orb">${kind === 'you' ? '' : '<img src="assets/sahaay-monogram-white.svg" alt="" width="11" height="14">'}</span><span><span class="ev__t">${fmt(eh).join(' ')}</span>${tag}<br><span class="ev__txt">${txt}</span></span>${amt ? `<span class="ev__amt">+${inr(amt)}</span>` : ''}`;
+        if (kind === 'you') el.querySelector('.orb').textContent = eh > 30 ? '☀' : '☾';
+        track.appendChild(el);
+      });
+      shown = due.length;
+    }
+    const conv = Math.round((h - 9) * 9) + due.reduce((n, e) => n + (e[3] || 0), 0);
+    const saved = due.filter((e) => e[2] > 0).length;
+    const rev = due.reduce((n, e) => n + e[2], 0);
+    document.getElementById('t-conv').textContent = String(Math.max(0, conv));
+    document.getElementById('t-saved').textContent = String(saved);
+    document.getElementById('t-rev').textContent = inr(rev);
+    const sleptRev = EVENTS.filter((e) => e[0] >= 23.6 && e[0] < 32.7).reduce((n, e) => n + e[2], 0);
+    document.getElementById('slept').textContent = inr(sleptRev);
+    document.getElementById('hint').hidden = h > 9.4;
+  };
+  const onScroll = () => {
+    const r = day.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight)));
+    render(9 + p * 24);
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  render(reduce ? 9 : 9);
+  onScroll();
+
+  document.getElementById('wl').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('wl-email');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())) { input.focus(); input.style.borderColor = '#EF4444'; return; }
+    e.target.outerHTML = '<p class="note" style="color:#047857;font-weight:600">You’re on the list. (Prototype: nothing was saved.)</p>';
+  });
+})();
+</script>

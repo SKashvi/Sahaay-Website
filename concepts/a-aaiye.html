@@ -1,0 +1,289 @@
+<title>Sahaay Aaiye Concept</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Concept A: a shop scene told in three moods. Offline shop (warm), silent website (cold), Sahaay (alive). */
+:root {
+  --bg: #FCFBFF; --ink: #111126; --muted: #6B6B82; --line: #E8E6F3; --tint: #F5F4FC;
+  --violet: #6C5FFF; --green: #10B981; --warm: #FFF4E6; --cold: #ECEBF2;
+  --serif: 'Newsreader', Georgia, serif; --sans: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px)); --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --orb: radial-gradient(circle at 30% 25%, rgba(255,255,255,.75), rgba(255,255,255,0) 45%), conic-gradient(from var(--spin, 0deg), #6C5FFF, #F2A6FF, #8FD8FF, #8B82FF, #6C5FFF);
+  color-scheme: light;
+}
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+p, h1, h2 { margin: 0; }
+h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; text-wrap: balance; }
+em { font-style: italic; }
+.chip-concept { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: 50%; z-index: 20; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: rgba(17,17,38,.82); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .3px; white-space: nowrap; }
+
+/* ---- Story: sticky stage, mood follows scroll ---- */
+.story { position: relative; height: 520vh; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--warm); transition: background-color .9s ease; }
+.stage[data-mode="silent"] { background: var(--cold); }
+.stage[data-mode="sahaay"] { background: var(--bg); }
+.glow { position: absolute; inset: -20% -10% auto; height: 80%; pointer-events: none; filter: blur(70px); opacity: 0; transition: opacity 1.2s ease; background: radial-gradient(40% 50% at 30% 40%, #C9C2FF, transparent 70%), radial-gradient(35% 45% at 75% 30%, #F7C6FF, transparent 70%), radial-gradient(30% 40% at 55% 70%, #BFE9FF, transparent 70%); }
+.stage[data-mode="sahaay"] .glow { opacity: .7; }
+
+.copy { position: absolute; z-index: 3; top: clamp(70px, 12vh, 120px); left: 0; right: 0; padding-left: var(--gutter-l); padding-right: var(--gutter-r); text-align: center; }
+.copy__eyebrow { margin-bottom: 12px; font-size: 12px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--muted); }
+.copy h1 { font-size: clamp(40px, 6.4vw, 92px); line-height: .98; }
+.copy__sub { max-width: 520px; margin: 18px auto 0; font-size: clamp(16px, 1.5vw, 19px); color: var(--muted); }
+.copy__count { display: inline-flex; gap: 8px; align-items: baseline; margin-top: 16px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.7); font-size: 14px; color: var(--muted); }
+.copy__count b { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.copy__count b.ok { color: var(--green); }
+.fade { transition: opacity .45s ease, transform .45s ease; }
+.fade.is-out { opacity: 0; transform: translateY(10px); }
+
+/* the shop floor */
+.shop { position: absolute; left: 0; right: 0; bottom: 0; height: 56%; }
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(rgba(17,17,38,.05), rgba(17,17,38,0)); border-top: 1px solid rgba(17,17,38,.08); }
+.shelf { position: absolute; bottom: calc(22% + clamp(64px, 7vw, 104px)); display: flex; flex-direction: column; align-items: center; gap: 6px; width: clamp(64px, 8.5vw, 124px); translate: -50% 0; transition: filter .8s ease, opacity .8s ease; }
+.shelf img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; object-position: center 20%; border-radius: 12px; box-shadow: 0 16px 30px -18px rgba(17,17,38,.5); }
+.shelf span { font-size: 12px; font-weight: 700; }
+.stage[data-mode="silent"] .shelf { filter: saturate(.3); opacity: .8; }
+
+.counter { position: absolute; right: 6%; bottom: 22%; display: flex; flex-direction: column; align-items: center; }
+.counter__desk { width: clamp(90px, 11vw, 160px); height: clamp(48px, 5vw, 72px); border-radius: 10px 10px 0 0; background: #E7DCCB; transition: background-color .8s ease; }
+.stage[data-mode="silent"] .counter__desk { background: #D9D7E2; }
+.stage[data-mode="sahaay"] .counter__desk { background: #E7E3FF; }
+.keeper { position: absolute; bottom: clamp(44px, 4.6vw, 66px); width: clamp(36px, 4.6vw, 62px); transition: opacity .6s ease, transform .6s ease; color: #C9805A; }
+.stage:not([data-mode="offline"]) .keeper { opacity: 0; transform: translateY(16px); }
+.orb { display: inline-grid; place-items: center; border-radius: 50%; background: var(--orb); animation: spin 8s linear infinite; box-shadow: inset 0 1px 1px rgba(255,255,255,.6); }
+.orb img { filter: drop-shadow(0 1px 2px rgba(17,17,38,.35)); }
+.counter .orb { position: absolute; bottom: clamp(58px, 6vw, 86px); width: clamp(42px, 4.4vw, 60px); height: clamp(42px, 4.4vw, 60px); opacity: 0; transform: scale(.6); transition: opacity .6s ease, transform .6s ease; box-shadow: 0 0 0 10px rgba(108,95,255,.12), 0 20px 40px -14px rgba(108,95,255,.9); }
+.stage[data-mode="sahaay"] .counter .orb { opacity: 1; transform: none; }
+.sign { position: absolute; right: 0; top: -96px; padding: 4px 10px; border-radius: 6px; background: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+/* shoppers */
+.sh { position: absolute; bottom: 20%; width: clamp(36px, 4.6vw, 66px); color: #9B93E8; translate: -50% 0; transition-property: left, color, opacity; transition-timing-function: linear, ease, ease; z-index: 2; }
+.sh svg { display: block; width: 100%; }
+.sh.is-lost { color: #B9B7C6; opacity: .5; }
+.sh.is-won { color: var(--green); }
+.sh.is-won::after { content: ""; position: absolute; right: -12px; bottom: 30%; width: 14px; height: 16px; border-radius: 3px 3px 4px 4px; background: var(--green); box-shadow: inset 0 3px 0 rgba(255,255,255,.35); }
+.bub { position: absolute; bottom: calc(100% + 8px); left: 50%; translate: -50% 0; display: flex; align-items: center; gap: 6px; width: max-content; max-width: 200px; padding: 8px 12px; border-radius: 12px; background: #fff; font-size: 13.5px; font-weight: 600; line-height: 1.3; white-space: normal; box-shadow: 0 12px 24px -14px rgba(17,17,38,.5); animation: pop .25s ease; }
+.bub--help { bottom: calc(100% + 54px); border: 1.5px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg, #6C5FFF, #F2A6FF, #8FD8FF) border-box; }
+.bub--keeper { bottom: calc(100% + 54px); background: #FFE7CC; }
+.bub .orb { width: 16px; height: 16px; flex: none; }
+.bub--silent { color: var(--muted); background: rgba(255,255,255,.75); }
+.money { position: absolute; bottom: calc(100% + 10px); left: 50%; translate: -50% 0; color: var(--green); font-size: 13px; font-weight: 800; white-space: nowrap; animation: floatUp 1.4s ease forwards; }
+@keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.95); } }
+@keyframes floatUp { to { opacity: 0; transform: translateY(-30px); } }
+
+.dots { position: absolute; z-index: 3; right: var(--gutter-r); top: 50%; translate: 0 -50%; display: grid; gap: 10px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(17,17,38,.18); transition: background-color .3s ease, transform .3s ease; }
+.dots i.is-on { background: var(--violet); transform: scale(1.3); }
+.hint { position: absolute; z-index: 3; left: 50%; bottom: 16px; translate: -50% 0; font-size: 13px; color: var(--muted); animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(4px); } }
+
+/* ---- Close ---- */
+.close { padding: clamp(88px, 12vw, 140px) var(--gutter-r) clamp(88px, 12vw, 140px) var(--gutter-l); text-align: center; }
+.close h2 { max-width: 760px; margin: 0 auto; font-size: clamp(36px, 5vw, 68px); line-height: 1.02; }
+.close__sub { margin-top: 16px; color: var(--muted); }
+.wl { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 520px; margin: 32px auto 0; }
+.wl input { flex: 1 1 220px; min-height: 54px; padding: 0 16px; border: 1.5px solid var(--line); border-radius: 12px; font: 500 16px var(--sans); color: var(--ink); background: #fff; }
+.wl input:focus { outline: none; border-color: var(--violet); }
+.btn { min-height: 54px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--violet); color: #fff; font: 600 16px var(--sans); cursor: pointer; box-shadow: 0 12px 24px -14px rgba(108,95,255,.9); }
+.btn:hover { background: #5A4DF0; }
+.wl__note { margin-top: 14px; font-size: 13.5px; color: var(--muted); }
+.wl__done { margin-top: 28px; font-weight: 600; color: #047857; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .shop { height: 46%; }
+  .shelf { width: 54px; bottom: calc(22% + 58px); }
+  .shop { height: 50%; }
+  .copy { top: 64px; }
+  .counter { right: 4%; }
+  .sign { display: none; }
+  .bub { max-width: 150px; font-size: 11.5px; }
+  .dots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+
+<p class="chip-concept">Concept A of 4 · Aaiye · prototype</p>
+
+<section class="story" id="story" aria-label="The Aaiye story">
+  <div class="stage" id="stage" data-mode="offline">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="copy">
+      <div class="fade" id="copy">
+        <p class="copy__eyebrow" id="eyebrow">In a real shop</p>
+        <h1 id="headline">Someone always says <em>Aaiye.</em></h1>
+        <p class="copy__sub" id="sub">They notice you walk in, ask what you’re looking for, and help you choose.</p>
+      </div>
+      <p class="copy__count" id="count" hidden></p>
+    </div>
+
+    <div class="shop" id="shop" aria-hidden="true">
+      <div class="floor"></div>
+      <div class="counter">
+        <span class="sign" id="sign">Velour · since 1998</span>
+        <svg class="keeper" viewBox="0 0 20 23"><circle cx="10" cy="6" r="5" fill="currentColor"/><path d="M0 23c0-6.6 4.5-11 10-11s10 4.4 10 11z" fill="currentColor"/></svg>
+        <span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="16" height="21"></span>
+        <div class="counter__desk"></div>
+      </div>
+    </div>
+    <div class="dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+    <p class="hint" id="hint">Scroll ↓</p>
+  </div>
+</section>
+
+<section class="close" id="join">
+  <h2>Give your store someone who says <em>Aaiye.</em></h2>
+  <p class="close__sub">Sales on any store. Orders, returns and refunds on Shopify. Flat monthly price, no commission.</p>
+  <form class="wl" id="wl" novalidate>
+    <label class="sr" for="wl-email" style="position:absolute;left:-9999px">Work email</label>
+    <input id="wl-email" type="email" placeholder="you@yourbrand.com" autocomplete="email" required>
+    <button class="btn" type="submit">Join the waitlist</button>
+  </form>
+  <p class="wl__note">First 10 brands get a free 14-day pilot.</p>
+</section>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const story = document.getElementById('story');
+  const stage = document.getElementById('stage');
+  const shop = document.getElementById('shop');
+  const copy = document.getElementById('copy');
+  const count = document.getElementById('count');
+  const dots = [...document.querySelectorAll('.dots i')];
+  const COPY = {
+    offline: ['In a real shop', 'Someone always says <em>Aaiye.</em>', 'They notice you walk in, ask what you’re looking for, and help you choose.', 'Velour · since 1998'],
+    silent: ['On your website', 'Nobody says <em>anything.</em>', 'Shoppers arrive with a question, find no one to ask, and leave. 97 in 100 never buy.', 'velour.store'],
+    sahaay: ['With Sahaay', 'Your store says <em>Aaiye</em> again.', 'Sahaay notices every shopper, answers the doubt and helps them buy. Day and night.', 'velour.store · Sahaay'],
+  };
+  const QA = [
+    ['Will it fit?', 'Aaiye! It runs true to size. Try S.'],
+    ['Delivery kab tak?', '4 to 7 days, free above ₹1,999.'],
+    ['Return ho jayega?', 'Yes, within 14 days of delivery.'],
+    ['Is this in M?', 'Yes, M is in stock in both colours.'],
+    ['Which colour?', 'Terracotta is everyone’s favourite.'],
+    ['Breathable hai?', 'Viscose crepe: light and airy.'],
+  ];
+  const PRICES = [2599, 3499, 1399, 2599];
+  let mode = 'offline';
+  let lost = 0; let won = 0; let rupees = 0;
+  const inr = (n) => n >= 1e5 ? `₹${(n / 1e5).toFixed(1)}L` : `₹${n.toLocaleString('en-IN')}`;
+
+  // shelves
+  const slots = () => (innerWidth <= 640 ? [16, 40, 64] : [14, 32, 50, 68]);
+  let shelves = [];
+  const buildShelves = () => {
+    shelves.forEach((s) => s.remove());
+    shelves = slots().map((x, i) => {
+      const s = document.createElement('div');
+      s.className = 'shelf'; s.style.left = x + '%';
+      s.innerHTML = `<img src="assets/dress.webp" alt="" width="405" height="442"><span>${inr(PRICES[i % 4])}</span>`;
+      shop.appendChild(s);
+      return s;
+    });
+  };
+  buildShelves();
+  addEventListener('resize', buildShelves);
+
+  const renderCount = () => {
+    if (mode === 'offline') { count.hidden = true; return; }
+    count.hidden = false;
+    count.innerHTML = mode === 'silent'
+      ? `<b>${lost}</b> left without buying`
+      : `<b class="ok">${won}</b> sales saved · <b class="ok">${inr(rupees)}</b>`;
+  };
+  const setMode = (m) => {
+    if (m === mode) return;
+    mode = m; stage.dataset.mode = m;
+    copy.classList.add('is-out');
+    setTimeout(() => {
+      const [e, h, s, sign] = COPY[m];
+      document.getElementById('eyebrow').textContent = e;
+      document.getElementById('headline').innerHTML = h;
+      document.getElementById('sub').textContent = s;
+      document.getElementById('sign').textContent = sign;
+      copy.classList.remove('is-out');
+    }, 300);
+    renderCount();
+  };
+
+  addEventListener('scroll', () => {
+    const r = story.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight)));
+    setMode(p < 0.3 ? 'offline' : p < 0.64 ? 'silent' : 'sahaay');
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === (p < 0.3 ? 0 : p < 0.64 ? 1 : 2)));
+    document.getElementById('hint').hidden = p > 0.05;
+  }, { passive: true });
+
+  // shoppers
+  const FIG = '<svg viewBox="0 0 20 23"><circle cx="10" cy="6" r="5" fill="currentColor"/><path d="M0 23c0-6.6 4.5-11 10-11s10 4.4 10 11z" fill="currentColor"/></svg>';
+  const busy = new Set();
+  let active = false;
+  const later = (ms, fn) => setTimeout(fn, reduce ? 0 : ms);
+  const bubble = (el, cls, html) => { el.querySelectorAll('.' + cls.split(' ')[0]).forEach((b) => b.remove()); const b = document.createElement('div'); b.className = cls; b.innerHTML = html; el.appendChild(b); return b; };
+  const walk = (el, toPct, ms) => { el.style.transitionDuration = `${ms}ms, .5s, .5s`; el.style.left = toPct + '%'; };
+
+  const spawn = () => {
+    if (!active) return;
+    const free = slots().map((x, i) => i).filter((i) => !busy.has(i));
+    if (!free.length) return;
+    const i = free[Math.floor(Math.random() * free.length)];
+    busy.add(i);
+    const x = slots()[i] + 5;
+    const el = document.createElement('div');
+    el.className = 'sh'; el.innerHTML = FIG; el.style.left = '-4%';
+    shop.appendChild(el);
+    const [q, a] = QA[Math.floor(Math.random() * QA.length)];
+    const walkIn = 1400 + x * 22;
+    requestAnimationFrame(() => requestAnimationFrame(() => walk(el, x, walkIn)));
+    later(walkIn, () => {
+      const m = mode;
+      bubble(el, 'bub' + (m === 'silent' ? ' bub--silent' : ''), q);
+      if (m === 'silent') {
+        later(1700, () => {
+          el.querySelector('.bub').remove();
+          bubble(el, 'bub bub--silent', '…');
+          later(900, () => {
+            el.querySelector('.bub').remove();
+            el.classList.add('is-lost'); lost += 1; renderCount();
+            walk(el, -6, 2600);
+            later(2600, () => { el.remove(); busy.delete(i); });
+          });
+        });
+        return;
+      }
+      later(800, () => {
+        const help = m === 'offline'
+          ? bubble(el, 'bub bub--keeper', a.replace('Aaiye! ', 'Aaiye ji! '))
+          : bubble(el, 'bub bub--help', `<span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="8" height="10"></span>${a}`);
+        later(1500, () => {
+          el.querySelectorAll('.bub').forEach((b) => b.remove());
+          el.classList.add('is-won');
+          const price = PRICES[i % 4];
+          if (m === 'sahaay') { won += 1; rupees += price; renderCount(); }
+          const money = document.createElement('span'); money.className = 'money'; money.textContent = `+${inr(price)}`; el.appendChild(money);
+          walk(el, 106, 2600);
+          later(2600, () => { el.remove(); busy.delete(i); });
+          help.remove();
+        });
+      });
+    });
+  };
+  let timer = 0;
+  const start = () => { if (active) return; active = true; spawn(); timer = setInterval(spawn, 1100); };
+  const stop = () => { active = false; clearInterval(timer); };
+  new IntersectionObserver(([e]) => (e.isIntersecting && !document.hidden ? start() : stop()), { threshold: 0.2 }).observe(stage);
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+  document.getElementById('wl').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('wl-email');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())) { input.focus(); input.style.borderColor = '#EF4444'; return; }
+    e.target.outerHTML = '<p class="wl__done">You’re on the list. (Prototype: nothing was saved.)</p>';
+  });
+})();
+</script>

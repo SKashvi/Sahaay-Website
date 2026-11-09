@@ -1,0 +1,256 @@
+<title>Sahaay Try To Leave</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Concept B: the page is quiet text; the drama is Sahaay reacting to the visitor. A live trigger log keeps score. */
+:root {
+  --bg: #FCFBFF; --ink: #111126; --muted: #6B6B82; --faint: #A7A5BA; --line: #E8E6F3; --tint: #F5F4FC;
+  --violet: #6C5FFF; --green: #10B981;
+  --serif: 'Newsreader', Georgia, serif; --sans: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
+  --gl: max(20px, env(safe-area-inset-left, 0px)); --gr: max(20px, env(safe-area-inset-right, 0px));
+  --orb: radial-gradient(circle at 30% 25%, rgba(255,255,255,.75), rgba(255,255,255,0) 45%), conic-gradient(from var(--spin, 0deg), #6C5FFF, #F2A6FF, #8FD8FF, #8B82FF, #6C5FFF);
+  color-scheme: light;
+}
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+p, h1, h2, h3 { margin: 0; }
+h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; text-wrap: balance; }
+em { font-style: italic; }
+::selection { background: #DCD7FF; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+.chip-concept { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: 50%; z-index: 30; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: rgba(17,17,38,.82); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+.col { max-width: 720px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+.hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-block: 120px 80px; }
+.eyebrow { margin-bottom: 20px; font-size: 12px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--muted); }
+.hero h1 { font-size: clamp(46px, 7.6vw, 104px); line-height: .96; }
+.hero h1 em { display: block; color: var(--violet); }
+.hero__sub { max-width: 520px; margin-top: 26px; font-size: clamp(17px, 1.7vw, 20px); color: var(--muted); }
+.hero__try { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.hero__try span { padding: 7px 12px; border: 1px dashed #CFCAE8; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--muted); }
+
+.block { padding-block: clamp(64px, 10vw, 120px); border-top: 1px solid var(--line); }
+.block h2 { font-size: clamp(32px, 4.4vw, 54px); line-height: 1.05; }
+.block p + p, .block h2 + p { margin-top: 18px; }
+.block p { color: #3A3754; }
+.block .big { font: 400 clamp(22px, 2.4vw, 28px)/1.4 var(--serif); color: var(--ink); }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+.facts div { padding: 18px; border-radius: 16px; background: var(--tint); }
+.facts b { display: block; font: 400 34px/1 var(--serif); }
+.facts span { font-size: 13.5px; color: var(--muted); }
+.price { margin-top: 28px; padding: 26px; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+.price b { font: 400 30px/1.1 var(--serif); }
+.price ul { margin: 14px 0 0; padding-left: 20px; color: #3A3754; }
+
+.wl { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.wl input { flex: 1 1 240px; min-height: 56px; padding: 0 16px; border: 1.5px solid var(--line); border-radius: 12px; font: 500 16px var(--sans); background: #fff; color: var(--ink); }
+.wl input:focus { outline: none; border-color: var(--violet); }
+.btn { min-height: 56px; padding: 0 24px; border: 0; border-radius: 12px; background: var(--violet); color: #fff; font: 600 16px var(--sans); cursor: pointer; box-shadow: 0 12px 24px -14px rgba(108,95,255,.9); }
+.btn:hover { background: #5A4DF0; }
+.note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.end { padding-block: 40px 200px; color: var(--faint); font-size: 13px; }
+
+/* Sahaay's message */
+.pop { position: fixed; z-index: 40; right: calc(var(--gr) + 4px); bottom: calc(96px + env(safe-area-inset-bottom, 0px)); width: min(360px, calc(100vw - 40px)); padding: 18px 18px 16px; border: 1.5px solid transparent; border-radius: 20px 20px 6px 20px; background: linear-gradient(rgba(255,255,255,.96), rgba(255,255,255,.96)) padding-box, linear-gradient(135deg, #6C5FFF, #F2A6FF, #8FD8FF) border-box; box-shadow: 0 30px 60px -28px rgba(108,95,255,.7); transition: opacity .35s ease, transform .35s ease; }
+.pop.is-out { opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none; }
+.pop__who { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; }
+.pop__why { margin-left: auto; padding: 3px 9px; border-radius: 999px; background: #ECEAFF; color: var(--violet); font-size: 10.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }
+.pop__msg { margin-top: 10px; font-size: 16px; font-weight: 600; line-height: 1.45; }
+.pop__row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.pop__row button { padding: 8px 14px; border: 0; border-radius: 999px; background: var(--violet); color: #fff; font: 600 13px var(--sans); cursor: pointer; }
+.pop__row button + button { background: var(--tint); color: var(--ink); }
+.pop__meta { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 12px; color: var(--muted); }
+.orb { display: inline-grid; place-items: center; flex: none; border-radius: 50%; background: var(--orb); animation: spin 8s linear infinite; box-shadow: inset 0 1px 1px rgba(255,255,255,.6); }
+.orb img { filter: drop-shadow(0 1px 2px rgba(17,17,38,.35)); }
+
+/* the live log */
+.log { position: fixed; z-index: 35; left: var(--gl); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(300px, calc(100vw - 112px)); border: 1px solid rgba(255,255,255,.85); border-radius: 18px; background: rgba(255,255,255,.82); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 20px 40px -24px rgba(17,17,38,.5); font-size: 13px; }
+.log summary { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; list-style: none; font-weight: 700; }
+.log summary::-webkit-details-marker { display: none; }
+.log summary .orb { width: 22px; height: 22px; }
+.log__n { margin-left: auto; padding: 2px 9px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 12px; font-variant-numeric: tabular-nums; }
+.log ul { margin: 0; padding: 0 14px 12px; list-style: none; }
+.log li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-top: 1px solid rgba(17,17,38,.06); color: var(--muted); }
+.log li i { flex: none; width: 16px; height: 16px; border: 2px dashed #CFCAE8; border-radius: 50%; }
+.log li.is-hit { color: var(--ink); font-weight: 600; }
+.log li.is-hit i { border: 0; background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat; }
+.log li.is-new { animation: flash 1s ease; }
+@keyframes flash { 30% { background: #ECEAFF; } }
+.launch { position: fixed; z-index: 35; right: var(--gr); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 58px; height: 58px; border: 1px solid rgba(255,255,255,.7); box-shadow: 0 18px 40px -16px rgba(108,95,255,.9); }
+@media (max-width: 640px) {
+  .facts { grid-template-columns: 1fr; }
+  .pop { right: 10px; left: 10px; width: auto; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+
+<p class="chip-concept">Concept B of 4 · Try to leave · prototype</p>
+
+<main>
+  <section class="col hero" data-name="the opening">
+    <p class="eyebrow">Sahaay · the AI sales agent that speaks first</p>
+    <h1>This page runs Sahaay. <em>Try to leave.</em></h1>
+    <p class="hero__sub">Everything Sahaay says to you here is set off by what you do: the same moments it catches on your store, with your shoppers.</p>
+    <div class="hero__try" aria-label="Things to try"><span class="try-desk">Head for the tab bar</span><span>Read slowly</span><span>Scroll fast</span><span>Copy some text</span><span>Switch tabs and come back</span></div>
+  </section>
+
+  <section class="col block" id="problem" data-name="the problem">
+    <h2>Your shoppers do <em>exactly this.</em></h2>
+    <p class="big">They hover, they hesitate, they wonder if it fits, and then they close the tab. 97 in 100 leave without buying, and almost none of them ask a question first.</p>
+    <p>A chat box in the corner waits for them to type. They never do. Sahaay doesn’t wait: it reads the moment and speaks first, the way a good salesperson walks up at the right time, and not a second earlier.</p>
+  </section>
+
+  <section class="col block" id="how" data-name="how it works">
+    <h2>It reads the moment, <em>then says the one right thing.</em></h2>
+    <p>Exit intent, time on a product, scroll depth, cart value, hesitation over a button. Sahaay watches the signals, works out what’s holding the shopper back, and answers from your own catalog and policies in under 2 seconds.</p>
+    <div class="facts">
+      <div><b>&lt;2s</b><span>to every answer</span></div>
+      <div><b>24/7</b><span>selling, sale nights too</span></div>
+      <div><b>&lt;24h</b><span>to learn your catalog</span></div>
+    </div>
+  </section>
+
+  <section class="col block" id="pricing" data-name="pricing">
+    <h2>What it costs, <em>plainly.</em></h2>
+    <div class="price">
+      <b>One flat monthly price. No commission.</b>
+      <ul>
+        <li>No fee per order, no cut of your sales: checkout stays on your store.</li>
+        <li>The sales package works on any store. Orders, returns and refunds are for Shopify.</li>
+        <li>The price is announced at launch. Waitlist brands hear it first.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="col block" id="join" data-name="the waitlist">
+    <h2>Now imagine this <em>on your store.</em></h2>
+    <p>Every message you saw on this page could be Sahaay talking to your shoppers.</p>
+    <form class="wl" id="wl" novalidate>
+      <input id="wl-email" type="email" placeholder="you@yourbrand.com" autocomplete="email" aria-label="Work email" required>
+      <button class="btn" id="cta" type="submit">Join the waitlist</button>
+    </form>
+    <p class="note">First 10 brands get a free 14-day pilot.</p>
+  </section>
+  <p class="col end">Prototype: messages run in your browser and nothing you type is sent anywhere.</p>
+</main>
+
+<div class="pop is-out" id="pop" role="status" aria-live="polite">
+  <p class="pop__who"><span class="orb" style="width:22px;height:22px"><img src="assets/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay <span class="pop__why" id="why"></span></p>
+  <p class="pop__msg" id="msg"></p>
+  <div class="pop__row" id="row"></div>
+  <p class="pop__meta" id="meta"></p>
+</div>
+
+<details class="log" id="log" open>
+  <summary><span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay is watching this page <span class="log__n" id="n">0/7</span></summary>
+  <ul id="list"></ul>
+</details>
+<span class="orb launch" aria-hidden="true"><img src="assets/sahaay-monogram-white.svg" alt="" width="20" height="26"></span>
+
+<script>
+(() => {
+  const touch = matchMedia('(hover: none)').matches;
+  const T = {
+    exit:   { label: touch ? 'Exit intent (fast scroll up)' : 'Exit intent', why: 'Exit intent', msg: 'Leaving already? Here’s the 20-second version: Sahaay talks to your shoppers before they leave, and turns doubts into orders.', acts: ['Show me the short version', 'Not now'], go: '#problem' },
+    dwell:  { label: 'Reading slowly', why: 'Time on section', msg: (s) => `You’ve spent a while on ${s}. Want me to answer the one thing you’re wondering about?`, acts: ['Ask a question', 'Not now'] },
+    depth:  { label: 'Scroll depth', why: 'Scroll depth', msg: 'You’re past the halfway mark. Most store owners ask about pricing next: flat monthly, no commission.', acts: ['Jump to pricing', 'Not now'], go: '#pricing' },
+    hover:  { label: touch ? 'Hesitation on a field' : 'Hesitation on a button', why: 'Hesitation', msg: 'Not sure yet? It’s only a waitlist: no card, and the first 10 brands get a free 14-day pilot.', acts: ['Okay, I’m in', 'Not now'], go: '#join' },
+    copy:   { label: 'Copied text', why: 'Copy', msg: 'Saving that for later? Join the waitlist and I’ll send you the summary instead.', acts: ['Join the waitlist', 'Not now'], go: '#join' },
+    back:   { label: 'Came back to the tab', why: 'Returned', msg: (s) => `Welcome back! You were on ${s}. Shall I pick up from there?`, acts: ['Yes, continue', 'Not now'] },
+    idle:   { label: 'Went quiet', why: 'Idle', msg: 'Still there? I can show you what Sahaay would say to one of your shoppers.', acts: ['Show me', 'Not now'], go: '#how' },
+  };
+  const ORDER = ['exit', 'dwell', 'depth', 'hover', 'copy', 'back', 'idle'];
+  const list = document.getElementById('list');
+  ORDER.forEach((k) => { const li = document.createElement('li'); li.dataset.k = k; li.innerHTML = `<i></i>${T[k].label}`; list.appendChild(li); });
+  if (touch) document.querySelector('.try-desk').textContent = 'Flick back up fast';
+  const pop = document.getElementById('pop');
+  const hit = new Set();
+  let current = 'the opening';
+  let lastPop = 0; let hideT = 0;
+
+  const fire = (k, arg) => {
+    if (hit.has(k)) return;
+    if (Date.now() - lastPop < 3500) { setTimeout(() => fire(k, arg), 3600 - (Date.now() - lastPop)); return; }
+    hit.add(k); lastPop = Date.now();
+    const t = T[k];
+    document.getElementById('why').textContent = t.why;
+    document.getElementById('msg').textContent = typeof t.msg === 'function' ? t.msg(arg || current) : t.msg;
+    document.getElementById('meta').textContent = `Set off by: ${t.label.toLowerCase()}. Your shoppers would see this too.`;
+    const row = document.getElementById('row');
+    row.innerHTML = '';
+    t.acts.forEach((a, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = a;
+      b.addEventListener('click', () => {
+        pop.classList.add('is-out');
+        if (i === 0 && t.go) document.querySelector(t.go).scrollIntoView({ behavior: 'smooth' });
+        if (i === 0 && (k === 'hover' || k === 'copy')) setTimeout(() => document.getElementById('wl-email').focus(), 600);
+      });
+      row.appendChild(b);
+    });
+    pop.classList.remove('is-out');
+    const li = list.querySelector(`[data-k="${k}"]`);
+    li.classList.add('is-hit', 'is-new');
+    document.getElementById('n').textContent = `${hit.size}/7`;
+    clearTimeout(hideT); hideT = setTimeout(() => pop.classList.add('is-out'), 9000);
+  };
+
+  // which section is being read
+  const sections = [...document.querySelectorAll('[data-name]')];
+  const dwellT = new Map();
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) {
+      current = e.target.dataset.name;
+      if (current !== 'the opening') dwellT.set(e.target, setTimeout(() => fire('dwell', e.target.dataset.name), 6000));
+    } else clearTimeout(dwellT.get(e.target));
+  }), { threshold: 0.55 });
+  sections.forEach((s) => io.observe(s));
+
+  // exit intent: desktop = quick move to the top edge; touch = fast flick back up
+  let lastY = null; let lastT = 0;
+  document.addEventListener('mousemove', (e) => {
+    if (lastY !== null && e.clientY < 24 && lastY - e.clientY > 8) fire('exit');
+    lastY = e.clientY;
+  });
+  document.documentElement.addEventListener('mouseleave', (e) => { if (e.clientY <= 4) fire('exit'); });
+  let sY = scrollY; let sT = performance.now();
+  addEventListener('scroll', () => {
+    const now = performance.now(); const dy = scrollY - sY; const v = dy / Math.max(1, now - sT);
+    if (touch && v < -2.2 && scrollY > 400) fire('exit');
+    sY = scrollY; sT = now;
+    const p = scrollY / (document.documentElement.scrollHeight - innerHeight);
+    if (p > 0.5) fire('depth');
+  }, { passive: true });
+
+  // hesitation: hovering the button (desktop) or leaving the email field empty (touch)
+  const cta = document.getElementById('cta'); let hovT = 0;
+  cta.addEventListener('mouseenter', () => { hovT = setTimeout(() => fire('hover'), 1800); });
+  cta.addEventListener('mouseleave', () => clearTimeout(hovT));
+  const email = document.getElementById('wl-email');
+  email.addEventListener('blur', () => { if (!email.value.trim()) fire('hover'); });
+
+  document.addEventListener('copy', () => fire('copy'));
+  document.addEventListener('selectionchange', () => { if (String(getSelection()).trim().length > 40) setTimeout(() => fire('copy'), 1200); });
+
+  let hiddenAt = 0;
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) hiddenAt = Date.now();
+    else if (hiddenAt && Date.now() - hiddenAt > 2500) setTimeout(() => fire('back'), 500);
+  });
+
+  let idleT = 0;
+  const poke = () => { clearTimeout(idleT); idleT = setTimeout(() => fire('idle'), 14000); };
+  ['mousemove', 'scroll', 'keydown', 'touchstart'].forEach((ev) => addEventListener(ev, poke, { passive: true }));
+  poke();
+
+  document.getElementById('wl').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) { email.focus(); email.style.borderColor = '#EF4444'; return; }
+    e.target.outerHTML = '<p class="note" style="color:#047857;font-weight:600">You’re on the list. (Prototype: nothing was saved.)</p>';
+  });
+  if (innerWidth <= 640) document.getElementById('log').open = false;
+})();
+</script>

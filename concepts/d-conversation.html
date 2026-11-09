@@ -1,0 +1,192 @@
+<title>Sahaay Conversation Page</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Concept D: the landing page is one conversation. Sahaay leads; the visitor taps replies or types. */
+:root {
+  --bg: #FCFBFF; --ink: #111126; --muted: #6B6B82; --faint: #A7A5BA; --line: #E8E6F3; --tint: #F5F4FC;
+  --violet: #6C5FFF; --green: #10B981;
+  --serif: 'Newsreader', Georgia, serif; --sans: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  --orb: radial-gradient(circle at 30% 25%, rgba(255,255,255,.75), rgba(255,255,255,0) 45%), conic-gradient(from var(--spin, 0deg), #6C5FFF, #F2A6FF, #8FD8FF, #8B82FF, #6C5FFF);
+  color-scheme: light;
+}
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+p, h1 { margin: 0; }
+em { font-style: italic; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+.glow { position: fixed; inset: -20% -10% 40%; z-index: 0; pointer-events: none; filter: blur(80px); opacity: .45; background: radial-gradient(35% 45% at 25% 35%, #C9C2FF, transparent 70%), radial-gradient(30% 40% at 78% 25%, #F7C6FF, transparent 70%), radial-gradient(30% 40% at 55% 65%, #BFE9FF, transparent 70%); }
+
+.app { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; max-width: 760px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+.top { display: flex; align-items: center; gap: 12px; padding: 16px 0 12px; }
+.orb { display: inline-grid; place-items: center; flex: none; border-radius: 50%; background: var(--orb); animation: spin 8s linear infinite; box-shadow: inset 0 1px 1px rgba(255,255,255,.6); }
+.orb img { filter: drop-shadow(0 1px 2px rgba(17,17,38,.35)); }
+.top .orb { width: 40px; height: 40px; }
+.top__who b { display: block; font-size: 16px; }
+.top__who span { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.top__who i { width: 7px; height: 7px; border-radius: 50%; background: #34D399; }
+.top__skip { margin-left: auto; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.8); font: 600 13px var(--sans); color: var(--ink); cursor: pointer; }
+.top__skip:hover { border-color: var(--ink); }
+.chip-concept { position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; z-index: 30; translate: -50% 0; padding: 5px 11px; border-radius: 999px; background: rgba(17,17,38,.82); color: #fff; font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+
+.log { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding: 18px 2px 20px; scroll-behavior: smooth; }
+.m { max-width: 86%; padding: 12px 16px; border-radius: 20px; font-size: 16.5px; line-height: 1.5; animation: in .3s ease; overflow-wrap: anywhere; }
+@keyframes in { from { opacity: 0; transform: translateY(8px); } }
+.m--bot { align-self: flex-start; border: 1px solid #ECE9FA; border-bottom-left-radius: 6px; background: rgba(255,255,255,.92); }
+.m--me { align-self: flex-end; border-bottom-right-radius: 6px; background: linear-gradient(135deg, #6C5FFF, #8B6CFF); color: #fff; }
+.m--hero { max-width: 100%; padding: 0; border: 0; background: none; font: 400 clamp(36px, 6vw, 64px)/1 var(--serif); letter-spacing: -0.02em; }
+.m--hero em { color: var(--violet); }
+.typing { display: inline-flex; gap: 4px; padding: 14px 16px; }
+.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); animation: dot 1s ease-in-out infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 50% { transform: translateY(-3px); opacity: .5; } }
+
+/* rich cards inside the chat */
+.card { align-self: flex-start; width: min(520px, 100%); padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: 0 20px 40px -30px rgba(17,17,38,.5); animation: in .35s ease; }
+.card__t { margin-bottom: 12px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--muted); }
+.crowd { display: grid; grid-template-columns: repeat(20, 1fr); gap: 5px; }
+.crowd i { aspect-ratio: 1; border-radius: 50%; background: #ABA4EE; transition: opacity .5s ease, background-color .4s ease; }
+.crowd i.is-gone { opacity: .12; }
+.crowd i.is-buy { background: var(--green); }
+.card__foot { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.card__foot b { color: var(--ink); }
+.mini { position: relative; height: 190px; overflow: hidden; border-radius: 14px; background: var(--tint); }
+.mini img { position: absolute; left: 12px; top: 12px; width: 32%; height: calc(100% - 24px); object-fit: cover; object-position: center 20%; border-radius: 10px; }
+.mini__info { position: absolute; left: calc(32% + 26px); top: 18px; font-size: 13px; }
+.mini__info b { display: block; font-size: 15px; }
+.mini__pop { position: absolute; right: 12px; bottom: 12px; width: 58%; padding: 10px 12px; border: 1.5px solid transparent; border-radius: 14px 14px 4px 14px; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg, #6C5FFF, #F2A6FF, #8FD8FF) border-box; font-size: 13px; font-weight: 600; line-height: 1.4; opacity: 0; transform: translateY(10px); animation: popIn .4s ease 1.6s forwards; }
+@keyframes popIn { to { opacity: 1; transform: none; } }
+.mini__cur { position: absolute; left: 40%; top: 70%; width: 16px; fill: var(--ink); stroke: #fff; stroke-width: 1.4; animation: cur 1.4s cubic-bezier(.5,0,.3,1) .2s forwards; }
+@keyframes cur { to { left: 88%; top: 4%; } }
+.mini__badge { position: absolute; right: 12px; top: 12px; padding: 4px 8px; border-radius: 7px; background: var(--ink); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; opacity: 0; animation: popIn .3s ease 1.4s forwards; }
+.vs { display: grid; gap: 0; }
+.vs div { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.vs div:first-child { border-top: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--faint); }
+.vs span:first-child { color: var(--muted); }
+.vs span:last-child { font-weight: 600; }
+.price b { display: block; font: 400 26px/1.15 var(--serif); }
+.price ul { margin: 10px 0 0; padding-left: 18px; font-size: 14.5px; color: #3A3754; }
+.wl { display: grid; gap: 8px; }
+.wl input { min-height: 50px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 12px; font: 500 16px var(--sans); color: var(--ink); background: var(--bg); }
+.wl input:focus { outline: none; border-color: var(--violet); }
+.wl button { min-height: 52px; border: 0; border-radius: 12px; background: var(--violet); color: #fff; font: 600 16px var(--sans); cursor: pointer; }
+.wl small { color: var(--muted); font-size: 13px; }
+
+/* replies + composer */
+.dock { padding: 10px 0 calc(14px + env(safe-area-inset-bottom, 0px)); }
+.chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-bottom: 10px; min-height: 0; }
+.chips button { padding: 10px 16px; border: 1.5px solid #D6D1F5; border-radius: 999px; background: #fff; color: var(--violet); font: 600 14.5px var(--sans); cursor: pointer; animation: in .3s ease; }
+.chips button:hover { background: #ECEAFF; }
+.composer { display: flex; gap: 8px; padding: 6px; border: 1px solid rgba(255,255,255,.9); border-radius: 18px; background: rgba(255,255,255,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 16px 40px -24px rgba(17,17,38,.5); }
+.composer input { flex: 1; min-width: 0; padding: 0 12px; border: 0; background: transparent; font: 500 16px var(--sans); color: var(--ink); }
+.composer input:focus { outline: none; }
+.composer button { width: 44px; height: 44px; border: 0; border-radius: 12px; background: linear-gradient(135deg, #6C5FFF, #A27BFF); cursor: pointer; }
+.composer svg { width: 18px; height: 18px; fill: #fff; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; } }
+</style>
+
+<div class="glow" aria-hidden="true"></div>
+<p class="chip-concept">Concept D of 4 · Conversation · prototype</p>
+<div class="app">
+  <header class="top">
+    <span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="16" height="21"></span>
+    <span class="top__who"><b>Sahaay</b><span><i></i>The AI sales agent that speaks first</span></span>
+    <button type="button" class="top__skip" id="skip">Short version</button>
+  </header>
+  <main class="log" id="log" role="log" aria-live="polite"></main>
+  <div class="dock">
+    <div class="chips" id="chips"></div>
+    <form class="composer" id="composer">
+      <input id="say" type="text" placeholder="Or type your own question…" autocomplete="off" aria-label="Your message">
+      <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-2-7z"/></svg></button>
+    </form>
+  </div>
+</div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const log = document.getElementById('log');
+  const chips = document.getElementById('chips');
+  const state = { vertical: 'store', platform: null };
+  const wait = (ms) => new Promise((r) => setTimeout(r, reduce ? 0 : ms));
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+
+  const add = (cls, html) => { const el = document.createElement('div'); el.className = cls; el.innerHTML = html; log.appendChild(el); scroll(); return el; };
+  async function say(...parts) {
+    for (const p of parts) {
+      const t = add('m m--bot typing', '<i></i><i></i><i></i>');
+      await wait(Math.min(1100, 380 + (typeof p === 'string' ? p.length * 9 : 400)));
+      t.remove();
+      if (typeof p === 'string') add('m m--bot', p);
+      else { const c = add('card', p.html); p.init && p.init(c); }
+      await wait(220);
+    }
+  }
+  const me = (txt) => add('m m--me', txt.replace(/[<>&]/g, ''));
+  const offer = (opts) => {
+    chips.innerHTML = '';
+    opts.forEach(([label, next]) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
+      b.addEventListener('click', () => { chips.innerHTML = ''; me(label); go(next); });
+      chips.appendChild(b);
+    });
+  };
+
+  const CROWD = { html: '<p class="card__t">100 visitors to a typical store</p><div class="crowd">' + '<i></i>'.repeat(100) + '</div><p class="card__foot"><b class="c-left">0</b> left without buying · <b class="c-buy" style="color:#10B981">0</b> bought</p>',
+    init(c) {
+      const dots = [...c.querySelectorAll('.crowd i')]; const buy = new Set([17, 54, 88]);
+      const order = dots.map((_, i) => i).filter((i) => !buy.has(i)).sort((a, b) => ((a * 37) % 101) - ((b * 37) % 101));
+      let n = 0;
+      const tick = setInterval(() => {
+        for (let k = 0; k < 4 && n < 97; k++) dots[order[n++]].classList.add('is-gone');
+        c.querySelector('.c-left').textContent = n;
+        if (n >= 97) { clearInterval(tick); buy.forEach((i) => dots[i].classList.add('is-buy')); c.querySelector('.c-buy').textContent = '3'; }
+      }, reduce ? 0 : 50);
+    } };
+  const DEMO = { html: '<p class="card__t">What your shopper sees</p><div class="mini"><img src="assets/dress.webp" alt="" width="405" height="442"><div class="mini__info"><b>Wrap Midi Dress</b>₹2,599</div><span class="mini__badge">Exit intent</span><div class="mini__pop">Leaving already? It runs true to size. Want help picking yours?</div><svg class="mini__cur" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg></div>' };
+  const VS = { html: '<p class="card__t">A chatbot vs Sahaay</p><div class="vs"><div><span>Chat that waits</span><span>Sahaay</span></div><div><span>The shopper starts</span><span>Sahaay starts, at the moment of doubt</span></div><div><span>Reaches the few who ask</span><span>Reaches everyone showing a signal</span></div><div><span>After they’re stuck</span><span>Before they leave</span></div><div><span>Support tickets</span><span>Saved carts and orders</span></div></div>' };
+  const PRICE = { html: '<p class="card__t">Pricing</p><div class="price"><b>One flat monthly price. No commission.</b><ul><li>No fee per order: checkout stays on your store.</li><li>The price is announced at launch; the waitlist hears first.</li><li>First 10 brands get a free 14-day pilot.</li></ul></div>' };
+  const FORM = { html: '<p class="card__t">Join the waitlist</p><form class="wl" novalidate><input type="text" name="store" placeholder="yourstore.com" aria-label="Store URL" autocomplete="url"><input type="email" name="email" placeholder="you@yourbrand.com" aria-label="Work email" autocomplete="email"><button type="submit">Join the waitlist</button><small>First 10 brands get a free 14-day pilot.</small></form>',
+    init(c) { c.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.value.trim())) { f.email.focus(); f.email.style.borderColor = '#EF4444'; return; } f.outerHTML = '<p style="color:#047857;font-weight:600">You’re on the list. (Prototype: nothing was saved.)</p>'; go('done'); }); } };
+
+  const VERT = { fashion: 'Fashion shoppers mostly ask about fit and fabric.', beauty: 'Beauty shoppers mostly ask about skin type and shades.', home: 'Home shoppers mostly ask about size, delivery and returns.', store: 'Most shoppers ask about fit, delivery and returns.' };
+  const NODES = {
+    start: async () => { add('m m--hero', 'Hi, I’m Sahaay. <em>Most websites make you scroll. I’d rather talk.</em>'); await wait(500); await say('I’m the AI sales agent that speaks first to your shoppers. What brings you here?'); offer([['I run an online store', 'store'], ['Just curious', 'curious'], ['Show me the short version', 'short']]); },
+    store: async () => { await say('Nice. What do you sell?'); offer([['Fashion', 'v-fashion'], ['Beauty', 'v-beauty'], ['Home', 'v-home'], ['Something else', 'v-store']]); },
+    curious: async () => { await say('Fair. Here’s the one-line version: shoppers leave without buying because nobody answers their question. I answer it before they go.'); offer([['Show me', 'problem'], ['Short version', 'short']]); },
+    problem: async () => { await say(`${VERT[state.vertical]} But here’s the catch: almost nobody asks.`, CROWD, '97 in 100 leave without buying. A chat box that waits never hears them.'); offer([['How would you stop them?', 'demo'], ['How is that different from a chatbot?', 'vs']]); },
+    demo: async () => { await say('I watch for the moment: exit intent, a long pause on a product, a scroll to delivery details, a cart over your threshold. Then I speak first, with an answer from your own catalog.', DEMO); offer([['What store do you work with?', 'platform'], ['How is that different from a chatbot?', 'vs']]); },
+    vs: async () => { await say(VS, 'In short: a chatbot waits to be asked. I walk up.'); offer([['Which stores do you work with?', 'platform'], ['What does it cost?', 'price']]); },
+    platform: async () => { await say('What’s your store on?'); offer([['Shopify', 'p-shopify'], ['Something else', 'p-other']]); },
+    'p-shopify': async () => { state.platform = 'shopify'; await say('Then you’d get everything: the sales package, plus order tracking, returns and refunds right in the chat. Every refund still waits for your OK.'); offer([['What does it cost?', 'price'], ['I want in', 'join']]); },
+    'p-other': async () => { state.platform = 'other'; await say('You’d get the full sales package: speaking first, answering questions, recommending and recovering carts. Order tracking, returns and refunds are Shopify-only for now.'); offer([['What does it cost?', 'price'], ['I want in', 'join']]); },
+    price: async () => { await say(PRICE); offer([['I want in', 'join'], ['Which stores do you work with?', 'platform']]); },
+    join: async () => { await say('Love that. Drop your store and email and you’re on the list.', FORM); offer([]); },
+    short: async () => { await say('The short version: I’m an AI sales agent for online stores. I spot the shopper about to leave, answer the doubt that’s stopping them, and help them buy. Sales features work on any store; orders, returns and refunds on Shopify. Flat monthly price, no commission.', FORM); offer([['Tell me more first', 'problem']]); },
+    done: async () => { await say('You’re in. I’ll be in touch before launch. Anything else you want to know?'); offer([['What does it cost?', 'price'], ['Which stores?', 'platform']]); },
+  };
+  ['fashion', 'beauty', 'home', 'store'].forEach((v) => { NODES['v-' + v] = async () => { state.vertical = v; await NODES.problem(); }; });
+  let busy = false;
+  async function go(n) { if (busy) return; busy = true; try { await NODES[n](); } finally { busy = false; } }
+
+  // free text: route by keyword
+  const ROUTES = [[/price|cost|pricing|charge|commission|fee/i, 'price'], [/shopify|platform|woo|wix|store on|work with/i, 'platform'], [/chatbot|different|vs|tidio|gorgias/i, 'vs'], [/how|work|trigger|exit|demo|show/i, 'demo'], [/join|waitlist|sign|pilot|in\b/i, 'join'], [/why|problem|leave|lost/i, 'problem']];
+  document.getElementById('composer').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('say'); const q = input.value.trim(); if (!q || busy) return;
+    input.value = ''; chips.innerHTML = ''; me(q);
+    const hit = ROUTES.find(([re]) => re.test(q));
+    if (hit) go(hit[1]);
+    else (async () => { busy = true; await say('Good question. I’ll answer that one properly on a demo call. Meanwhile, here’s what most people ask:'); busy = false; offer([['What does it cost?', 'price'], ['How does it work?', 'demo'], ['I want in', 'join']]); })();
+  });
+  document.getElementById('skip').addEventListener('click', () => { chips.innerHTML = ''; me('Short version, please'); go('short'); });
+  go('start');
+})();
+</script>
