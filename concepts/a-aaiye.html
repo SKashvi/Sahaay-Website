@@ -1,16 +1,19 @@
-<title>Sahaay Aaiye Concept</title>
+<title>Sahaay Speaks First Story</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Concept A: a shop scene told in three moods. Offline shop (warm), silent website (cold), Sahaay (alive). */
+/* Concept A v2: one scene, three states. A physical shop (warm, wood, a shopkeeper), then the same
+   shop as a website inside a browser window (silent), then the website with Sahaay. Every speech
+   bubble is labelled with who is speaking. */
 :root {
-  --bg: #FCFBFF; --ink: #111126; --muted: #6B6B82; --line: #E8E6F3; --tint: #F5F4FC;
-  --violet: #6C5FFF; --green: #10B981; --warm: #FFF4E6; --cold: #ECEBF2;
+  --bg: #FCFBFF; --ink: #111126; --muted: #6B6B82; --faint: #A7A5BA; --line: #E8E6F3; --tint: #F5F4FC;
+  --violet: #6C5FFF; --green: #10B981; --amber: #F2A93B;
   --serif: 'Newsreader', Georgia, serif; --sans: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
-  --gutter-l: max(20px, env(safe-area-inset-left, 0px)); --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --gl: max(20px, env(safe-area-inset-left, 0px)); --gr: max(20px, env(safe-area-inset-right, 0px));
   --orb: radial-gradient(circle at 30% 25%, rgba(255,255,255,.75), rgba(255,255,255,0) 45%), conic-gradient(from var(--spin, 0deg), #6C5FFF, #F2A6FF, #8FD8FF, #8B82FF, #6C5FFF);
+  --person-h: clamp(84px, 15vh, 150px);
   color-scheme: light;
 }
 @property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -20,69 +23,119 @@ body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 v
 p, h1, h2 { margin: 0; }
 h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; text-wrap: balance; }
 em { font-style: italic; }
-.chip-concept { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: 50%; z-index: 20; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: rgba(17,17,38,.82); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .3px; white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+.chip-concept { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: 50%; z-index: 30; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: rgba(17,17,38,.82); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
 
-/* ---- Story: sticky stage, mood follows scroll ---- */
-.story { position: relative; height: 520vh; }
-.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--warm); transition: background-color .9s ease; }
-.stage[data-mode="silent"] { background: var(--cold); }
+/* ---- Sticky stage ---- */
+.story { position: relative; height: 560vh; }
+.stage { position: sticky; top: 0; display: flex; flex-direction: column; height: 100vh; height: 100svh; overflow: hidden; padding: clamp(64px, 9vh, 96px) var(--gr) clamp(16px, 3vh, 32px) var(--gl); background: #FFF7EE; transition: background-color .9s ease; }
+.stage[data-mode="silent"] { background: #EEEDF3; }
 .stage[data-mode="sahaay"] { background: var(--bg); }
 .glow { position: absolute; inset: -20% -10% auto; height: 80%; pointer-events: none; filter: blur(70px); opacity: 0; transition: opacity 1.2s ease; background: radial-gradient(40% 50% at 30% 40%, #C9C2FF, transparent 70%), radial-gradient(35% 45% at 75% 30%, #F7C6FF, transparent 70%), radial-gradient(30% 40% at 55% 70%, #BFE9FF, transparent 70%); }
-.stage[data-mode="sahaay"] .glow { opacity: .7; }
+.stage[data-mode="sahaay"] .glow { opacity: .6; }
 
-.copy { position: absolute; z-index: 3; top: clamp(70px, 12vh, 120px); left: 0; right: 0; padding-left: var(--gutter-l); padding-right: var(--gutter-r); text-align: center; }
-.copy__eyebrow { margin-bottom: 12px; font-size: 12px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--muted); }
-.copy h1 { font-size: clamp(40px, 6.4vw, 92px); line-height: .98; }
-.copy__sub { max-width: 520px; margin: 18px auto 0; font-size: clamp(16px, 1.5vw, 19px); color: var(--muted); }
-.copy__count { display: inline-flex; gap: 8px; align-items: baseline; margin-top: 16px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.7); font-size: 14px; color: var(--muted); }
-.copy__count b { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
-.copy__count b.ok { color: var(--green); }
-.fade { transition: opacity .45s ease, transform .45s ease; }
+.copy { position: relative; z-index: 3; text-align: center; }
+.copy__eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.7); font-size: 12px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--muted); }
+.copy__eyebrow svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.copy h1 { font-size: clamp(36px, 5.6vw, 80px); line-height: 1; }
+.copy__sub { max-width: 540px; margin: 14px auto 0; font-size: clamp(15px, 1.4vw, 18px); color: var(--muted); }
+.fade { transition: opacity .4s ease, transform .4s ease; }
 .fade.is-out { opacity: 0; transform: translateY(10px); }
+.count { display: inline-flex; gap: 8px; align-items: baseline; margin-top: 12px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.75); font-size: 14px; color: var(--muted); }
+.count b { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.count b.ok { color: var(--green); }
+.count.is-hidden { visibility: hidden; }
 
-/* the shop floor */
-.shop { position: absolute; left: 0; right: 0; bottom: 0; height: 56%; }
-.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(rgba(17,17,38,.05), rgba(17,17,38,0)); border-top: 1px solid rgba(17,17,38,.08); }
-.shelf { position: absolute; bottom: calc(22% + clamp(64px, 7vw, 104px)); display: flex; flex-direction: column; align-items: center; gap: 6px; width: clamp(64px, 8.5vw, 124px); translate: -50% 0; transition: filter .8s ease, opacity .8s ease; }
-.shelf img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; object-position: center 20%; border-radius: 12px; box-shadow: 0 16px 30px -18px rgba(17,17,38,.5); }
-.shelf span { font-size: 12px; font-weight: 700; }
-.stage[data-mode="silent"] .shelf { filter: saturate(.3); opacity: .8; }
+/* ---- The scene: a shop, or a website ---- */
+.scene { position: relative; z-index: 2; flex: 1; width: min(1080px, 100%); min-height: 280px; max-height: 560px; margin: clamp(14px, 3vh, 28px) auto 0; border-radius: 18px; overflow: hidden; transition: border-radius .6s ease, box-shadow .6s ease, background-color .6s ease; background: #F6E7D4; }
+.stage:not([data-mode="offline"]) .scene { border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 40px 80px -50px rgba(17,17,38,.55); }
+.scene__tag { position: absolute; z-index: 6; left: 14px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(17,17,38,.72); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
 
-.counter { position: absolute; right: 6%; bottom: 22%; display: flex; flex-direction: column; align-items: center; }
-.counter__desk { width: clamp(90px, 11vw, 160px); height: clamp(48px, 5vw, 72px); border-radius: 10px 10px 0 0; background: #E7DCCB; transition: background-color .8s ease; }
-.stage[data-mode="silent"] .counter__desk { background: #D9D7E2; }
-.stage[data-mode="sahaay"] .counter__desk { background: #E7E3FF; }
-.keeper { position: absolute; bottom: clamp(44px, 4.6vw, 66px); width: clamp(36px, 4.6vw, 62px); transition: opacity .6s ease, transform .6s ease; color: #C9805A; }
-.stage:not([data-mode="offline"]) .keeper { opacity: 0; transform: translateY(16px); }
-.orb { display: inline-grid; place-items: center; border-radius: 50%; background: var(--orb); animation: spin 8s linear infinite; box-shadow: inset 0 1px 1px rgba(255,255,255,.6); }
+/* shop-only dressing */
+.awning { position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 46px; background: repeating-linear-gradient(90deg, #E8735A 0 44px, #FFF4E8 44px 88px); border-bottom-left-radius: 0; transition: transform .6s ease, opacity .6s ease; }
+.awning::after { content: ""; position: absolute; left: 0; right: 0; bottom: -12px; height: 12px; background: radial-gradient(circle at 22px 0, #E8735A 0 22px, transparent 23px) 0 0 / 88px 12px repeat-x, radial-gradient(circle at 66px 0, #FFF4E8 0 22px, transparent 23px) 0 0 / 88px 12px repeat-x; }
+.wall { position: absolute; inset: 0; background: linear-gradient(#F6E7D4, #F1DEC6); transition: opacity .6s ease; }
+.wood { position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: repeating-linear-gradient(90deg, #C9945E 0 120px, #BE8752 120px 122px), #C9945E; box-shadow: inset 0 6px 10px -6px rgba(0,0,0,.25); transition: opacity .6s ease; }
+.shopsign { position: absolute; z-index: 2; left: 50%; top: 62px; translate: -50% 0; padding: 6px 18px; border-radius: 8px; background: #3B2A20; color: #F6E7D4; font: 500 15px var(--serif); letter-spacing: 3px; text-transform: uppercase; transition: opacity .5s ease; }
+.rail { position: absolute; z-index: 1; left: 8%; right: 26%; top: 24%; height: 4px; border-radius: 2px; background: #8A6A4E; transition: opacity .5s ease; }
+.stage:not([data-mode="offline"]) :is(.awning, .wall, .wood, .shopsign, .rail) { opacity: 0; }
+.stage:not([data-mode="offline"]) .awning { transform: translateY(-100%); }
+
+/* website-only dressing */
+.browser { position: absolute; z-index: 5; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 7px; height: 44px; padding: 0 14px; border-bottom: 1px solid var(--line); background: #FDFDFF; transform: translateY(-100%); transition: transform .6s ease; }
+.browser i { width: 10px; height: 10px; border-radius: 50%; background: #E2E0EF; }
+.browser span { flex: 1; max-width: 420px; margin-left: 10px; padding: 5px 12px; border-radius: 999px; background: var(--tint); font-size: 12.5px; color: var(--muted); }
+.webnav { position: absolute; z-index: 2; left: 0; right: 0; top: 44px; display: flex; align-items: center; gap: 18px; height: 42px; padding: 0 20px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--muted); opacity: 0; transition: opacity .5s ease .2s; }
+.webnav b { margin-right: auto; font: 500 15px var(--serif); letter-spacing: 3px; color: var(--ink); }
+.stage:not([data-mode="offline"]) .browser { transform: none; }
+.stage:not([data-mode="offline"]) .webnav { opacity: 1; }
+.webfloor { position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(#F6F5FB, #FFFFFF); border-top: 1px solid var(--line); opacity: 0; transition: opacity .6s ease; }
+.stage:not([data-mode="offline"]) .webfloor { opacity: 1; }
+
+/* products: hang on a rail in the shop, become cards on the website */
+.prod { position: absolute; z-index: 2; top: calc(24% + 2px); width: clamp(58px, 8vw, 104px); translate: -50% 0; transition: top .6s ease; }
+.prod__hook { display: block; width: 16px; height: 14px; margin: 0 auto -2px; border: 2px solid #8A6A4E; border-bottom: 0; border-radius: 10px 10px 0 0; transition: opacity .4s ease; }
+.prod__card { padding: 0; border-radius: 10px; background: transparent; transition: padding .5s ease, background-color .5s ease, box-shadow .5s ease; }
+.prod img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 8px; box-shadow: 0 14px 24px -16px rgba(0,0,0,.5); }
+.prod__meta { max-height: 0; white-space: nowrap; overflow: hidden; font-size: 11px; line-height: 1.3; transition: max-height .5s ease; }
+.prod__meta b { display: block; font-size: 11.5px; }
+.stage:not([data-mode="offline"]) .prod { top: calc(44px + 42px + 4%); }
+.stage:not([data-mode="offline"]) .prod__hook { opacity: 0; }
+.stage:not([data-mode="offline"]) .prod__card { padding: 6px; background: #fff; box-shadow: 0 0 0 1px var(--line); }
+.stage:not([data-mode="offline"]) .prod__meta { max-height: 40px; padding-top: 6px; }
+.stage[data-mode="silent"] .prod img { filter: saturate(.35); }
+
+/* the counter: a shopkeeper in the shop, an empty chat box or Sahaay on the website */
+.counter { position: absolute; z-index: 3; right: 5%; bottom: 18%; display: flex; flex-direction: column; align-items: center; transition: opacity .5s ease; }
+.counter__desk { position: relative; z-index: 2; width: clamp(96px, 12vw, 170px); height: clamp(46px, 7vh, 70px); border-radius: 8px 8px 0 0; background: linear-gradient(#8A5A3B, #6E4529); box-shadow: inset 0 4px 0 #A9744F; }
+.keeper { position: absolute; z-index: 1; bottom: calc(clamp(46px, 7vh, 70px) - 18px); height: calc(var(--person-h) * .92); }
+.keeper svg { height: 100%; width: auto; display: block; }
+.keeper .wave { transform-origin: 30px 44px; }
+.keeper.is-waving .wave { animation: wave .5s ease-in-out 3; }
+@keyframes wave { 50% { transform: rotate(-28deg); } }
+.stage:not([data-mode="offline"]) .counter { opacity: 0; }
+.widget { position: absolute; z-index: 4; right: 16px; bottom: calc(18% + 12px); display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+.widget__pill { padding: 9px 14px; border-radius: 999px; background: #E9E8EF; color: var(--muted); font-size: 12px; font-weight: 600; }
+.widget .orb { width: clamp(42px, 5vw, 58px); height: clamp(42px, 5vw, 58px); box-shadow: 0 0 0 10px rgba(108,95,255,.12), 0 20px 40px -14px rgba(108,95,255,.9); }
+.stage[data-mode="silent"] .widget--wait, .stage[data-mode="sahaay"] .widget--sahaay { opacity: 1; transform: none; }
+.orb { display: inline-grid; place-items: center; flex: none; border-radius: 50%; background: var(--orb); animation: spin 8s linear infinite; box-shadow: inset 0 1px 1px rgba(255,255,255,.6); }
 .orb img { filter: drop-shadow(0 1px 2px rgba(17,17,38,.35)); }
-.counter .orb { position: absolute; bottom: clamp(58px, 6vw, 86px); width: clamp(42px, 4.4vw, 60px); height: clamp(42px, 4.4vw, 60px); opacity: 0; transform: scale(.6); transition: opacity .6s ease, transform .6s ease; box-shadow: 0 0 0 10px rgba(108,95,255,.12), 0 20px 40px -14px rgba(108,95,255,.9); }
-.stage[data-mode="sahaay"] .counter .orb { opacity: 1; transform: none; }
-.sign { position: absolute; right: 0; top: -96px; padding: 4px 10px; border-radius: 6px; background: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
 /* shoppers */
-.sh { position: absolute; bottom: 20%; width: clamp(36px, 4.6vw, 66px); color: #9B93E8; translate: -50% 0; transition-property: left, color, opacity; transition-timing-function: linear, ease, ease; z-index: 2; }
-.sh svg { display: block; width: 100%; }
-.sh.is-lost { color: #B9B7C6; opacity: .5; }
-.sh.is-won { color: var(--green); }
-.sh.is-won::after { content: ""; position: absolute; right: -12px; bottom: 30%; width: 14px; height: 16px; border-radius: 3px 3px 4px 4px; background: var(--green); box-shadow: inset 0 3px 0 rgba(255,255,255,.35); }
-.bub { position: absolute; bottom: calc(100% + 8px); left: 50%; translate: -50% 0; display: flex; align-items: center; gap: 6px; width: max-content; max-width: 200px; padding: 8px 12px; border-radius: 12px; background: #fff; font-size: 13.5px; font-weight: 600; line-height: 1.3; white-space: normal; box-shadow: 0 12px 24px -14px rgba(17,17,38,.5); animation: pop .25s ease; }
-.bub--help { bottom: calc(100% + 54px); border: 1.5px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg, #6C5FFF, #F2A6FF, #8FD8FF) border-box; }
-.bub--keeper { bottom: calc(100% + 54px); background: #FFE7CC; }
-.bub .orb { width: 16px; height: 16px; flex: none; }
-.bub--silent { color: var(--muted); background: rgba(255,255,255,.75); }
-.money { position: absolute; bottom: calc(100% + 10px); left: 50%; translate: -50% 0; color: var(--green); font-size: 13px; font-weight: 800; white-space: nowrap; animation: floatUp 1.4s ease forwards; }
-@keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.95); } }
-@keyframes floatUp { to { opacity: 0; transform: translateY(-30px); } }
+.sh { position: absolute; z-index: 4; bottom: 14%; height: var(--person-h); translate: -50% 0; transition-property: left, opacity, filter; transition-timing-function: linear, ease, ease; }
+.sh svg { display: block; height: 100%; width: auto; }
+.sh.is-walking svg { animation: bob .5s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-3px); } }
+.sh.is-lost { filter: grayscale(1); opacity: .45; }
+.sh .bag { opacity: 0; transition: opacity .3s ease; }
+.sh.is-won .bag { opacity: 1; }
+.tag { position: absolute; left: 50%; top: -22px; translate: -50% 0; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: .5px; white-space: nowrap; animation: pop .25s ease; }
+.tag--lost { background: #DCDAE6; color: var(--muted); }
+.tag--won { background: var(--green); color: #fff; }
 
-.dots { position: absolute; z-index: 3; right: var(--gutter-r); top: 50%; translate: 0 -50%; display: grid; gap: 10px; }
+/* speech: who is talking is always labelled */
+.say { position: absolute; z-index: 7; width: max-content; max-width: min(210px, 42vw); padding: 7px 11px 8px; border-radius: 14px; font-size: 13px; font-weight: 600; line-height: 1.3; box-shadow: 0 12px 24px -14px rgba(17,17,38,.55); animation: pop .25s ease; }
+.say small { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; font-size: 9.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+.say--q { bottom: calc(100% + 10px); right: 50%; border-bottom-right-radius: 4px; background: #fff; color: var(--ink); }
+.say--q small { color: var(--muted); }
+.say--q.is-unanswered::after { content: "No reply"; position: absolute; left: 0; right: 0; top: calc(100% + 4px); font-size: 10.5px; font-style: italic; font-weight: 600; color: var(--muted); text-align: right; }
+.say--a { bottom: calc(100% + 54px); left: 30%; border-bottom-left-radius: 4px; }
+.say--keeper { background: #FFE2BF; color: #4A2E12; }
+.say--keeper small { color: #9A5B1E; }
+.say--sahaay { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, #6C5FFF, #F2A6FF, #8FD8FF) border-box; }
+.say--sahaay small { color: var(--violet); }
+.say .orb { width: 14px; height: 14px; }
+.face { width: 14px; height: 14px; border-radius: 50%; background: #C68A62; }
+@keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.95); } }
+
+.dots { position: absolute; z-index: 3; right: var(--gr); top: 50%; translate: 0 -50%; display: grid; gap: 10px; }
 .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(17,17,38,.18); transition: background-color .3s ease, transform .3s ease; }
 .dots i.is-on { background: var(--violet); transform: scale(1.3); }
-.hint { position: absolute; z-index: 3; left: 50%; bottom: 16px; translate: -50% 0; font-size: 13px; color: var(--muted); animation: nudge 1.6s ease-in-out infinite; }
+.hint { position: absolute; z-index: 8; left: 50%; bottom: 14px; translate: -50% 0; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.8); font-size: 12.5px; color: var(--muted); animation: nudge 1.6s ease-in-out infinite; }
 @keyframes nudge { 50% { transform: translateY(4px); } }
 
 /* ---- Close ---- */
-.close { padding: clamp(88px, 12vw, 140px) var(--gutter-r) clamp(88px, 12vw, 140px) var(--gutter-l); text-align: center; }
+.close { padding: clamp(88px, 12vw, 140px) var(--gr) clamp(88px, 12vw, 140px) var(--gl); text-align: center; }
 .close h2 { max-width: 760px; margin: 0 auto; font-size: clamp(36px, 5vw, 68px); line-height: 1.02; }
 .close__sub { margin-top: 16px; color: var(--muted); }
 .wl { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 520px; margin: 32px auto 0; }
@@ -91,56 +144,62 @@ em { font-style: italic; }
 .btn { min-height: 54px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--violet); color: #fff; font: 600 16px var(--sans); cursor: pointer; box-shadow: 0 12px 24px -14px rgba(108,95,255,.9); }
 .btn:hover { background: #5A4DF0; }
 .wl__note { margin-top: 14px; font-size: 13.5px; color: var(--muted); }
-.wl__done { margin-top: 28px; font-weight: 600; color: #047857; }
-:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
 @media (max-width: 640px) {
-  .shop { height: 46%; }
-  .shelf { width: 54px; bottom: calc(22% + 58px); }
-  .shop { height: 50%; }
-  .copy { top: 64px; }
-  .counter { right: 4%; }
-  .sign { display: none; }
-  .bub { max-width: 150px; font-size: 11.5px; }
+  :root { --person-h: 92px; }
   .dots { display: none; }
+  .shopsign { top: 56px; font-size: 12px; }
+  .webnav span { display: none; }
+  .say { max-width: 46vw; font-size: 12px; }
+  .say--a { left: -10%; }
+  .rail { right: 30%; }
+  .prod__meta b { display: none; }
+  .prod { width: 64px; }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 </style>
 
-<p class="chip-concept">Concept A of 4 · Aaiye · prototype</p>
+<p class="chip-concept">Concept A of 4 · Speaks first · prototype v2</p>
 
-<section class="story" id="story" aria-label="The Aaiye story">
+<section class="story" id="story" aria-label="A shop, a website, and Sahaay">
   <div class="stage" id="stage" data-mode="offline">
     <div class="glow" aria-hidden="true"></div>
     <div class="copy">
       <div class="fade" id="copy">
-        <p class="copy__eyebrow" id="eyebrow">In a real shop</p>
-        <h1 id="headline">Someone always says <em>Aaiye.</em></h1>
-        <p class="copy__sub" id="sub">They notice you walk in, ask what you’re looking for, and help you choose.</p>
+        <p class="copy__eyebrow" id="eyebrow"></p>
+        <h1 id="headline"></h1>
+        <p class="copy__sub" id="sub"></p>
       </div>
-      <p class="copy__count" id="count" hidden></p>
+      <p class="count is-hidden" id="count" aria-live="polite">&nbsp;</p>
     </div>
 
-    <div class="shop" id="shop" aria-hidden="true">
-      <div class="floor"></div>
+    <div class="scene" id="scene" aria-hidden="true">
+      <div class="wall"></div>
+      <div class="awning"></div>
+      <p class="shopsign">Velour</p>
+      <div class="rail"></div>
+      <div class="browser"><i></i><i></i><i></i><span>velour.store/collections/dresses</span></div>
+      <div class="webnav"><b>VELOUR</b><span>New in</span><span>Dresses</span><span>Sale</span><span>Cart (0)</span></div>
+      <div class="wood"></div>
+      <div class="webfloor"></div>
       <div class="counter">
-        <span class="sign" id="sign">Velour · since 1998</span>
-        <svg class="keeper" viewBox="0 0 20 23"><circle cx="10" cy="6" r="5" fill="currentColor"/><path d="M0 23c0-6.6 4.5-11 10-11s10 4.4 10 11z" fill="currentColor"/></svg>
-        <span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="16" height="21"></span>
+        <div class="keeper" id="keeper"></div>
         <div class="counter__desk"></div>
       </div>
+      <div class="widget widget--wait"><span class="widget__pill">Chat with us</span></div>
+      <div class="widget widget--sahaay"><span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="18" height="23"></span></div>
+      <p class="scene__tag" id="scene-tag">In the shop</p>
     </div>
     <div class="dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
-    <p class="hint" id="hint">Scroll ↓</p>
+    <p class="hint" id="hint">Scroll to go from the shop to the website ↓</p>
   </div>
 </section>
 
 <section class="close" id="join">
-  <h2>Give your store someone who says <em>Aaiye.</em></h2>
+  <h2>Give your website someone who <em>speaks first.</em></h2>
   <p class="close__sub">Sales on any store. Orders, returns and refunds on Shopify. Flat monthly price, no commission.</p>
   <form class="wl" id="wl" novalidate>
-    <label class="sr" for="wl-email" style="position:absolute;left:-9999px">Work email</label>
-    <input id="wl-email" type="email" placeholder="you@yourbrand.com" autocomplete="email" required>
+    <input id="wl-email" type="email" placeholder="you@yourbrand.com" autocomplete="email" aria-label="Work email" required>
     <button class="btn" type="submit">Join the waitlist</button>
   </form>
   <p class="wl__note">First 10 brands get a free 14-day pilot.</p>
@@ -151,130 +210,165 @@ em { font-style: italic; }
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const story = document.getElementById('story');
   const stage = document.getElementById('stage');
-  const shop = document.getElementById('shop');
+  const scene = document.getElementById('scene');
   const copy = document.getElementById('copy');
   const count = document.getElementById('count');
   const dots = [...document.querySelectorAll('.dots i')];
+  const ICON = {
+    shop: '<svg viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></svg>',
+    web: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>',
+  };
   const COPY = {
-    offline: ['In a real shop', 'Someone always says <em>Aaiye.</em>', 'They notice you walk in, ask what you’re looking for, and help you choose.', 'Velour · since 1998'],
-    silent: ['On your website', 'Nobody says <em>anything.</em>', 'Shoppers arrive with a question, find no one to ask, and leave. 97 in 100 never buy.', 'velour.store'],
-    sahaay: ['With Sahaay', 'Your store says <em>Aaiye</em> again.', 'Sahaay notices every shopper, answers the doubt and helps them buy. Day and night.', 'velour.store · Sahaay'],
+    offline: [ICON.shop + 'In a shop', 'Someone always says <em>hello.</em>', 'They notice you walk in, answer your question and help you choose.', 'In the shop'],
+    silent: [ICON.web + 'On your website', 'Nobody says <em>anything.</em>', 'Same shoppers, same questions. There’s no one to ask, so they leave. 97 in 100 never buy.', 'On the website'],
+    sahaay: [ICON.web + 'On your website, with Sahaay', 'Now your website <em>speaks first.</em>', 'Sahaay notices every shopper, answers the doubt and helps them buy. Day and night.', 'On the website · with Sahaay'],
   };
   const QA = [
-    ['Will it fit?', 'Aaiye! It runs true to size. Try S.'],
-    ['Delivery kab tak?', '4 to 7 days, free above ₹1,999.'],
-    ['Return ho jayega?', 'Yes, within 14 days of delivery.'],
+    ['Will it fit me?', 'It runs true to size. Try S.'],
+    ['How long is delivery?', '4 to 7 days, free above ₹1,999.'],
+    ['Can I return it?', 'Yes, within 14 days of delivery.'],
     ['Is this in M?', 'Yes, M is in stock in both colours.'],
-    ['Which colour?', 'Terracotta is everyone’s favourite.'],
-    ['Breathable hai?', 'Viscose crepe: light and airy.'],
+    ['Which colour is best?', 'Terracotta is the favourite.'],
+    ['Is it breathable?', 'Yes, it’s light viscose crepe.'],
   ];
   const PRICES = [2599, 3499, 1399, 2599];
-  let mode = 'offline';
-  let lost = 0; let won = 0; let rupees = 0;
-  const inr = (n) => n >= 1e5 ? `₹${(n / 1e5).toFixed(1)}L` : `₹${n.toLocaleString('en-IN')}`;
+  const inr = (n) => (n >= 1e5 ? `₹${(n / 1e5).toFixed(1)}L` : `₹${n.toLocaleString('en-IN')}`);
 
-  // shelves
-  const slots = () => (innerWidth <= 640 ? [16, 40, 64] : [14, 32, 50, 68]);
-  let shelves = [];
-  const buildShelves = () => {
-    shelves.forEach((s) => s.remove());
-    shelves = slots().map((x, i) => {
-      const s = document.createElement('div');
-      s.className = 'shelf'; s.style.left = x + '%';
-      s.innerHTML = `<img src="assets/dress.webp" alt="" width="405" height="442"><span>${inr(PRICES[i % 4])}</span>`;
-      shop.appendChild(s);
-      return s;
+  // Illustrated people: varied skin, hair, outfits. Arms and legs as simple shapes.
+  const SKIN = ['#F2C9A6', '#E0A982', '#B9794F', '#8A5536', '#F6D7BD'];
+  const HAIR = ['#2B1D16', '#4A2E1F', '#151515', '#7A4B2A', '#C9A06A'];
+  const TOP = ['#5B7FD1', '#E0796B', '#3FA57F', '#E5B04A', '#8C70D6', '#2F3A56', '#D45F8E'];
+  const BOTTOM = ['#2F3A56', '#1F2433', '#6B5B4E', '#3A4E7A', '#4B4B55'];
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const person = ({ skin, hair, top, bottom, long, bag = true }) => `
+    <svg viewBox="0 0 40 100">
+      <path d="M14 62 L12 96 L18 96 L20 66 L22 96 L28 96 L26 62 Z" fill="${bottom}"/>
+      <rect x="11" y="95" width="8" height="4" rx="2" fill="#222"/><rect x="21" y="95" width="8" height="4" rx="2" fill="#222"/>
+      <path d="M11 34 Q20 28 29 34 L30 64 L10 64 Z" fill="${top}"/>
+      <path d="M11 35 L6 56 L9 57 L14 40 Z" fill="${top}"/><path d="M29 35 L34 56 L31 57 L26 40 Z" fill="${top}"/>
+      <circle cx="7.5" cy="57.5" r="2.4" fill="${skin}"/><circle cx="32.5" cy="57.5" r="2.4" fill="${skin}"/>
+      ${bag ? '<g class="bag"><path d="M30 58 q2.5 -5 5 0" fill="none" stroke="#0E8A62" stroke-width="1.4"/><rect x="28" y="58" width="9" height="11" rx="1.5" fill="#10B981"/></g>' : ''}
+      <rect x="17.5" y="26" width="5" height="6" fill="${skin}"/>
+      <ellipse cx="20" cy="18" rx="8" ry="9" fill="${skin}"/>
+      <path d="M11.5 18 Q11 8 20 8 Q29 8 28.5 18 Q26 12 20 12.5 Q14 12 11.5 18 Z" fill="${hair}"/>
+      ${long ? `<path d="M11.5 17 Q10 28 13 34 L15 22 Z M28.5 17 Q30 28 27 34 L25 22 Z" fill="${hair}"/>` : ''}
+    </svg>`;
+  const KEEPER = `<svg viewBox="0 0 40 100"><path d="M11 34 Q20 28 29 34 L30 64 L10 64 Z" fill="#C2553F"/><path d="M11 35 L6 56 L9 57 L14 40 Z" fill="#C2553F"/><g class="wave"><path d="M29 35 L36 18 L33 16.5 L26 40 Z" fill="#C2553F"/><circle cx="35" cy="16" r="2.6" fill="#C68A62"/></g><circle cx="7.5" cy="57.5" r="2.4" fill="#C68A62"/><rect x="17.5" y="26" width="5" height="6" fill="#C68A62"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#C68A62"/><path d="M11.5 18 Q11 7 20 7 Q29 7 28.5 18 Q26 11 20 11.5 Q14 11 11.5 18 Z" fill="#2B1D16"/><rect x="14" y="44" width="12" height="20" rx="2" fill="#F3E3C8" opacity=".9"/></svg>`;
+  const keeper = document.getElementById('keeper');
+  keeper.innerHTML = KEEPER;
+
+  // products
+  const slots = () => (innerWidth <= 640 ? [34] : [13, 30, 47, 64]);
+  let prods = [];
+  const prodSlots = () => (innerWidth <= 640 ? [18, 46] : slots());
+  const build = () => {
+    prods.forEach((p) => p.remove());
+    prods = prodSlots().map((x, i) => {
+      const p = document.createElement('div');
+      p.className = 'prod'; p.style.left = x + '%';
+      p.innerHTML = `<span class="prod__hook"></span><div class="prod__card"><img src="assets/dress.webp" alt="" width="405" height="442"><div class="prod__meta"><b>Wrap Dress</b>${inr(PRICES[i % 4])}</div></div>`;
+      scene.appendChild(p);
+      return p;
     });
   };
-  buildShelves();
-  addEventListener('resize', buildShelves);
+  build();
+  addEventListener('resize', build);
 
+  let mode = '';
+  let lost = 0; let won = 0; let rupees = 0;
   const renderCount = () => {
-    if (mode === 'offline') { count.hidden = true; return; }
-    count.hidden = false;
-    count.innerHTML = mode === 'silent'
-      ? `<b>${lost}</b> left without buying`
-      : `<b class="ok">${won}</b> sales saved · <b class="ok">${inr(rupees)}</b>`;
+    count.classList.toggle('is-hidden', mode === 'offline');
+    count.innerHTML = mode === 'silent' ? `<b>${lost}</b> left without buying`
+      : mode === 'sahaay' ? `<b class="ok">${won}</b> sales saved · <b class="ok">${inr(rupees)}</b>` : '&nbsp;';
   };
   const setMode = (m) => {
     if (m === mode) return;
+    const first = !mode;
     mode = m; stage.dataset.mode = m;
-    copy.classList.add('is-out');
-    setTimeout(() => {
-      const [e, h, s, sign] = COPY[m];
-      document.getElementById('eyebrow').textContent = e;
+    const apply = () => {
+      const [e, h, s, tag] = COPY[m];
+      document.getElementById('eyebrow').innerHTML = e;
       document.getElementById('headline').innerHTML = h;
       document.getElementById('sub').textContent = s;
-      document.getElementById('sign').textContent = sign;
+      document.getElementById('scene-tag').textContent = tag;
       copy.classList.remove('is-out');
-    }, 300);
+    };
+    if (first) apply(); else { copy.classList.add('is-out'); setTimeout(apply, 300); }
     renderCount();
   };
-
-  addEventListener('scroll', () => {
+  const onScroll = () => {
     const r = story.getBoundingClientRect();
     const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight)));
-    setMode(p < 0.3 ? 'offline' : p < 0.64 ? 'silent' : 'sahaay');
-    dots.forEach((d, i) => d.classList.toggle('is-on', i === (p < 0.3 ? 0 : p < 0.64 ? 1 : 2)));
-    document.getElementById('hint').hidden = p > 0.05;
-  }, { passive: true });
+    const k = p < 0.3 ? 0 : p < 0.64 ? 1 : 2;
+    setMode(['offline', 'silent', 'sahaay'][k]);
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === k));
+    document.getElementById('hint').hidden = p > 0.04;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
   // shoppers
-  const FIG = '<svg viewBox="0 0 20 23"><circle cx="10" cy="6" r="5" fill="currentColor"/><path d="M0 23c0-6.6 4.5-11 10-11s10 4.4 10 11z" fill="currentColor"/></svg>';
   const busy = new Set();
   let active = false;
   const later = (ms, fn) => setTimeout(fn, reduce ? 0 : ms);
-  const bubble = (el, cls, html) => { el.querySelectorAll('.' + cls.split(' ')[0]).forEach((b) => b.remove()); const b = document.createElement('div'); b.className = cls; b.innerHTML = html; el.appendChild(b); return b; };
-  const walk = (el, toPct, ms) => { el.style.transitionDuration = `${ms}ms, .5s, .5s`; el.style.left = toPct + '%'; };
+  const walk = (el, to, ms) => { el.classList.add('is-walking'); el.style.transitionDuration = `${ms}ms, .5s, .5s`; el.style.left = to + '%'; later(ms, () => el.classList.remove('is-walking')); };
+  // Speech bubbles never leave the scene: nudge them back inside if they'd overflow.
+  const speech = (el, cls, who, text) => {
+    const s = document.createElement('div'); s.className = `say ${cls}`; s.innerHTML = `<small>${who}</small>${text}`; el.appendChild(s);
+    const sr = scene.getBoundingClientRect(); const br = s.getBoundingClientRect();
+    const dx = br.left < sr.left + 8 ? sr.left + 8 - br.left : br.right > sr.right - 8 ? sr.right - 8 - br.right : 0;
+    if (dx) s.style.translate = `${dx}px 0`;
+    return s;
+  };
 
   const spawn = () => {
     if (!active) return;
-    const free = slots().map((x, i) => i).filter((i) => !busy.has(i));
+    const free = slots().map((_, i) => i).filter((i) => !busy.has(i));
     if (!free.length) return;
     const i = free[Math.floor(Math.random() * free.length)];
     busy.add(i);
-    const x = slots()[i] + 5;
+    const x = slots()[i] + 4;
     const el = document.createElement('div');
-    el.className = 'sh'; el.innerHTML = FIG; el.style.left = '-4%';
-    shop.appendChild(el);
+    el.className = 'sh';
+    el.innerHTML = person({ skin: pick(SKIN), hair: pick(HAIR), top: pick(TOP), bottom: pick(BOTTOM), long: Math.random() < 0.5 });
+    el.style.left = '-5%';
+    scene.appendChild(el);
     const [q, a] = QA[Math.floor(Math.random() * QA.length)];
-    const walkIn = 1400 + x * 22;
-    requestAnimationFrame(() => requestAnimationFrame(() => walk(el, x, walkIn)));
-    later(walkIn, () => {
+    const t = 1300 + x * 24;
+    requestAnimationFrame(() => requestAnimationFrame(() => walk(el, x, t)));
+    later(t, () => {
       const m = mode;
-      bubble(el, 'bub' + (m === 'silent' ? ' bub--silent' : ''), q);
+      const qEl = speech(el, 'say--q', 'Shopper', q);
       if (m === 'silent') {
-        later(1700, () => {
-          el.querySelector('.bub').remove();
-          bubble(el, 'bub bub--silent', '…');
-          later(900, () => {
-            el.querySelector('.bub').remove();
-            el.classList.add('is-lost'); lost += 1; renderCount();
-            walk(el, -6, 2600);
-            later(2600, () => { el.remove(); busy.delete(i); });
-          });
+        later(1100, () => qEl.classList.add('is-unanswered'));
+        later(2600, () => {
+          qEl.remove(); el.classList.add('is-lost');
+          const tg = document.createElement('span'); tg.className = 'tag tag--lost'; tg.textContent = 'Left'; el.appendChild(tg);
+          lost += 1; renderCount();
+          walk(el, -8, 2600);
+          later(2600, () => { el.remove(); busy.delete(i); });
         });
         return;
       }
-      later(800, () => {
-        const help = m === 'offline'
-          ? bubble(el, 'bub bub--keeper', a.replace('Aaiye! ', 'Aaiye ji! '))
-          : bubble(el, 'bub bub--help', `<span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="8" height="10"></span>${a}`);
-        later(1500, () => {
-          el.querySelectorAll('.bub').forEach((b) => b.remove());
+      later(900, () => {
+        if (m === 'offline') { keeper.classList.remove('is-waving'); void keeper.offsetWidth; keeper.classList.add('is-waving'); }
+        const aEl = m === 'offline'
+          ? speech(el, 'say--a say--keeper', '<span class="face"></span>Shopkeeper', 'Hello! ' + a)
+          : speech(el, 'say--a say--sahaay', '<span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="7" height="9"></span>Sahaay', a);
+        later(2200, () => {
+          qEl.remove(); aEl.remove();
           el.classList.add('is-won');
           const price = PRICES[i % 4];
+          const tg = document.createElement('span'); tg.className = 'tag tag--won'; tg.textContent = `Bought · ${inr(price)}`; el.appendChild(tg);
           if (m === 'sahaay') { won += 1; rupees += price; renderCount(); }
-          const money = document.createElement('span'); money.className = 'money'; money.textContent = `+${inr(price)}`; el.appendChild(money);
-          walk(el, 106, 2600);
-          later(2600, () => { el.remove(); busy.delete(i); });
-          help.remove();
+          walk(el, 108, 2800);
+          later(2800, () => { el.remove(); busy.delete(i); });
         });
       });
     });
   };
   let timer = 0;
-  const start = () => { if (active) return; active = true; spawn(); timer = setInterval(spawn, 1100); };
+  const start = () => { if (active) return; active = true; spawn(); timer = setInterval(spawn, 1400); };
   const stop = () => { active = false; clearInterval(timer); };
   new IntersectionObserver(([e]) => (e.isIntersecting && !document.hidden ? start() : stop()), { threshold: 0.2 }).observe(stage);
   document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
@@ -283,7 +377,7 @@ em { font-style: italic; }
     e.preventDefault();
     const input = document.getElementById('wl-email');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())) { input.focus(); input.style.borderColor = '#EF4444'; return; }
-    e.target.outerHTML = '<p class="wl__done">You’re on the list. (Prototype: nothing was saved.)</p>';
+    e.target.outerHTML = '<p class="wl__note" style="color:#047857;font-weight:600">You’re on the list. (Prototype: nothing was saved.)</p>';
   });
 })();
 </script>

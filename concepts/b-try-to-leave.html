@@ -95,7 +95,7 @@ em { font-style: italic; }
     <p class="eyebrow">Sahaay · the AI sales agent that speaks first</p>
     <h1>This page runs Sahaay. <em>Try to leave.</em></h1>
     <p class="hero__sub">Everything Sahaay says to you here is set off by what you do: the same moments it catches on your store, with your shoppers.</p>
-    <div class="hero__try" aria-label="Things to try"><span class="try-desk">Head for the tab bar</span><span>Read slowly</span><span>Scroll fast</span><span>Copy some text</span><span>Switch tabs and come back</span></div>
+    <div class="hero__try" aria-label="Things to try"><span class="try-desk">Head for the tab bar</span><span>Read slowly</span><span>Scroll far</span><span>Hesitate on the button</span></div>
   </section>
 
   <section class="col block" id="problem" data-name="the problem">
@@ -146,7 +146,7 @@ em { font-style: italic; }
 </div>
 
 <details class="log" id="log" open>
-  <summary><span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay is watching this page <span class="log__n" id="n">0/7</span></summary>
+  <summary><span class="orb"><img src="assets/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay is watching this page <span class="log__n" id="n">0/4</span></summary>
   <ul id="list"></ul>
 </details>
 <span class="orb launch" aria-hidden="true"><img src="assets/sahaay-monogram-white.svg" alt="" width="20" height="26"></span>
@@ -159,11 +159,8 @@ em { font-style: italic; }
     dwell:  { label: 'Reading slowly', why: 'Time on section', msg: (s) => `You’ve spent a while on ${s}. Want me to answer the one thing you’re wondering about?`, acts: ['Ask a question', 'Not now'] },
     depth:  { label: 'Scroll depth', why: 'Scroll depth', msg: 'You’re past the halfway mark. Most store owners ask about pricing next: flat monthly, no commission.', acts: ['Jump to pricing', 'Not now'], go: '#pricing' },
     hover:  { label: touch ? 'Hesitation on a field' : 'Hesitation on a button', why: 'Hesitation', msg: 'Not sure yet? It’s only a waitlist: no card, and the first 10 brands get a free 14-day pilot.', acts: ['Okay, I’m in', 'Not now'], go: '#join' },
-    copy:   { label: 'Copied text', why: 'Copy', msg: 'Saving that for later? Join the waitlist and I’ll send you the summary instead.', acts: ['Join the waitlist', 'Not now'], go: '#join' },
-    back:   { label: 'Came back to the tab', why: 'Returned', msg: (s) => `Welcome back! You were on ${s}. Shall I pick up from there?`, acts: ['Yes, continue', 'Not now'] },
-    idle:   { label: 'Went quiet', why: 'Idle', msg: 'Still there? I can show you what Sahaay would say to one of your shoppers.', acts: ['Show me', 'Not now'], go: '#how' },
   };
-  const ORDER = ['exit', 'dwell', 'depth', 'hover', 'copy', 'back', 'idle'];
+  const ORDER = ['exit', 'dwell', 'depth', 'hover'];
   const list = document.getElementById('list');
   ORDER.forEach((k) => { const li = document.createElement('li'); li.dataset.k = k; li.innerHTML = `<i></i>${T[k].label}`; list.appendChild(li); });
   if (touch) document.querySelector('.try-desk').textContent = 'Flick back up fast';
@@ -194,8 +191,9 @@ em { font-style: italic; }
     pop.classList.remove('is-out');
     const li = list.querySelector(`[data-k="${k}"]`);
     li.classList.add('is-hit', 'is-new');
-    document.getElementById('n').textContent = `${hit.size}/7`;
+    document.getElementById('n').textContent = `${hit.size}/4`;
     clearTimeout(hideT); hideT = setTimeout(() => pop.classList.add('is-out'), 9000);
+    if (hit.size === ORDER.length) document.querySelector('.log summary').lastElementChild.textContent = 'All 4 ✓';
   };
 
   // which section is being read
@@ -231,20 +229,6 @@ em { font-style: italic; }
   cta.addEventListener('mouseleave', () => clearTimeout(hovT));
   const email = document.getElementById('wl-email');
   email.addEventListener('blur', () => { if (!email.value.trim()) fire('hover'); });
-
-  document.addEventListener('copy', () => fire('copy'));
-  document.addEventListener('selectionchange', () => { if (String(getSelection()).trim().length > 40) setTimeout(() => fire('copy'), 1200); });
-
-  let hiddenAt = 0;
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) hiddenAt = Date.now();
-    else if (hiddenAt && Date.now() - hiddenAt > 2500) setTimeout(() => fire('back'), 500);
-  });
-
-  let idleT = 0;
-  const poke = () => { clearTimeout(idleT); idleT = setTimeout(() => fire('idle'), 14000); };
-  ['mousemove', 'scroll', 'keydown', 'touchstart'].forEach((ev) => addEventListener(ev, poke, { passive: true }));
-  poke();
 
   document.getElementById('wl').addEventListener('submit', (e) => {
     e.preventDefault();

@@ -2,8 +2,8 @@
 
 Four working prototypes, published as private preview pages for review. Not served by the site.
 
-- `a-aaiye.html`: an Indian shop says Aaiye; a website says nothing; Sahaay brings the greeting back
-- `b-try-to-leave.html`: the page runs Sahaay on the visitor
+- `a-aaiye.html`: a shop where someone says hello, a silent website, then the website with Sahaay (labelled speakers)
+- `b-try-to-leave.html`: the page runs Sahaay on the visitor (four triggers)
 - `c-night-shift.html`: scroll through 24 hours on a store
 - `d-conversation.html`: the landing page is one conversation
 
