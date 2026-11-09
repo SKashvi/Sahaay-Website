@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sahaay · The AI sales agent for your online store</title>
-  <meta name="description" content="Sahaay greets your shoppers, answers product questions, recovers carts and handles order queries 24/7. Trained on your catalog in under 24 hours. Free 14-day pilot.">
-  <meta name="theme-color" content="#6C5FFF">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sahaay · The AI sales agent that speaks first</title>
+  <meta name="description" content="Sahaay is the proactive AI sales agent for D2C stores. It spots the shopper who's about to leave, answers their doubt and turns it into an order. Free 14-day pilot.">
+  <meta name="theme-color" content="#FCFBFF">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Sahaay · Stop paying for clicks that never buy">
-  <meta property="og:description" content="The AI sales agent that turns your store traffic into paying customers. Free 14-day pilot for the first 10 brands.">
+  <meta property="og:title" content="Sahaay · Don’t wait for shoppers to ask">
+  <meta property="og:description" content="The proactive AI sales agent for D2C stores. Free 14-day pilot, live in 24 hours.">
   <meta property="og:image" content="assets/img/widget-welcome.webp">
 
   <link rel="icon" href="assets/logo/favicon-violet.svg" type="image/svg+xml">
@@ -18,7 +18,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/tokens.css">
   <link rel="stylesheet" href="styles.css">
@@ -26,625 +26,438 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Announcement -->
-  <div class="announce">
-    <p>The founding pilot is open: 14 days free for the first 10 brands.</p>
-    <a href="#pilot">Claim your spot <span aria-hidden="true">›</span></a>
-  </div>
-
-  <!-- Floating nav -->
-  <header class="nav" id="top">
+  <!-- 0 · Nav: three links, one action -->
+  <header class="nav">
     <div class="nav__bar">
-      <a href="#top" class="nav__brand" aria-label="Sahaay home">
-        <img src="assets/logo/sahaay-wordmark-violet.svg" alt="Sahaay" width="112" height="22">
-      </a>
-      <div class="seg" role="group" aria-label="Jump to">
-        <a href="#proactive" class="seg__item is-on">Pre-purchase</a>
-        <a href="#easy" class="seg__item">Post-purchase</a>
-      </div>
+      <a href="#top" class="nav__brand" aria-label="Sahaay home"><img src="assets/logo/sahaay-wordmark-violet.svg" alt="Sahaay" width="112" height="22"></a>
       <nav class="nav__links" aria-label="Primary">
-        <a href="#why">Why</a>
-        <a href="#waiting">Speaks first</a>
         <a href="#how">How it works</a>
         <a href="#pilot">Pilot</a>
         <a href="#faq">FAQ</a>
-        <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" data-book>Book a demo</a>
       </nav>
-      <a href="#pilot" class="btn btn--lav btn--nav" data-cta="nav">Claim free pilot</a>
+      <a href="#pilot" class="btn btn--primary btn--sm" data-cta="nav">Claim free pilot</a>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- ============ HERO ============ -->
-    <section class="hero" id="hero">
+    <!-- 1 · Hero: what it is, who it's for, what to do -->
+    <section class="hero" id="top">
       <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="hero__copy">
-        <p class="eyebrow">The proactive AI sales agent for online stores</p>
+      <div class="wrap hero__copy">
+        <p class="eyebrow">The proactive AI sales agent for D2C stores</p>
         <h1>Don’t wait for shoppers to ask. <em>Sahaay speaks first.</em></h1>
-        <p class="hero__sub">It spots the shopper who’s about to leave, starts the right conversation and turns the doubt into an order. Around the clock, in your brand’s voice.</p>
+        <p class="hero__sub">It spots the shopper who’s about to leave, answers the doubt that’s stopping them and turns it into an order. Around the clock, in your brand’s voice.</p>
         <div class="hero__ctas">
-          <a href="#pilot" class="btn btn--lav" data-cta="hero">Claim your free pilot</a>
-          <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" class="btn btn--plain" data-book data-cta="hero-demo">Book a 20-min demo</a>
+          <a href="#pilot" class="btn btn--primary" data-cta="hero">Claim your free pilot</a>
+          <a href="#how" class="btn btn--ghost">See how it works <span aria-hidden="true">↓</span></a>
         </div>
-        <p class="hero__small">Free for 14 days · No card · Live in under 24 hours</p>
+        <p class="hero__micro">Free for 14 days · No card · Live in 24 hours</p>
       </div>
 
-      <!-- The story of one save: shopper about to leave -> Sahaay speaks first -> added to cart -->
-      <div class="story" id="story" data-phase="0">
-        <ol class="story__steps" aria-label="What happens in the demo">
-          <li class="is-on"><span class="story__n">1</span><span><b>Spots the moment</b>The cursor heads for the close tab.</span><i class="story__bar"></i></li>
-          <li><span class="story__n">2</span><span><b>Speaks first</b>Sahaay opens with help, not a discount.</span><i class="story__bar"></i></li>
-          <li><span class="story__n">3</span><span><b>Saves the sale</b>The right size goes in the cart.</span><i class="story__bar"></i></li>
-        </ol>
-        <ul class="hero__stats" aria-label="At a glance">
-          <li><b>&lt;2s</b>to every answer</li>
-          <li><b>24/7</b>selling, sale nights too</li>
-          <li><b>&lt;24h</b>to learn your catalog</li>
-          <li><b>₹0</b>to start the pilot</li>
-        </ul>
-        <p class="hero__note">Demo on the Velour demo store</p>
-
-        <div class="story__stage" aria-hidden="true">
-          <div class="feed feed--l">
-            <p class="feed__card"><span class="feed__tag feed__tag--ok">Cart saved</span><b>+₹2,599</b><span>Wrap Midi Dress · exit intent · 2:14 AM</span></p>
-            <p class="feed__card"><span class="feed__tag">Answered in 1.4s</span><b>“Will it fit?”</b><span>Sizing doubt on a product page</span></p>
-          </div>
-          <div class="feed feed--r">
-            <p class="feed__card"><span class="feed__tag feed__tag--ok">Upsell</span><b>+₹3,499</b><span>Utility Bomber Jacket · cart over ₹2,000</span></p>
-            <p class="feed__card"><span class="feed__tag">Order tracked</span><b>“Where’s my order?”</b><span>Answered without a human</span></p>
-          </div>
-          <div class="win">
-            <div class="win__bar">
-              <i></i><i></i><i></i>
-              <span class="win__url">velour.store/products/wrap-midi-dress</span>
-              <span class="win__badge story__badge">Browsing</span>
-            </div>
-            <div class="pdp">
-              <div class="pdp__img"><img src="assets/img/dress.webp" alt="" width="405" height="442"></div>
-              <div class="pdp__info">
-                <p class="pdp__brand">Velour</p>
-                <p class="pdp__name">Wrap Midi Dress</p>
-                <p class="pdp__price">₹2,599</p>
-                <div class="pdp__sizes"><span>XS</span><span class="story__size">S</span><span>M</span><span>L</span></div>
-                <span class="pdp__add story__add">Add to cart</span>
+      <!-- One saved sale, played on a loop -->
+      <div class="wrap">
+        <div class="story" id="story">
+          <div class="story__stage" aria-hidden="true">
+            <div class="win">
+              <div class="win__bar">
+                <i></i><i></i><i></i>
+                <span class="win__url">velour.store/products/wrap-midi-dress</span>
+                <span class="win__badge story__badge">Browsing</span>
               </div>
-              <span class="story__cart"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg><b>0</b></span>
-            </div>
-
-            <div class="sbox">
-              <p class="pop__who"><span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>Sahaay</p>
-              <p class="sbox__open">Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?</p>
-              <span class="sbox__btn sbox__btn--help">Help me pick</span>
-              <div class="sbox__thread">
-                <p class="sbox__me">I’m usually an S. Will it fit?</p>
-                <p class="sbox__typing"><i></i><i></i><i></i></p>
-                <p class="sbox__bot">S fits true to size, and it’s in stock in Terracotta. Add it to your cart?</p>
-                <span class="sbox__btn sbox__btn--add">Add S to cart</span>
+              <div class="pdp">
+                <div class="pdp__img"><img src="assets/img/dress.webp" alt="" width="405" height="442"></div>
+                <div class="pdp__info">
+                  <p class="pdp__brand">Velour</p>
+                  <p class="pdp__name">Wrap Midi Dress</p>
+                  <p class="pdp__price">₹2,599</p>
+                  <div class="pdp__sizes"><span>XS</span><span class="story__size">S</span><span>M</span><span>L</span></div>
+                  <span class="pdp__add story__add">Add to cart</span>
+                  <div class="pdp__meta">
+                    <p><b>Delivery</b>4 to 7 business days across India</p>
+                    <p><b>Returns</b>Within 14 days, unworn with tags</p>
+                  </div>
+                </div>
+                <span class="cartpill story__cart"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg><b>0</b></span>
               </div>
+              <div class="sbox">
+                <p class="who"><span class="orb orb--sm"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay</p>
+                <p class="sbox__open">Leaving already? The Wrap Midi Dress runs true to size. Want help picking yours?</p>
+                <span class="chipbtn sbox__help">Help me pick</span>
+                <div class="sbox__thread">
+                  <p class="sbox__me">I’m usually an S. Will it fit?</p>
+                  <p class="sbox__typing"><i></i><i></i><i></i></p>
+                  <p class="sbox__bot">S fits true to size, and it’s in stock in Terracotta. Add it to your cart?</p>
+                  <span class="chipbtn sbox__add">Add S to cart</span>
+                </div>
+              </div>
+              <span class="story__toast">+1 sale saved · ₹2,599</span>
+              <svg class="cursor story__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
             </div>
-            <span class="story__toast">+1 sale saved · ₹2,599</span>
-            <svg class="story__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ THE PROBLEM: 100 visitors, scroll to watch them leave ============ -->
-    <section class="leak" id="why">
-      <div class="leak__sticky">
-        <div class="leak__copy">
-          <p class="eyebrow eyebrow--left">The problem</p>
-          <h2 class="display display--left">You pay for every visitor. <em>Then you leave them alone.</em></h2>
-          <ol class="leak__beats">
-            <li class="is-on"><b>You pay to bring them in.</b>Ads, influencers, SEO: every visit to your store has a cost.</li>
-            <li><b>They arrive with a question.</b>Will it fit? When will it arrive? Can I return it?</li>
-            <li><b>Nobody answers, so they leave.</b>Most shoppers never ask, so a chat box that waits never hears them. 97 in 100 go without buying.</li>
+          <ol class="story__steps" aria-label="What the demo shows">
+            <li class="is-on"><b>Spots the moment</b><span>The cursor heads for the close tab.</span><i class="bar"></i></li>
+            <li><b>Speaks first</b><span>Sahaay opens with help, not a discount.</span><i class="bar"></i></li>
+            <li><b>Saves the sale</b><span>The right size goes in the cart.</span><i class="bar"></i></li>
           </ol>
         </div>
-        <div class="leak__viz" aria-hidden="true">
-          <div class="crowd" id="crowd"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="leak__qs">
-            <span style="--x:12%;--y:18%">Will it fit?</span>
-            <span style="--x:58%;--y:8%">Is COD available?</span>
-            <span style="--x:30%;--y:46%">When will it arrive?</span>
-            <span style="--x:66%;--y:56%">Can I return it?</span>
-            <span style="--x:8%;--y:74%">Is it in stock in M?</span>
-          </div>
-          <p class="leak__count"><b id="leak-left">0</b> left without buying · <b class="green" id="leak-bought">0</b> bought</p>
-        </div>
       </div>
-      <p class="leak__src">Source: Monetate, share of visitors who leave without buying.</p>
     </section>
 
-    <!-- ============ QUESTIONS BAND: hover a question to hear Sahaay's answer ============ -->
-    <section class="band band--ink" aria-labelledby="asks-title">
-      <p class="eyebrow eyebrow--light" id="asks-title">What shoppers ask, answered in under 2 seconds</p>
-      <p class="asks__hint">Hover or tap a question to see Sahaay’s answer</p>
+    <!-- 2 · The problem: why they should care, ending in their own number -->
+    <section class="section problem" id="why">
+      <div class="wrap">
+        <div class="problem__grid">
+          <div class="problem__copy">
+            <p class="eyebrow eyebrow--left">The problem</p>
+            <h2 class="display display--left">You pay for every visitor. <em>Then you leave them alone.</em></h2>
+            <ol class="beats" id="beats">
+              <li><b>You pay to bring them in.</b>Ads, influencers, SEO: every visit to your store has a cost.</li>
+              <li><b>They arrive with a question.</b>Will it fit? When will it arrive? Can I return it?</li>
+              <li><b>Nobody answers, so they leave.</b>Most never ask, so a chat box that waits never hears them. 97 in 100 go without buying.</li>
+            </ol>
+          </div>
+          <div class="crowd-card" id="crowd-card" aria-hidden="true">
+            <div class="crowd" id="crowd"></div>
+            <div class="crowd__qs">
+              <span style="--x:6%;--y:12%">Will it fit?</span>
+              <span style="--x:55%;--y:4%">Is COD available?</span>
+              <span style="--x:28%;--y:40%">When will it arrive?</span>
+              <span style="--x:62%;--y:52%">Can I return it?</span>
+              <span style="--x:4%;--y:70%">Is it in stock in M?</span>
+            </div>
+            <p class="crowd__count"><b id="crowd-left">0</b> left without buying <span>·</span> <b class="ok" id="crowd-bought">0</b> bought</p>
+          </div>
+        </div>
+
+        <div class="calc" id="calc">
+          <div class="calc__head">
+            <h3>What is a silent store <em>costing you?</em></h3>
+            <p>Move the sliders to your numbers.</p>
+          </div>
+          <div class="calc__body">
+            <div class="calc__inputs">
+              <label class="calc__row" for="c-visitors"><span>Monthly visitors</span><output id="o-visitors" for="c-visitors">20,000</output></label>
+              <input type="range" id="c-visitors" min="1000" max="200000" step="1000" value="20000">
+              <label class="calc__row" for="c-aov"><span>Average order value</span><output id="o-aov" for="c-aov">₹2,000</output></label>
+              <input type="range" id="c-aov" min="300" max="10000" step="100" value="2000">
+              <label class="calc__row" for="c-rate"><span>Leaving visitors Sahaay wins back</span><output id="o-rate" for="c-rate">1%</output></label>
+              <input type="range" id="c-rate" min="0.5" max="5" step="0.5" value="1">
+            </div>
+            <div class="calc__out" aria-live="polite">
+              <p class="calc__line"><span>Leave without buying</span><b id="r-leave">19,400</b></p>
+              <p class="calc__line"><span>Extra orders a month</span><b id="r-orders">194</b></p>
+              <p class="calc__total"><span>You could win back</span><b id="r-rev">₹3.9L</b><small id="r-year">a month · ₹46.6L a year</small></p>
+              <a href="#pilot" class="btn btn--primary btn--block" data-cta="calculator"><span>Win back <span id="r-cta">₹3.9L</span> a month <span class="calc__ctasep">·</span> Claim free pilot</span></a>
+            </div>
+          </div>
+          <p class="fine">Illustrative: you choose the rate. 97% of visitors leave without buying (Monetate).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · The bridge: the questions nobody answers -->
+    <section class="asks" aria-labelledby="asks-title">
+      <div class="wrap">
+        <h2 class="asks__title" id="asks-title">Every one of these is <em>a sale waiting for an answer.</em></h2>
+        <p class="asks__hint">Hover or tap a question to see how Sahaay answers it.</p>
+      </div>
       <div class="marquee">
-        <div class="marquee__track">
-          <button type="button" class="ask" data-a="Tell me the occasion and your usual size, and I’ll pick a few pieces that fit.">What would you recommend for me?</button><button type="button" class="ask" data-a="Yes, the Wrap Midi Dress is in stock in XS, in Terracotta and Ink Blue.">Do you have this in XS?</button><button type="button" class="ask" data-a="Order VEL-ACE0F49A has shipped. You can track it right here in the chat.">Where’s my order?</button><button type="button" class="ask" data-a="Returns are accepted within 14 days of delivery, unworn with tags attached.">What’s your return policy?</button><button type="button" class="ask" data-a="It’s viscose crepe: light and breathable, so it works well for summer.">Is the fabric breathable?</button><button type="button" class="ask" data-a="Orders reach most of India, including 560001, in 4 to 7 business days.">When will it reach 560001?</button><button type="button" class="ask" data-a="Yes. Report it here with a photo and it goes straight to the team for review.">Can I return a damaged item?</button><button type="button" class="ask" data-a="Terracotta and Ink Blue are both in stock in XS, S, M and L.">Which colour is in stock?</button>
-          <button type="button" class="ask" data-a="Tell me the occasion and your usual size, and I’ll pick a few pieces that fit." tabindex="-1" aria-hidden="true">What would you recommend for me?</button><button type="button" class="ask" data-a="Yes, the Wrap Midi Dress is in stock in XS, in Terracotta and Ink Blue." tabindex="-1" aria-hidden="true">Do you have this in XS?</button><button type="button" class="ask" data-a="Order VEL-ACE0F49A has shipped. You can track it right here in the chat." tabindex="-1" aria-hidden="true">Where’s my order?</button><button type="button" class="ask" data-a="Returns are accepted within 14 days of delivery, unworn with tags attached." tabindex="-1" aria-hidden="true">What’s your return policy?</button><button type="button" class="ask" data-a="It’s viscose crepe: light and breathable, so it works well for summer." tabindex="-1" aria-hidden="true">Is the fabric breathable?</button><button type="button" class="ask" data-a="Orders reach most of India, including 560001, in 4 to 7 business days." tabindex="-1" aria-hidden="true">When will it reach 560001?</button><button type="button" class="ask" data-a="Yes. Report it here with a photo and it goes straight to the team for review." tabindex="-1" aria-hidden="true">Can I return a damaged item?</button><button type="button" class="ask" data-a="Terracotta and Ink Blue are both in stock in XS, S, M and L." tabindex="-1" aria-hidden="true">Which colour is in stock?</button>
-        </div>
+        <div class="marquee__track" id="asks-track"></div>
       </div>
-      <div class="asks__answer" aria-live="polite">
-        <span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>
-        <p id="asks-answer"><span class="asks__q">Do you have this in XS?</span>Yes, the Wrap Midi Dress is in stock in XS, in Terracotta and Ink Blue.</p>
+      <div class="wrap">
+        <div class="asks__answer" aria-live="polite">
+          <span class="orb orb--sm"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>
+          <p id="asks-answer"><span class="asks__q">Do you have this in XS?</span>Yes, the Wrap Midi Dress is in stock in XS, in Terracotta and Ink Blue.</p>
+        </div>
       </div>
     </section>
 
-    <!-- ============ COST OF SILENCE (violet): interactive calculator ============ -->
-    <section class="band band--violet" id="problem">
-      <h2 class="display display--light">What is a silent store <em>costing you?</em></h2>
-      <p class="band__sub">97 in 100 visitors leave without buying, and most never say why. Move the sliders to see what winning back even a few of them is worth.</p>
-
-      <div class="calc">
-        <div class="calc__inputs">
-          <label class="calc__row" for="c-visitors"><span>Monthly visitors</span><output id="o-visitors" for="c-visitors">20,000</output></label>
-          <input type="range" id="c-visitors" min="1000" max="200000" step="1000" value="20000">
-          <label class="calc__row" for="c-aov"><span>Average order value</span><output id="o-aov" for="c-aov">₹2,000</output></label>
-          <input type="range" id="c-aov" min="300" max="10000" step="100" value="2000">
-          <label class="calc__row" for="c-rate"><span>Leaving visitors Sahaay turns into buyers</span><output id="o-rate" for="c-rate">1%</output></label>
-          <input type="range" id="c-rate" min="0.5" max="5" step="0.5" value="1">
+    <!-- 4 · The difference: waiting vs speaking first -->
+    <section class="section" id="difference">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">The difference</p>
+          <h2 class="display">A chat box that waits, <em>or a salesperson who speaks first.</em></h2>
+          <p class="lede">Same shopper, same moment of doubt. One store waits to be asked. The other says hello.</p>
         </div>
-        <div class="calc__out" aria-live="polite">
-          <p><span>Leave without buying</span><b id="r-leave">19,400</b><small>visitors a month</small></p>
-          <p><span>Extra orders</span><b id="r-orders">194</b><small>a month</small></p>
-          <p class="calc__big"><span>Extra revenue</span><b id="r-rev">₹3.9L</b><small id="r-year">a month · ₹46.6L a year</small></p>
-        </div>
-      </div>
-      <p class="band__src">Illustrative: you choose the rate. 97% of visitors leave without buying (Monetate); proactive chat converts 3.5x better than waiting (McKinsey).</p>
-    </section>
 
-
-    <!-- ============ WAITING vs SPEAKING FIRST: the core idea ============ -->
-    <section class="vsx" id="waiting">
-      <div class="section-head">
-        <p class="eyebrow">The difference</p>
-        <h2 class="display">A chat box that waits, <em>or a salesperson who speaks first.</em></h2>
-        <p class="sub">Same shopper, same moment of doubt. One store waits to be asked. The other says hello.</p>
-      </div>
-      <div class="vsx__split" id="vsx" aria-hidden="true">
-        <figure class="vsx__side vsx__side--wait">
-          <figcaption>Chat that waits</figcaption>
-          <div class="mini mini--wait">
-            <div class="win__bar"><i></i><i></i><i></i><span class="win__url">velour.store</span></div>
-            <div class="mini__page">
-              <img src="assets/img/dress.webp" alt="" width="405" height="442">
-              <div><p class="mini__name">Wrap Midi Dress</p><p class="mini__price">₹2,599</p><span class="mini__add">Add to cart</span></div>
-              <span class="mini__chat">Chat with us</span>
-              <p class="mini__status">Waiting for the shopper to ask…</p>
-              <div class="mini__gone"><b>Shopper left</b><span>₹0 · no one said a word</span></div>
-            </div>
-            <svg class="mini__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
-          </div>
-        </figure>
-        <span class="vsx__vs">vs</span>
-        <figure class="vsx__side vsx__side--sahaay">
-          <figcaption>Sahaay</figcaption>
-          <div class="mini mini--sahaay">
-            <div class="win__bar"><i></i><i></i><i></i><span class="win__url">velour.store</span></div>
-            <div class="mini__page">
-              <img src="assets/img/dress.webp" alt="" width="405" height="442">
-              <div><p class="mini__name">Wrap Midi Dress</p><p class="mini__price">₹2,599</p><span class="mini__add">Add to cart</span></div>
-              <span class="mini__orb"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="12" height="16"></span>
-              <p class="mini__status">Exit intent spotted</p>
-              <div class="mini__pop">
-                <p class="mini__open">Leaving already? It runs true to size. Want help picking yours?</p>
-                <p class="mini__me">I’m an S. Will it fit?</p>
-                <p class="mini__bot">S fits true to size, and it’s in stock. Add it to your cart?</p>
+        <div class="vs" id="vs" data-phase="0" aria-hidden="true">
+          <figure class="vs__side vs__side--wait">
+            <figcaption>Chat that waits</figcaption>
+            <div class="mini">
+              <div class="win__bar"><i></i><i></i><i></i><span class="win__url">store.in</span></div>
+              <div class="mini__page">
+                <img src="assets/img/dress.webp" alt="" width="405" height="442">
+                <div><p class="mini__name">Wrap Midi Dress</p><p class="mini__price">₹2,599</p><span class="mini__add">Add to cart</span></div>
+                <span class="mini__chat">Chat with us</span>
+                <p class="mini__status">Waiting for the shopper to ask…</p>
+                <div class="mini__result mini__result--lost"><b>Shopper left</b><span>₹0 · nobody said a word</span></div>
               </div>
-              <div class="mini__won"><b>+₹2,599</b><span>Added to cart</span></div>
+              <svg class="cursor mini__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
             </div>
-            <svg class="mini__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
-          </div>
-        </figure>
-      </div>
-      <dl class="vsx__rows">
-        <div><dt>Who starts</dt><dd class="w">The shopper, if they bother</dd><dd class="s">Sahaay, at the moment of doubt</dd></div>
-        <div><dt>Who it reaches</dt><dd class="w">The few who ask</dd><dd class="s">Everyone showing a signal</dd></div>
-        <div><dt>When</dt><dd class="w">After they’re stuck</dd><dd class="s">Before they leave</dd></div>
-        <div><dt>What you get</dt><dd class="w">Support tickets</dd><dd class="s">Saved carts and orders</dd></div>
-      </dl>
-      <p class="vsx__src">Proactive chat converts 3.5x better than waiting for the shopper (McKinsey).</p>
-    </section>
-
-    <!-- ============ PROACTIVE ============ -->
-    <section class="pro" id="proactive">
-      <div class="section-head">
-        <p class="eyebrow">Proactive selling</p>
-        <h2 class="display">How Sahaay decides <em>when to speak.</em></h2>
-        <p class="sub">Every shopper sends signals. Sahaay reads them as they happen, works out what the shopper is unsure about, and speaks at that moment with an answer from your own store.</p>
-      </div>
-
-      <!-- The core loop: signals in, the right words out -->
-      <ol class="think" aria-label="How Sahaay thinks">
-        <li class="think__step">
-          <span class="think__n">1</span><h3>Watch</h3>
-          <p>How they move, what they look at, how long they pause, what’s in their cart.</p>
-          <div class="think__chips" aria-hidden="true"><span>cursor ↑ tab</span><span>40s on product</span><span>size chart</span><span>cart ₹2,599</span></div>
-        </li>
-        <li class="think__step">
-          <span class="think__n">2</span><h3>Understand</h3>
-          <p>Curiosity, doubt or a goodbye? Sahaay reads intent from the pattern, not from one click.</p>
-          <div class="think__meter" aria-hidden="true"><span>Intent to leave</span><i><b></b></i></div>
-        </li>
-        <li class="think__step">
-          <span class="think__n">3</span><h3>Decide</h3>
-          <p>Speak now or stay quiet. If now, lead with the one thing that answers the doubt.</p>
-          <div class="think__choice" aria-hidden="true"><span class="no">Stay quiet</span><span class="yes">Speak: sizing</span></div>
-        </li>
-        <li class="think__step">
-          <span class="think__n">4</span><h3>Speak</h3>
-          <p>In your brand’s voice, from your catalog and policies, in under 2 seconds.</p>
-          <div class="think__bubble" aria-hidden="true">Leaving already? It runs true to size.</div>
-        </li>
-      </ol>
-
-      <div class="pro__sub">
-        <h3>Four of the moments it catches. <em>Try them.</em></h3>
-        <p>Every store is different, so the full set of signals is tuned to yours during the pilot.</p>
-      </div>
-
-      <!-- Sandbox: the visitor plays the shopper and sets off each trigger -->
-      <div class="play" id="play">
-        <div class="play__top">
-          <p class="play__goal"><b>Your turn.</b> <span class="play__how">Be the shopper: head for the close tab, linger, scroll down, or add the dress to your cart.</span></p>
-          <ul class="play__found" aria-label="Triggers found">
-            <li data-t="exit"><i aria-hidden="true"></i>Exit intent</li>
-            <li data-t="time"><i aria-hidden="true"></i>Time on page</li>
-            <li data-t="scroll"><i aria-hidden="true"></i>Scroll depth</li>
-            <li data-t="cart"><i aria-hidden="true"></i>Cart value</li>
-          </ul>
-        </div>
-
-        <div class="win play__win" id="play-win">
-          <div class="win__bar">
-            <button type="button" class="win__nav" data-exit aria-label="Back (sets off exit intent)">←</button>
-            <span class="win__url">velour.store/products/wrap-midi-dress</span>
-            <span class="win__badge" id="play-badge">0s on page</span>
-            <button type="button" class="win__nav" data-exit aria-label="Close tab (sets off exit intent)">×</button>
-          </div>
-          <div class="play__page" id="play-page" tabindex="0" aria-label="Velour product page, scrollable">
-            <div class="pdp">
-              <div class="pdp__img"><img src="assets/img/dress.webp" alt="Wrap Midi Dress in Terracotta on the Velour demo store" width="405" height="442"></div>
-              <div class="pdp__info">
-                <p class="pdp__brand">Velour</p>
-                <p class="pdp__name">Wrap Midi Dress</p>
-                <p class="pdp__price">₹2,599</p>
-                <div class="pdp__sizes" role="group" aria-label="Size"><button type="button">XS</button><button type="button" class="on">S</button><button type="button">M</button><button type="button">L</button></div>
-                <button type="button" class="pdp__add" id="play-add">Add to cart</button>
-                <p class="play__scrollhint">Scroll for details ↓</p>
+          </figure>
+          <span class="vs__mid">vs</span>
+          <figure class="vs__side vs__side--sahaay">
+            <figcaption>Sahaay</figcaption>
+            <div class="mini">
+              <div class="win__bar"><i></i><i></i><i></i><span class="win__url">store.in</span></div>
+              <div class="mini__page">
+                <img src="assets/img/dress.webp" alt="" width="405" height="442">
+                <div><p class="mini__name">Wrap Midi Dress</p><p class="mini__price">₹2,599</p><span class="mini__add">Add to cart</span></div>
+                <span class="orb orb--md mini__orb"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="12" height="16"></span>
+                <p class="mini__status">Exit intent spotted</p>
+                <div class="mini__chatlog">
+                  <p class="m-bot m-1">Leaving already? It runs true to size. Want help picking yours?</p>
+                  <p class="m-me m-2">I’m an S. Will it fit?</p>
+                  <p class="m-bot m-3">S fits true to size, and it’s in stock. Add it to your cart?</p>
+                </div>
+                <div class="mini__result mini__result--won"><b>+₹2,599</b><span>Added to cart</span></div>
               </div>
-              <span class="play__cart"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg><b id="play-count">0</b></span>
+              <svg class="cursor mini__cursor" viewBox="0 0 16 22"><path d="M1 1v17l4.6-4.2 3.3 7.2 2.8-1.3-3.2-7H15z"/></svg>
             </div>
-            <div class="play__more">
-              <section><h4>Details</h4><p>A wrap midi with a smocked waist and tiered skirt. Ties at the shoulder.</p></section>
-              <section><h4>Size &amp; fit</h4><p>Runs true to size. The model is 5′7″ and wears S.</p></section>
-              <section><h4>Fabric &amp; care</h4><p>Viscose crepe. Machine wash cold, inside out, with similar colours.</p></section>
-              <section id="play-delivery"><h4>Delivery &amp; returns</h4><p>Delivered in 4 to 7 business days across India, free above ₹1,999. Returns within 14 days, unworn with tags.</p></section>
-            </div>
-          </div>
-          <div class="pop is-out" id="play-pop" role="status">
-            <p class="pop__who"><span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>Sahaay <span class="pop__why" id="play-why"></span></p>
-            <p class="pop__msg" id="play-msg"></p>
-            <button type="button" class="pop__btn" id="play-btn">Got it</button>
-          </div>
-          <span class="launcher" aria-hidden="true"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="16" height="21"></span>
+          </figure>
         </div>
 
-        <div class="play__foot">
-          <p class="play__status" id="play-status" aria-live="polite"><b id="play-n">0</b> of 4 moments caught</p>
-          <button type="button" class="btn btn--plain btn--nav" id="play-auto">Show me instead</button>
-        </div>
+        <dl class="rows">
+          <div><dt>Who starts</dt><dd class="w">The shopper, if they bother</dd><dd class="s">Sahaay, at the moment of doubt</dd></div>
+          <div><dt>Who it reaches</dt><dd class="w">The few who ask</dd><dd class="s">Everyone showing a signal</dd></div>
+          <div><dt>When</dt><dd class="w">After they’re stuck</dd><dd class="s">Before they leave</dd></div>
+          <div><dt>What you get</dt><dd class="w">Support tickets</dd><dd class="s">Saved carts and orders</dd></div>
+        </dl>
+        <p class="fine fine--center">Proactive chat converts 3.5x better than waiting for the shopper (McKinsey).</p>
       </div>
-
-
-      <div class="pro__grid">
-        <div class="pro__card">
-          <div class="pro__head"><h3>You set the rules</h3><span class="chip chip--ok" id="rules-live">4 triggers live</span></div>
-          <ul class="rules">
-            <li><button type="button" class="tog is-on" role="switch" aria-checked="true" data-rule="exit" aria-label="Exit intent"></button><span><b>Exit intent</b>Product pages · Offer help with sizing</span></li>
-            <li><button type="button" class="tog is-on" role="switch" aria-checked="true" data-rule="time" aria-label="Time on page"></button><span><b>On page for 8s</b>Any product · Answer fabric and fit</span></li>
-            <li><button type="button" class="tog is-on" role="switch" aria-checked="true" data-rule="scroll" aria-label="Scroll depth"></button><span><b>Scrolled to delivery</b>Product pages · Share delivery and returns</span></li>
-            <li><button type="button" class="tog is-on" role="switch" aria-checked="true" data-rule="cart" aria-label="Cart value"></button><span><b>Cart over ₹2,000</b>Cart · Suggest a matching item</span></li>
-          </ul>
-          <p class="pro__note">Flip a switch and try the store above: switched-off triggers stay quiet. On your store you choose the signals, the pages and what Sahaay leads with.</p>
-        </div>
-        <div class="pro__card pro__card--more">
-          <div class="pro__head"><h3>And the moments only your store has</h3></div>
-          <p class="pro__lead">A sale-night rush, a size that always confuses, a product people compare for days. During the pilot we watch where your shoppers hesitate and set Sahaay up to speak right there.</p>
-          <a href="#pilot" class="link">See it on your store <span aria-hidden="true">›</span></a>
-        </div>
-      </div>
-
-      <div class="center"><a href="#pilot" class="btn btn--lav" data-cta="proactive">Turn it on for your store</a></div>
     </section>
 
-    <!-- ============ HOW IT WORKS ============ -->
-    <section class="how" id="how">
-      <svg class="how__swoosh" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true"><path d="M -100 760 C 300 900, 520 300, 820 340 C 1120 380, 1100 760, 1540 620"/></svg>
-      <div class="section-head">
-        <p class="eyebrow">How it works</p>
-        <h2 class="display">Sell the way <em>your best salesperson would.</em></h2>
-      </div>
+    <!-- 5 · How it works: the thinking, then try it -->
+    <section class="section section--tint" id="how">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">How it works</p>
+          <h2 class="display">How Sahaay decides <em>when to speak.</em></h2>
+          <p class="lede">Every shopper sends signals. Sahaay reads them as they happen, works out what’s holding the shopper back, and speaks at that moment with an answer from your own store.</p>
+        </div>
 
-      <div class="how__grid">
-        <ol class="how__list" aria-hidden="true">
-          <li class="is-on">Learns your catalog</li>
-          <li>Answers every question</li>
-          <li>Closes the sale</li>
-          <li>Handles the after</li>
+        <ol class="think" aria-label="How Sahaay thinks">
+          <li><span class="think__n">1</span><h3>Watch</h3><p>How they move, what they look at, how long they pause, what’s in the cart.</p>
+            <div class="think__viz think__chips" aria-hidden="true"><span>cursor ↑ tab</span><span>40s on product</span><span>size chart</span><span>cart ₹2,599</span></div></li>
+          <li><span class="think__n">2</span><h3>Understand</h3><p>Curiosity, doubt or a goodbye? It reads intent from the pattern, not one click.</p>
+            <div class="think__viz think__meter" aria-hidden="true"><span>Intent to leave</span><i><b></b></i></div></li>
+          <li><span class="think__n">3</span><h3>Decide</h3><p>Speak now or stay quiet. If now, lead with the one thing that answers the doubt.</p>
+            <div class="think__viz think__choice" aria-hidden="true"><span>Stay quiet</span><span class="yes">Speak: sizing</span></div></li>
+          <li><span class="think__n">4</span><h3>Speak</h3><p>In your brand’s voice, from your catalog and policies, in under 2 seconds.</p>
+            <div class="think__viz" aria-hidden="true"><span class="think__bubble">Leaving already? It runs true to size.</span></div></li>
         </ol>
 
-        <div class="how__media" aria-hidden="true">
-          <figure class="shot is-on"><div class="mock mock--catalog" data-tpl="catalog"></div><span class="tag">Catalog learned</span></figure>
-          <figure class="shot"><img src="assets/img/widget-recommend.webp" alt="" width="487" height="725" loading="lazy"><span class="tag">Stock confirmed</span></figure>
-          <figure class="shot"><img src="assets/img/widget-product.webp" alt="" width="502" height="723" loading="lazy"><span class="tag">Sent to your checkout</span></figure>
-          <figure class="shot"><img src="assets/img/widget-tracking.webp" alt="" width="501" height="728" loading="lazy"><span class="tag">Order tracked</span></figure>
-        </div>
+        <!-- Sandbox: the visitor plays the shopper -->
+        <div class="play" id="play">
+          <div class="play__head">
+            <h3>Try it. <em>You’re the shopper.</em></h3>
+            <p>Four of the moments Sahaay catches. Every store has its own; we tune them to yours during the pilot.</p>
+          </div>
+          <div class="play__grid">
+            <div class="win play__win" id="play-win">
+              <div class="win__bar">
+                <button type="button" class="win__nav" data-exit aria-label="Back (sets off exit intent)">←</button>
+                <span class="win__url">velour.store/products/wrap-midi-dress</span>
+                <span class="win__badge" id="play-badge">0s on page</span>
+                <button type="button" class="win__nav" data-exit aria-label="Close tab (sets off exit intent)">×</button>
+              </div>
+              <div class="play__page" id="play-page" tabindex="0" aria-label="Velour product page, scrollable">
+                <div class="pdp">
+                  <div class="pdp__img"><img src="assets/img/dress.webp" alt="Wrap Midi Dress in Terracotta on the Velour demo store" width="405" height="442"></div>
+                  <div class="pdp__info">
+                    <p class="pdp__brand">Velour</p>
+                    <p class="pdp__name">Wrap Midi Dress</p>
+                    <p class="pdp__price">₹2,599</p>
+                    <div class="pdp__sizes" role="group" aria-label="Size"><button type="button">XS</button><button type="button" class="on">S</button><button type="button">M</button><button type="button">L</button></div>
+                    <button type="button" class="pdp__add" id="play-add">Add to cart</button>
+                    <p class="play__scrollhint">Scroll for details ↓</p>
+                  </div>
+                  <span class="cartpill" id="play-cart"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/></svg><b id="play-count">0</b></span>
+                </div>
+                <div class="play__more">
+                  <section><h4>Details</h4><p>A wrap midi with a smocked waist and tiered skirt. Ties at the shoulder.</p></section>
+                  <section><h4>Size &amp; fit</h4><p>Runs true to size. The model is 5′7″ and wears S.</p></section>
+                  <section><h4>Fabric &amp; care</h4><p>Viscose crepe. Machine wash cold, inside out, with similar colours.</p></section>
+                  <section id="play-delivery"><h4>Delivery &amp; returns</h4><p>Delivered in 4 to 7 business days across India, free above ₹1,999. Returns within 14 days, unworn with tags.</p></section>
+                </div>
+              </div>
+              <div class="pop is-out" id="play-pop" role="status">
+                <p class="who"><span class="orb orb--sm"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay <span class="pop__why" id="play-why"></span></p>
+                <p class="pop__msg" id="play-msg"></p>
+                <button type="button" class="chipbtn" id="play-btn">Got it</button>
+              </div>
+            </div>
 
-        <div class="how__steps">
-          <article class="how__step" data-step="0">
-            <figure class="shot shot--m"><div class="mock mock--catalog" data-tpl="catalog"></div><span class="tag">Catalog learned</span></figure>
-            <h3>Learns your catalog</h3>
-            <p>Share your store link. Sahaay reads every product, size, colour, price and fabric, plus your shipping and returns policies, in under 24 hours.</p>
-          </article>
-          <article class="how__step" data-step="1">
-            <figure class="shot shot--m"><img src="assets/img/widget-recommend.webp" alt="Sahaay recommending the Wrap Midi Dress with price, fabric and colours in stock" width="487" height="725" loading="lazy"><span class="tag">Stock confirmed</span></figure>
-            <h3>Answers every question</h3>
-            <p>“What would you recommend?”, “Is this in XS?”, “Is the fabric breathable?” Sahaay answers from your catalog in under 2 seconds and suggests what fits.</p>
-          </article>
-          <article class="how__step" data-step="2">
-            <figure class="shot shot--m"><img src="assets/img/widget-product.webp" alt="Product card in chat with size and colour pickers and an add to cart button" width="502" height="723" loading="lazy"><span class="tag">Sent to your checkout</span></figure>
-            <h3>Closes the sale</h3>
-            <p>Shoppers pick a size and colour and add to cart right in the chat, then go straight to your own checkout. Payments stay on your store, which is why Sahaay never charges per order.</p>
-          </article>
-          <article class="how__step" data-step="3">
-            <figure class="shot shot--m"><img src="assets/img/widget-tracking.webp" alt="Order tracking in chat showing an order as shipped" width="501" height="728" loading="lazy"><span class="tag">Order tracked</span></figure>
-            <h3>Handles the after</h3>
-            <p>“Where’s my order?” gets a live tracking answer in chat, so your team stops copy-pasting AWB numbers.</p>
-          </article>
+            <div class="triggers">
+              <ul class="triggers__list">
+                <li data-t="exit"><span class="tick" aria-hidden="true"></span><span class="triggers__txt"><b>Exit intent</b><span class="how-d">Move your cursor up to the tab bar, or press ← or ×</span><span class="how-m">Tap ← or ×</span></span><button type="button" class="tog is-on" role="switch" aria-checked="true" aria-label="Exit intent trigger"></button></li>
+                <li data-t="time"><span class="tick" aria-hidden="true"></span><span class="triggers__txt"><b>Time on page</b><span>Stay on the page for 8 seconds</span></span><button type="button" class="tog is-on" role="switch" aria-checked="true" aria-label="Time on page trigger"></button></li>
+                <li data-t="scroll"><span class="tick" aria-hidden="true"></span><span class="triggers__txt"><b>Scroll depth</b><span>Scroll down to delivery &amp; returns</span></span><button type="button" class="tog is-on" role="switch" aria-checked="true" aria-label="Scroll depth trigger"></button></li>
+                <li data-t="cart"><span class="tick" aria-hidden="true"></span><span class="triggers__txt"><b>Cart value</b><span>Add the dress (over ₹2,000)</span></span><button type="button" class="tog is-on" role="switch" aria-checked="true" aria-label="Cart value trigger"></button></li>
+              </ul>
+              <p class="triggers__status" id="play-status" aria-live="polite"><b id="play-n">0</b> of <span id="play-live">4</span> moments caught</p>
+              <div class="triggers__actions">
+                <button type="button" class="btn btn--ghost btn--sm" id="play-auto">Show me instead</button>
+                <a href="#pilot" class="btn btn--primary btn--sm triggers__cta" id="play-cta" data-cta="sandbox">Want this on your store? Claim free pilot</a>
+              </div>
+              <p class="fine">Switch a trigger off and it stays quiet, just like on your store.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ FEATURES ============ -->
-    <section class="easy" id="easy">
-      <div class="section-head">
-        <p class="eyebrow">Sahaay makes it easy</p>
-        <h2 class="display">Built around <em>how you sell,</em><br>not how we think you should.</h2>
-      </div>
+    <!-- 6 · Everything else it handles -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Beyond the first hello</p>
+          <h2 class="display">From the first question <em>to the last refund.</em></h2>
+        </div>
 
-      <div class="bento">
-        <article class="tile tile--cart">
-          <div class="tile__copy"><h3>AI cart recovery</h3><p>Contextual nudges that know what’s in the cart and why the shopper paused. Sizing doubts, delivery dates and return worries get answered before the tab closes.</p></div>
-          <div class="tile__screen">
-            <div class="scr scr--cart">
+        <div class="bento">
+          <article class="tile tile--cart">
+            <div class="tile__copy"><h3>AI cart recovery</h3><p>Nudges that know what’s in the cart and why the shopper paused. Sizing, delivery and return worries get answered before the tab closes.</p></div>
+            <div class="scr">
               <p class="scr__title">Your cart</p>
-              <div class="cartline">
-                <img src="assets/img/dress.webp" alt="" width="405" height="442">
-                <div><b>Wrap Midi Dress</b><span>XS · Terracotta × 1</span></div>
-                <b class="cartline__price">₹2,599</b>
-              </div>
-              <span class="scr__btn">Checkout</span>
-              <div class="nudge">
-                <p class="pop__who"><span class="pop__av"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="10" height="13"></span>Sahaay</p>
-                <p>Unsure about the fit? XS runs true to size, and returns are accepted within 14 days.</p>
-              </div>
+              <div class="cartline"><img src="assets/img/dress.webp" alt="" width="405" height="442"><div><b>Wrap Midi Dress</b><span>XS · Terracotta × 1</span></div><b>₹2,599</b></div>
+              <div class="nudge"><p class="who"><span class="orb orb--sm"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="9" height="12"></span>Sahaay</p><p>Unsure about the fit? XS runs true to size, and returns are accepted within 14 days.</p></div>
               <span class="chip chip--ok">Cart saved</span>
             </div>
-          </div>
-        </article>
-        <article class="tile tile--kb">
-          <div class="tile__copy"><h3>Trained on your policies</h3><p>Shipping, returns, sizing and care, learned from your store and answered in your brand’s voice. Update an entry and Sahaay uses it on the next chat.</p></div>
-          <div class="tile__screen">
-            <div class="scr scr--kb">
-              <div class="scr__head"><p class="scr__title">Knowledge base</p><span class="chip chip--ok">Learned overnight</span></div>
+          </article>
+
+          <article class="tile tile--kb">
+            <div class="tile__copy"><h3>Trained on your policies</h3><p>Learned from your store in under 24 hours and answered in your voice. Change an entry and the next chat uses it.</p></div>
+            <div class="scr">
+              <div class="scr__head"><p class="scr__title">Knowledge base</p><span class="chip chip--ok">Learned</span></div>
               <dl class="kb">
-                <div><dt>Shipping</dt><dd>Delivered in 4 to 7 business days across India. Free above ₹1,999.</dd></div>
-                <div><dt>Returns</dt><dd>Accepted within 14 days of delivery, unworn with tags attached.</dd></div>
-                <div><dt>Sizing</dt><dd>Tees and joggers run true to size. Jackets are cut slightly relaxed.</dd></div>
-                <div><dt>Fabric care</dt><dd>Machine wash cold, inside out, with similar colours.</dd></div>
+                <div><dt>Shipping</dt><dd>4 to 7 business days across India. Free above ₹1,999.</dd></div>
+                <div><dt>Returns</dt><dd>Within 14 days of delivery, unworn with tags.</dd></div>
+                <div><dt>Sizing</dt><dd>Dresses run true to size. Jackets are cut relaxed.</dd></div>
+                <div><dt>Fabric</dt><dd>Machine wash cold, inside out, with similar colours.</dd></div>
               </dl>
             </div>
-          </div>
-        </article>
-        <article class="tile tile--post">
-          <div class="tile__copy"><h3>Post-purchase on autopilot</h3><p>Tracking, returns and refunds in chat, with AI-scored damage photo verification. 80% of post-purchase queries resolved without a human.</p></div>
-          <div class="tile__screen">
-            <div class="scr scr--shot">
-              <img src="assets/img/report-crop.webp" alt="Report an issue in chat with the reason list open and Damaged item selected" width="501" height="350" loading="lazy">
-              <span class="chip chip--ok chip--float">Photo verified</span>
-            </div>
-          </div>
-        </article>
-        <article class="tile tile--dash">
-          <div class="tile__copy"><h3>Revenue you can see</h3><p>A dashboard of every conversation, saved cart and rupee Sahaay brought in, so you know exactly what it’s worth.</p></div>
-          <div class="tile__screen">
-            <div class="scr scr--dash">
-              <div class="scr__head"><p class="scr__title">Revenue from Sahaay</p><span class="scr__hint">Sample data</span></div>
-              <div class="kpis">
-                <p><span>Conversations</span><b>1,284</b></p>
-                <p><span>Carts saved</span><b>96</b></p>
-                <p><span>Revenue</span><b>₹2.4L</b></p>
-              </div>
+          </article>
+
+          <article class="tile tile--post">
+            <div class="tile__copy"><h3>After-purchase, handled</h3><p>Tracking, returns and refunds in chat, with AI-scored damage photos. About 80% resolved without a human.</p></div>
+            <div class="scr scr--shot"><img src="assets/img/report-crop.webp" alt="Report an issue in chat with Damaged item selected" width="501" height="350" loading="lazy"><span class="chip chip--ok chip--float">Photo verified</span></div>
+          </article>
+
+          <article class="tile tile--dash">
+            <div class="tile__copy"><h3>Revenue you can see</h3><p>Every conversation, saved cart and rupee Sahaay brought in, in one dashboard.</p></div>
+            <div class="scr">
+              <div class="scr__head"><p class="scr__title">This week</p><span class="scr__hint">Sample data</span></div>
               <div class="bars" aria-hidden="true"><i style="--h:38%"></i><i style="--h:46%"></i><i style="--h:42%"></i><i style="--h:58%"></i><i style="--h:64%"></i><i class="on" style="--h:78%"></i><i class="on" style="--h:92%"></i></div>
-              <div class="bars__x" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
             </div>
-          </div>
-        </article>
-        <article class="tile tile--trust">
-          <div class="tile__copy">
-            <h3>Your store <em>stays yours.</em></h3>
-            <p>Nothing executes until you say so. Every refund, return and cancellation waits in your dashboard for your OK, and Sahaay only answers from your own catalog and policies.</p>
-          </div>
-          <ul class="badges">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg>Admin approval</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 9v10"/></svg>Your catalog only</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M4 20L20 4"/></svg>No card to start</li>
-          </ul>
-        </article>
-      </div>
-    </section>
+          </article>
 
-    <!-- ============ VOICES ============ -->
-    <section class="band band--ink band--round" id="voices">
-      <p class="eyebrow eyebrow--light">Why we built it</p>
-      <h2 class="display display--light">Selling has always been <em>a conversation.</em></h2>
-
-      <div class="board">
-        <!-- Founder quote: draft copy. Replace with the founder's own words and name before launch. -->
-        <figure class="qcard qcard--founder" data-depth="0.04">
-          <div class="qcard__body">
-            <p class="qcard__name">Founder, Sahaay</p>
-            <blockquote>“Every D2C founder we met was brilliant at bringing people to their store, and then lost them in silence. Sahaay is the salesperson every online store deserves.”</blockquote>
-            <a href="#pilot" class="link">Claim a pilot spot <span aria-hidden="true">›</span></a>
-          </div>
-          <div class="qcard__side">
-            <img src="assets/logo/sahaay-monogram-white.svg" alt="" width="40" height="52">
-            <div class="qcard__stats">
-              <p><b>&lt;24h</b>to learn your catalog</p>
-              <p><b>24/7</b>selling, sale nights too</p>
-            </div>
-          </div>
-        </figure>
-
-        <figure class="qcard qcard--amber" data-depth="-0.06">
-          <blockquote>“We see our customers as invited guests to a party, and we are the hosts. It’s our job every day to make every important aspect of the customer experience a little bit better.”</blockquote>
-          <figcaption><b>Jeff Bezos</b>Founder, Amazon</figcaption>
-        </figure>
-
-        <figure class="qcard qcard--mint" data-depth="0.08">
-          <blockquote>“Get closer than ever to your customers. So close that you tell them what they need well before they realize it themselves.”</blockquote>
-          <figcaption><b>Steve Jobs</b>Co-founder, Apple</figcaption>
-        </figure>
-
-        <figure class="qcard qcard--cream" data-depth="-0.03">
-          <blockquote>“There is only one boss. The customer. And he can fire everybody in the company from the chairman on down, simply by spending his money somewhere else.”</blockquote>
-          <figcaption><b>Sam Walton</b>Founder, Walmart</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ============ PILOT ============ -->
-    <section class="pilot" id="pilot">
-      <div class="pilot__card">
-        <div class="pilot__copy">
-          <p class="eyebrow">Founding pilot</p>
-          <h2 class="display display--left">₹0 for 14 days. <em>First 10 brands.</em></h2>
-          <p>We’re onboarding the first brands by hand. Share your store link and Sahaay will be trained on your catalog within 24 hours.</p>
-          <ul class="checks">
-            <li>100 real conversations</li>
-            <li>Trained on your catalog</li>
-            <li>Full analytics dashboard</li>
-            <li>Approval on every action</li>
-          </ul>
-          <ol class="next" aria-label="What happens next">
-            <li><b>Today</b>Share your store link</li>
-            <li><b>Within 24 hours</b>Sahaay is live on your store</li>
-            <li><b>Day 14</b>We review the results together</li>
-          </ol>
-        </div>
-        <form class="form" id="pilot-form" novalidate>
-          <label for="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" placeholder="Your name" required autocomplete="name">
-          <label for="f-store">Your store URL</label>
-          <input id="f-store" name="store" type="url" inputmode="url" placeholder="yourstore.com" required autocomplete="url">
-          <label for="f-email">Work email</label>
-          <input id="f-email" name="email" type="email" placeholder="you@yourbrand.com" required autocomplete="email">
-          <input class="hp" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button type="submit" class="btn btn--ink btn--block" data-cta="form">Claim my pilot spot</button>
-          <p class="form__note" role="status" aria-live="polite">No card. We reply within one working day.</p>
-          <p class="form__alt">Rather talk first? <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" data-book data-cta="pilot-demo">Book a 20-minute call</a></p>
-        </form>
-      </div>
-    </section>
-
-    <!-- ============ FAQ ============ -->
-    <section class="faq" id="faq">
-      <div class="section-head">
-        <p class="eyebrow">FAQs</p>
-        <h2 class="display">Good <em>questions.</em></h2>
-      </div>
-      <div class="faq__box">
-        <div class="faq__qs" role="tablist" aria-label="Questions" aria-orientation="vertical">
-          <p class="faq__label">Questions</p>
-          <button role="tab" id="q0" aria-controls="faq-answer" aria-selected="true" data-a="Share your store link. Sahaay learns your catalog, policies and brand voice in under 24 hours. You add one snippet to your store and it goes live.">How long does setup take?</button>
-          <button role="tab" id="q1" aria-controls="faq-answer" aria-selected="false" data-a="No. Refunds, returns and cancellations all wait in your admin dashboard until you approve them. Sahaay answers from your own catalog and policies only.">Will it take actions without my permission?</button>
-          <button role="tab" id="q2" aria-controls="faq-answer" aria-selected="false" data-a="Anything about your products: sizes, colours, fabric and stock. Also shipping and return policies, offers and order tracking. Shoppers can add to cart in the chat, then pay on your own checkout page.">What can shoppers ask it?</button>
-          <button role="tab" id="q5" aria-controls="faq-answer" aria-selected="false" data-a="No. Sahaay doesn’t take payments or run its own checkout: shoppers add to cart in the chat and pay on your store’s checkout page. So there’s no per-order fee or commission. The pilot is free for 14 days, and pricing after that is shared on a call.">Do you charge per order?</button>
-          <button role="tab" id="q3" aria-controls="faq-answer" aria-selected="false" data-a="Yes. It learns your tone from your site and policies, so it sounds like your brand, not a generic bot.">Will it sound like my brand?</button>
-          <button role="tab" id="q4" aria-controls="faq-answer" aria-selected="false" data-a="You’ll see every conversation, saved cart and rupee of revenue in your dashboard, then decide whether to continue. No card is needed to start.">What happens after the 14 days?</button>
-        </div>
-        <div class="faq__a" id="faq-answer" role="tabpanel" aria-labelledby="q0" aria-live="polite">
-          <p class="faq__label">Answer</p>
-          <p class="faq__echo" id="faq-echo">How long does setup take?</p>
-          <div class="faq__bubble" id="faq-bubble">Share your store link. Sahaay learns your catalog, policies and brand voice in under 24 hours. You add one snippet to your store and it goes live.</div>
-          <span class="faq__avatar"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="12" height="16"></span>
+          <article class="tile tile--trust">
+            <div class="tile__copy"><h3>Your store <em>stays yours.</em></h3><p>Nothing executes until you say so: refunds, returns and cancellations wait for your OK. Sahaay answers only from your catalog, and checkout stays on your store, so there’s no fee per order.</p></div>
+            <ul class="badges">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg>You approve every action</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 9v10"/></svg>Your catalog only</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>No per-order fees</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- ============ FINAL CTA ============ -->
-    <section class="final">
-      <div class="final__card">
-        <h2 class="display display--light">Your store never sleeps. <em>Now it sells.</em></h2>
-        <p>Greet, recommend, recover carts and sort out orders around the clock. Free for 14 days.</p>
-        <a href="#pilot" class="btn btn--lav" data-cta="final">Claim your free pilot</a>
+    <!-- 7 · The pilot: offer, effort, form -->
+    <section class="section" id="pilot">
+      <div class="wrap">
+        <div class="pilot">
+          <div class="pilot__copy">
+            <p class="eyebrow eyebrow--left">Founding pilot · first 10 brands</p>
+            <h2 class="display display--left">₹0 for 14 days. <em>Live in 24 hours.</em></h2>
+            <ol class="steps">
+              <li><b>Today</b>Share your store link</li>
+              <li><b>Within 24 hours</b>Sahaay learns your catalog and goes live</li>
+              <li><b>Day 14</b>We review saved carts and revenue together</li>
+            </ol>
+            <ul class="checks">
+              <li>100 real conversations</li>
+              <li>Trained on your catalog</li>
+              <li>Full analytics dashboard</li>
+              <li>You approve every action</li>
+            </ul>
+            <!-- Founder note: draft copy. Replace with the founder's own words and name before launch. -->
+            <figure class="founder">
+              <span class="orb orb--md"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="12" height="16"></span>
+              <blockquote>“We onboard every pilot brand ourselves. You’ll talk to the people who built Sahaay, not a ticket queue.”</blockquote>
+              <figcaption>Founder, Sahaay</figcaption>
+            </figure>
+          </div>
+
+          <form class="form" id="pilot-form" novalidate>
+            <p class="form__title">Claim your pilot spot</p>
+            <label for="f-store">Your store URL</label>
+            <input id="f-store" name="store" type="text" inputmode="url" placeholder="yourstore.com" autocomplete="url" required>
+            <label for="f-email">Work email</label>
+            <input id="f-email" name="email" type="email" placeholder="you@yourbrand.com" autocomplete="email" required>
+            <input class="hp" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button type="submit" class="btn btn--primary btn--block" data-cta="form">Claim free pilot</button>
+            <p class="form__note" role="status" aria-live="polite">No card. Next, you’ll pick a time for a short kickoff call.</p>
+            <p class="form__alt">Rather talk first? <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" data-book data-cta="pilot-demo">Book a 20-minute demo</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Objections, then the last ask -->
+    <section class="section section--tint" id="faq">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="display">Good <em>questions.</em></h2>
+        </div>
+        <div class="faq">
+          <div class="faq__qs" role="tablist" aria-label="Questions" aria-orientation="vertical">
+            <button role="tab" id="q0" aria-controls="faq-a" aria-selected="true" data-a="Share your store link. Sahaay learns your catalog, policies and brand voice in under 24 hours, then you add one snippet to your site and it goes live.">How long does setup take?</button>
+            <button role="tab" id="q1" aria-controls="faq-a" aria-selected="false" data-a="Tell us your platform when you claim your pilot and we’ll confirm the setup on your kickoff call. Sahaay goes live with one snippet on your site.">Will it work on my store?</button>
+            <button role="tab" id="q2" aria-controls="faq-a" aria-selected="false" data-a="No. Sahaay adds to cart in the chat and sends shoppers to your own checkout, so there’s no per-order fee or commission. The pilot is free for 14 days; pricing after that is shared on a call.">Do you charge per order?</button>
+            <button role="tab" id="q3" aria-controls="faq-a" aria-selected="false" data-a="No. Refunds, returns and cancellations wait in your dashboard until you approve them, and Sahaay only answers from your own catalog and policies.">Will it act without my permission?</button>
+            <button role="tab" id="q4" aria-controls="faq-a" aria-selected="false" data-a="Yes. It learns your tone from your site and policies, and you set its branding and widget theme in the admin.">Will it sound like my brand?</button>
+            <button role="tab" id="q5" aria-controls="faq-a" aria-selected="false" data-a="We review every conversation, saved cart and rupee of revenue with you, and you decide whether to continue. No card is needed to start.">What happens after 14 days?</button>
+          </div>
+          <div class="faq__a" id="faq-a" role="tabpanel" aria-labelledby="q0" aria-live="polite">
+            <p class="faq__echo" id="faq-echo">How long does setup take?</p>
+            <div class="faq__bubble"><span class="orb orb--sm"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="9" height="12"></span><p id="faq-bubble">Share your store link. Sahaay learns your catalog, policies and brand voice in under 24 hours, then you add one snippet to your site and it goes live.</p></div>
+            <p class="faq__more">Something else? Ask Sahaay in the chat, bottom right.</p>
+          </div>
+        </div>
+
+        <div class="final">
+          <h2 class="display display--light">Your next customer is on your store right now. <em>Make sure someone says hello.</em></h2>
+          <a href="#pilot" class="btn btn--light" data-cta="final">Claim your free pilot</a>
+          <p class="hero__micro hero__micro--light">Free for 14 days · No card · Live in 24 hours</p>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="footer">
-    <p class="eyebrow eyebrow--left">Get started</p>
-    <div class="footer__cards">
-      <a href="#pilot" class="fcard">
-        <span class="fcard__thumb fcard__thumb--lav"><span class="minipill"><img src="assets/logo/sahaay-monogram-violet.svg" alt="" width="12" height="16"><i></i><i></i><i></i></span></span>
-        <span class="fcard__body"><b>Founding pilot</b><span>14 days, 100 conversations, trained on your catalog. No card.</span><u>Claim free pilot <span aria-hidden="true">›</span></u></span>
-      </a>
-      <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" class="fcard" data-book>
-        <span class="fcard__thumb fcard__thumb--ink"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
-        <span class="fcard__body"><b>20-minute demo</b><span>See Sahaay answering questions about your own products, live.</span><u>Book a call <span aria-hidden="true">›</span></u></span>
-      </a>
-    </div>
-
-    <div class="footer__cols">
-      <div><p class="footer__h">Product</p><a href="#proactive">Proactive selling</a><a href="#how">How it works</a><a href="#easy">Features</a><a href="#voices">Why we built it</a><a href="#faq">FAQ</a></div>
-      <div><p class="footer__h">Get started</p><a href="#pilot">Free 14-day pilot</a><a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" data-book>Book a demo</a></div>
-      <div><p class="footer__h">Follow</p><a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/sahaay_sells/" target="_blank" rel="noopener">Instagram</a></div>
-      <div><p class="footer__h">The name</p><p class="footer__note"><span lang="hi">सहाय</span> (sahaay) means help. That’s the job.</p></div>
-    </div>
-
-    <div class="footer__word" role="img" aria-label="Sahaay"></div>
-
-    <div class="footer__bottom">
-      <p>© <span id="year">2026</span> Sahaay. All rights reserved.</p>
-      <div class="socials">
-        <a href="https://www.instagram.com/sahaay_sells/" target="_blank" rel="noopener" aria-label="Sahaay on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.08a3.18 3.18 0 1 1 0-6.36 3.18 3.18 0 0 1 0 6.36zm5.1-9.43a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z"/></svg></a>
-        <a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener" aria-label="Sahaay on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.36h-4v-4.75c0-1.13-.02-2.59-1.58-2.59-1.58 0-1.82 1.23-1.82 2.5v4.84h-4v-11z"/></svg></a>
+    <div class="wrap">
+      <div class="footer__top">
+        <p class="footer__pitch">The proactive AI sales agent for D2C stores. <span lang="hi">सहाय</span> means help.</p>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="#how">How it works</a><a href="#pilot">Free pilot</a><a href="#faq">FAQ</a>
+          <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener" data-book>Book a demo</a>
+        </nav>
+        <div class="socials">
+          <a href="https://www.linkedin.com/company/sahaay-sales" target="_blank" rel="noopener" aria-label="Sahaay on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.36h-4v-4.75c0-1.13-.02-2.59-1.58-2.59-1.58 0-1.82 1.23-1.82 2.5v4.84h-4v-11z"/></svg></a>
+          <a href="https://www.instagram.com/sahaay_sells/" target="_blank" rel="noopener" aria-label="Sahaay on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.08a3.18 3.18 0 1 1 0-6.36 3.18 3.18 0 0 1 0 6.36zm5.1-9.43a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z"/></svg></a>
+        </div>
       </div>
+      <div class="footer__word" role="img" aria-label="Sahaay"></div>
+      <p class="footer__legal">© <span id="year">2026</span> Sahaay. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Catalog screen, shared by the sticky and the mobile how-it-works step -->
-  <template id="tpl-catalog">
-    <div class="scr scr--catalog">
-      <div class="scr__head"><p class="scr__title">Catalog</p><span class="chip chip--ok">3 products learned</span></div>
-      <table>
-        <thead><tr><th>Product</th><th>Price</th><th>Sizes</th></tr></thead>
-        <tbody>
-          <tr><td>Wrap Midi Dress</td><td>₹2,599</td><td>XS, S, M, L</td></tr>
-          <tr><td>Utility Bomber Jacket</td><td>₹3,499</td><td>S, M, L, XL</td></tr>
-          <tr><td>Everyday Joggers</td><td>₹1,399</td><td>S, M, L, XL</td></tr>
-        </tbody>
-      </table>
-      <div class="scr__sync"><span class="pulse"></span>Synced from velour.store · Policies, sizing and fabric included</div>
-    </div>
-  </template>
-
-  <!-- Demo booking: details first (saved to Airtable), then Calendly -->
+  <!-- Demo booking: details (saved as a lead), then Calendly -->
   <dialog class="book" id="book" aria-labelledby="book-title">
     <div class="book__panel">
       <button type="button" class="book__close" aria-label="Close">×</button>
@@ -660,7 +473,7 @@
           <label for="b-store">Store URL <span>(optional)</span></label>
           <input id="b-store" name="store" type="text" inputmode="url" placeholder="yourstore.com" autocomplete="url">
           <input class="hp" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button type="submit" class="btn btn--ink btn--block">Pick a time</button>
+          <button type="submit" class="btn btn--primary btn--block">Pick a time</button>
           <p class="form__note" id="book-note" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -669,17 +482,17 @@
         <p class="book__alt">Calendar not loading? <a href="https://calendly.com/ka1sh8vi/sahaay-demo" target="_blank" rel="noopener">Open the booking page</a></p>
       </div>
       <div class="book__step book__done" data-step="done" hidden>
-        <span class="form__tick" aria-hidden="true"></span>
+        <span class="tickbig" aria-hidden="true"></span>
         <h2 class="book__title">You’re booked.</h2>
-        <p class="book__sub">The invite with a Google Meet link is on its way to your inbox. Bring your store link.</p>
+        <p class="book__sub">The invite with a Google Meet link is on its way to your inbox.</p>
       </div>
     </div>
   </dialog>
 
-  <!-- Mobile sticky CTA -->
-  <div class="sticky-cta" aria-hidden="true">
+  <!-- Mobile: the one action, always in reach -->
+  <div class="sticky" aria-hidden="true">
     <span>Free 14-day pilot · no card</span>
-    <a href="#pilot" class="btn btn--lav btn--nav" tabindex="-1" data-cta="sticky">Claim spot</a>
+    <a href="#pilot" class="btn btn--primary btn--sm" tabindex="-1" data-cta="sticky">Claim free pilot</a>
   </div>
 
   <script src="widget.js" defer></script>

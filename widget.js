@@ -42,7 +42,25 @@
     dialog.querySelectorAll('.book__step').forEach((el) => { el.hidden = el.dataset.step !== name; });
   }
 
-  function openBooking(prefill = {}) {
+  async function showCalendar(details, medium) {
+    showStep('calendar');
+    const box = $('#book-cal');
+    box.innerHTML = '';
+    try {
+      await loadCalendly();
+      window.Calendly.initInlineWidget({
+        url: `${CALENDLY_URL}?hide_gdpr_banner=1&primary_color=6c5fff&text_color=111126`,
+        parentElement: box,
+        prefill: { name: details.name || '', email: details.email || '', customAnswers: details.store ? { a1: `Store: ${details.store}` } : {} },
+        utm: { utmSource: 'sahaay-website', utmMedium: medium },
+      });
+    } catch {
+      box.innerHTML = `<p class="book__fallback">The calendar didn’t load here. <a href="${CALENDLY_URL}" target="_blank" rel="noopener">Open the booking page</a> to pick a time.</p>`;
+    }
+  }
+
+  // opts.lead: an existing lead (e.g. a pilot sign-up). Skips the details step and books against that lead.
+  function openBooking(prefill = {}, opts = {}) {
     if (!dialog || typeof dialog.showModal !== 'function') {
       window.open(CALENDLY_URL, '_blank', 'noopener');
       return;
@@ -52,9 +70,10 @@
     ['name', 'email', 'store'].forEach((k) => { if (prefill[k]) form[k].value = prefill[k]; });
     $('#book-note').textContent = '';
     $('#book-cal').innerHTML = '';
-    leadToken = null;
-    showStep('details');
+    leadToken = opts.lead || null;
     dialog.showModal();
+    if (opts.lead) { showCalendar(prefill, 'pilot-kickoff'); return; }
+    showStep('details');
     (form.name.value ? form.email : form.name).focus();
     loadCalendly().catch(() => {});
   }
@@ -83,19 +102,7 @@
       }
       btn.disabled = false;
       btn.textContent = 'Pick a time';
-      showStep('calendar');
-      const box = $('#book-cal');
-      try {
-        await loadCalendly();
-        window.Calendly.initInlineWidget({
-          url: `${CALENDLY_URL}?hide_gdpr_banner=1&primary_color=6c5fff&text_color=111126`,
-          parentElement: box,
-          prefill: { name: details.name, email: details.email, customAnswers: details.store ? { a1: `Store: ${details.store}` } : {} },
-          utm: { utmSource: 'sahaay-website', utmMedium: 'demo-modal' },
-        });
-      } catch {
-        box.innerHTML = `<p class="book__fallback">The calendar didn’t load here. <a href="${CALENDLY_URL}" target="_blank" rel="noopener">Open the booking page</a> to pick a time.</p>`;
-      }
+      showCalendar(details, 'demo-modal');
     });
 
     window.addEventListener('message', (e) => {
