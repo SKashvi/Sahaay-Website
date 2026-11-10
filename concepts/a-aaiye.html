@@ -29,18 +29,23 @@ em { font-style: italic; }
 
 /* ---- One section, pinned while it plays ---- */
 .story { position: relative; height: 620vh; }
-.stage { position: sticky; top: 0; display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; height: 100vh; height: 100svh; max-width: 1240px; margin: 0 auto; padding: clamp(56px, 8vh, 80px) var(--gr) clamp(20px, 4vh, 40px) var(--gl); }
+.stage { position: sticky; top: 0; display: flex; flex-direction: column; gap: clamp(14px, 3vh, 28px); height: 100vh; height: 100svh; padding: clamp(60px, 9vh, 92px) var(--gr) clamp(16px, 3vh, 32px) var(--gl); background: var(--bg); }
 
 /* the three lines of the story */
-.lines { display: grid; gap: clamp(18px, 3.4vh, 30px); margin: 0; padding: 0; list-style: none; }
-.lines li { position: relative; padding-left: 22px; opacity: .22; transition: opacity .5s ease, transform .5s ease; transform: translateY(8px); }
-.lines li::before { content: ""; position: absolute; left: 0; top: .5em; width: 8px; height: 8px; border-radius: 50%; background: var(--faint); transition: background-color .4s ease, box-shadow .4s ease; }
+.lines { margin: 0; padding: 0; list-style: none; text-align: center; }
+.lines li:not(.is-on) { display: none; }
+.lines li.is-on { animation: lineIn .45s ease; }
+@keyframes lineIn { from { opacity: 0; transform: translateY(10px); } }
+.lines__where { justify-content: center; }
+.lines p.sub { max-width: 560px; margin-left: auto; margin-right: auto; }
+.lines li { position: relative; opacity: .22; transition: opacity .5s ease, transform .5s ease; transform: translateY(8px); }
+.lines li::before { display: none; content: ""; position: absolute; left: 0; top: .5em; width: 8px; height: 8px; border-radius: 50%; background: var(--faint); transition: background-color .4s ease, box-shadow .4s ease; }
 .lines li.is-seen { opacity: .45; transform: none; }
 .lines li.is-on { opacity: 1; transform: none; }
 .lines li.is-on::before { background: var(--violet); box-shadow: 0 0 0 5px rgba(108,95,255,.15); }
 .lines__where { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--muted); }
 .lines__where svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.lines h2 { font-size: clamp(28px, 3.2vw, 44px); line-height: 1.05; }
+.lines h2 { font-size: clamp(36px, 5.6vw, 80px); line-height: 1; }
 .lines p.sub { max-height: 0; overflow: hidden; margin-top: 0; font-size: 15px; color: var(--muted); transition: max-height .5s ease, margin-top .5s ease; }
 .lines li.is-on p.sub { max-height: 6em; margin-top: 8px; }
 .tally { display: inline-flex; gap: 6px; align-items: baseline; margin-top: 8px; padding: 4px 12px; border-radius: 999px; background: var(--tint); font-size: 13px; color: var(--muted); }
@@ -48,7 +53,7 @@ em { font-style: italic; }
 .tally b.ok { color: var(--green); }
 
 /* ---- The scene ---- */
-.scene { position: relative; height: min(68vh, 560px); min-height: 300px; overflow: hidden; border-radius: 20px; box-shadow: 0 0 0 1px rgba(17,17,38,.06), 0 40px 80px -50px rgba(17,17,38,.55); background: #F6E7D4; }
+.scene { position: relative; flex: 1; width: min(1080px, 100%); max-height: 560px; min-height: 280px; margin: 0 auto; overflow: hidden; border-radius: 20px; box-shadow: 0 0 0 1px rgba(17,17,38,.06), 0 40px 80px -50px rgba(17,17,38,.55); background: #F6E7D4; }
 .layer { position: absolute; inset: 0; isolation: isolate; }
 .layer--shop { z-index: 1; } .layer--web { z-index: 2; }
 /* the website wipes in over the shop from the right */
@@ -143,13 +148,8 @@ em { font-style: italic; }
 
 @media (max-width: 860px) {
   :root { --person-h: 88px; }
-  .stage { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-items: stretch; gap: 14px; padding-top: 54px; }
-  .lines { gap: 8px; }
-  .lines li { padding-left: 18px; }
-  .lines li:not(.is-on) { display: none; }
-  .lines h2 { font-size: clamp(26px, 7vw, 34px); }
+  .lines h2 { font-size: clamp(30px, 8vw, 40px); }
   .lines p.sub { font-size: 14px; }
-  .scene { height: auto; min-height: 0; }
   .webnav span { display: none; }
   .shopsign { top: 58px; font-size: 12px; }
   .rail { right: 34%; }
@@ -158,7 +158,7 @@ em { font-style: italic; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 </style>
 
-<p class="chip-concept">Concept A of 4 · Speaks first · prototype v3</p>
+<p class="chip-concept">Concept A of 4 · Speaks first · prototype v4</p>
 
 <section class="story" id="story" aria-label="A shop, a website, and Sahaay">
   <div class="stage" id="stage">
