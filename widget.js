@@ -117,18 +117,18 @@
    * Website assistant
    * ===================================================================== */
   const GREETING = 'Hi! Ask me anything about Sahaay.';
-  const SUGGESTIONS = ['How does the pilot work?', 'Do you charge per order?', 'How long is setup?'];
+  const SUGGESTIONS = ['What will it cost?', 'Does it work on my store?', 'How long is setup?'];
 
   // Built-in answers, used when the live assistant can't be reached. Same facts as knowledge/sahaay.md.
   const LOCAL = [
-    { k: ['pilot', 'free', 'trial', 'try'], a: 'The founding pilot is free for 14 days: 100 real conversations, Sahaay trained on your catalog, the full analytics dashboard and approval on every action. No card, no commitment, and it’s open to the first 10 brands. Use **Claim free pilot** below to sign up.' },
-    { k: ['price', 'pricing', 'cost', 'charge', 'per order', 'commission', 'fee', 'expensive', 'plan'], a: 'Sahaay doesn’t charge per order or take a commission, because checkout happens on your own store. The pilot is free for 14 days; pricing after that is shared on a call.' },
+    { k: ['pilot', 'free', 'trial', 'try', 'waitlist', 'launch', 'sign up', 'join'], a: 'Sahaay launches soon. Join the waitlist on this page: the first 10 brands get a free 14-day pilot with 100 real conversations, set up on your catalog. No card needed.' },
+    { k: ['price', 'pricing', 'cost', 'charge', 'per order', 'commission', 'fee', 'expensive', 'plan'], a: 'One flat monthly price, with no commission and no fee per order, because checkout stays on your store. The price is announced at launch, and the waitlist hears first.' },
     { k: ['setup', 'set up', 'install', 'integrate', 'how long', 'onboard', 'snippet', '24'], a: 'Share your store link and Sahaay learns your catalog, policies and brand voice in under 24 hours. Then you add one snippet to your site and it goes live.' },
     { k: ['checkout', 'payment', 'pay', 'cart'], a: 'Shoppers pick a size and colour and add to cart inside the chat, then pay on your own checkout page. Sahaay never takes payments, which is why there’s no per-order fee.' },
     { k: ['trigger', 'exit', 'proactive', 'speak first', 'scroll', 'time on page', 'popup', 'pop-up'], a: 'Sahaay can start the conversation when a shopper shows a signal: exit intent, time on a product, scroll depth, or a cart value you set. Each trigger gets a message that fits the moment.' },
     { k: ['return', 'refund', 'cancel', 'damage', 'approve', 'approval', 'permission'], a: 'Shoppers report issues in the chat and can attach a photo; damage photos get an AI score. Every refund, return and cancellation waits in your dashboard until you approve it.' },
-    { k: ['track', 'order status', 'where is my order', 'where’s my order', 'post-purchase', 'after purchase', 'delivery'], a: 'After purchase, shoppers look up orders by email with a six-digit code, track status, see order history and report issues, all in the chat. About 80% of these questions get resolved without a human.' },
-    { k: ['shopify', 'woocommerce', 'platform', 'integration', 'wix', 'magento'], a: 'I don’t have a confirmed list of supported store platforms yet. The team can check your setup on a 20-minute demo call.' },
+    { k: ['track', 'order status', 'where is my order', 'where’s my order', 'post-purchase', 'after purchase', 'delivery'], a: 'On Shopify stores, shoppers can look up and track orders, see their history and report issues, all in the chat. About 80% of these questions get resolved without a human.' },
+    { k: ['shopify', 'woocommerce', 'platform', 'integration', 'wix', 'magento', 'any store'], a: 'The sales package (speaking first, answering questions, recommending and recovering carts) works on any store. Order tracking, returns and refunds are for Shopify stores.' },
     { k: ['language', 'hindi', 'tamil', 'regional'], a: 'I don’t have a confirmed list of chat languages yet. The team can confirm it for your store on a demo call.' },
     { k: ['security', 'privacy', 'data', 'gdpr', 'soc'], a: 'Sahaay answers only from your own catalog and policies, and actions like refunds need your approval. For security and data questions, the team will walk you through details on a demo call.' },
     { k: ['demo', 'call', 'meeting', 'talk', 'book', 'calendly'], a: 'The demo is a 20-minute video call: your store and where shoppers drop off, Sahaay live on your own catalog, then a pilot plan. Use **Book a demo** below to pick a time.' },
@@ -203,15 +203,15 @@
 
   // Small next-step links under answers that point somewhere: no standing buttons.
   function addActions(after, text) {
-    const wantsPilot = /pilot|free|sign up|trial/i.test(text);
+    const wantsPilot = /pilot|free|sign up|trial|waitlist/i.test(text);
     const wantsDemo = /demo|call|book/i.test(text);
     if (!wantsPilot && !wantsDemo) return;
     const row = document.createElement('div');
     row.className = 'sw__acts';
     if (wantsPilot) {
       const b = document.createElement('button');
-      b.type = 'button'; b.textContent = 'Claim free pilot →';
-      b.addEventListener('click', () => { setOpen(false); document.getElementById('pilot')?.scrollIntoView({ behavior: 'smooth' }); });
+      b.type = 'button'; b.textContent = 'Join the waitlist →';
+      b.addEventListener('click', () => { setOpen(false); document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' }); });
       row.appendChild(b);
     }
     if (wantsDemo) {

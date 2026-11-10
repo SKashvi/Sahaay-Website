@@ -7,7 +7,8 @@ Edit it in plain English; the server reloads it on restart.
 
 - Sahaay is an AI sales agent for online stores (D2C e-commerce brands). It sits on the store as a chat widget.
 - It greets shoppers, answers questions about the store's products, recommends what fits, adds items to the cart, and handles order questions after purchase.
-- It is built India-first: prices in rupees (₹), delivery checks by PIN code.
+- It is built India-first (prices in rupees, delivery checks by PIN code) and works for online stores anywhere.
+- Sahaay has not launched yet. Brands can join the waitlist on this page.
 - सहाय (sahaay) means "help".
 
 ## Before purchase
@@ -22,7 +23,7 @@ Edit it in plain English; the server reloads it on restart.
 - **Add to cart in chat, checkout on the store.** Shoppers add to cart inside the chat, then go to the store's own checkout page to pay. Sahaay does not take payments or run its own checkout.
 - **Cart recovery.** Contextual nudges that know what is in the cart and why the shopper paused (for example a sizing doubt or a delivery question).
 
-## After purchase
+## After purchase (Shopify stores only)
 
 - **Order lookup.** Shoppers find their orders by email with a six-digit verification code, or by order ID, and see their order history.
 - **Tracking.** "Where's my order?" gets the order's status in the chat.
@@ -41,18 +42,22 @@ Edit it in plain English; the server reloads it on restart.
 - The store shares its store link. Sahaay learns the catalog, policies and brand voice in under 24 hours. No scripts or decision trees to write.
 - The store adds one snippet to the site and Sahaay goes live.
 
-## Pricing
+## Packages and pricing
 
-- Sahaay does not charge per order or take a commission, because checkout happens on the store's own checkout page.
-- Pricing after the pilot is shared on a call. Do not quote any price other than the free pilot.
+- Sales package: works on any store with one snippet. Speaking first, answering product questions, recommendations, add to cart and cart recovery.
+- Full commerce: Shopify stores only. Everything in the sales package plus order lookup and tracking, returns, refunds and cancellations with photo checks, and approval on every action.
+- One flat monthly price, no commission and no fee per order, because checkout happens on the store's own checkout page.
+- The price is announced at launch and the waitlist hears first. Never quote a number.
 
-## Free founding pilot
+## Waitlist and founding pilot
+
+- Join the waitlist with the form on this page (store URL and work email). We email before launch.
 
 - Free for 14 days, ₹0.
 - Includes 100 real conversations, training on the store's catalog, the full analytics dashboard, and approval on every action.
 - No card and no commitment.
 - Open to the first 10 brands, onboarded by hand.
-- Sign up with the "Claim free pilot" form on this page (name, work email, store URL). The team replies within one working day.
+- The first 10 brands on the waitlist get the free 14-day pilot.
 
 ## Demo call
 
@@ -73,8 +78,8 @@ Edit it in plain English; the server reloads it on restart.
 
 ## Not yet confirmed (say you'll confirm on a demo call)
 
-- Which store platforms and integrations are supported.
+- Which platforms beyond Shopify get full commerce features.
 - Which chat languages are supported.
 - Security certifications, data residency and contract terms.
-- Pricing after the pilot.
+- The exact monthly price (announced at launch).
 - Customer names, case studies or results from live stores.

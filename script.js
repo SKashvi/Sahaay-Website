@@ -43,154 +43,275 @@ document.querySelectorAll('[data-book]').forEach((a) => a.addEventListener('clic
 }));
 if ($('year')) $('year').textContent = new Date().getFullYear();
 
-/* ---------- 1 · Hero story: one saved sale, on a loop ---------- */
+/* ---------- 2 · A shop, a website, and Sahaay (scroll story) ---------- */
 (() => {
-  const story = $('story');
-  if (!story) return;
-  const win = story.querySelector('.win');
-  const cursor = story.querySelector('.story__cursor');
-  const badge = story.querySelector('.story__badge');
-  const count = story.querySelector('.story__cart b');
-  const add = story.querySelector('.story__add');
-  const help = story.querySelector('.sbox__help');
-  const addS = story.querySelector('.sbox__add');
-  const me = story.querySelector('.sbox__me');
-  const typing = story.querySelector('.sbox__typing');
-  const bot = story.querySelector('.sbox__bot');
-  const sizes = story.querySelectorAll('.pdp__sizes span');
-  const steps = [...story.querySelectorAll('.story__steps li')];
-  const bars = steps.map((li) => li.querySelector('.bar'));
-  const SPANS = [[0, 2400], [2400, 6000], [6000, 10400]];
-  const LOOP = 11200;
-
-  const moveTo = (target, fx = 0.5, fy = 0.5) => {
-    const w = win.getBoundingClientRect();
-    let x; let y;
-    if (target instanceof Element) {
-      const r = target.getBoundingClientRect();
-      x = r.left - w.left + r.width * fx; y = r.top - w.top + r.height * fy;
-    } else { x = target.x * w.width; y = target.y * w.height; }
-    cursor.style.left = `${x.toFixed(0)}px`;
-    cursor.style.top = `${y.toFixed(0)}px`;
-  };
-  const press = (el) => {
-    el.classList.add('is-press'); cursor.classList.add('is-press');
-    setTimeout(() => { el.classList.remove('is-press'); cursor.classList.remove('is-press'); }, 180);
-  };
-  const EVENTS = [
-    [0, () => {
-      story.className = 'story';
-      [me, typing, bot, addS].forEach((el) => el.classList.remove('is-in'));
-      badge.textContent = 'Browsing'; badge.className = 'win__badge story__badge';
-      count.textContent = '0'; add.textContent = 'Add to cart';
-      story.querySelector('.story__cart').classList.remove('is-full');
-      moveTo(story.querySelector('.pdp__name'), 0.3, 0.6);
-    }],
-    [700, () => moveTo(sizes[2], 0.5, 0.6)],
-    [1500, () => moveTo({ x: 0.93, y: 0.03 })],
-    [2300, () => { badge.textContent = 'Exit intent'; badge.classList.add('is-live'); }],
-    [2500, () => story.classList.add('is-pop')],
-    [3500, () => moveTo(help, 0.5, 0.6)],
-    [4250, () => press(help)],
-    [4500, () => { story.classList.add('is-chat'); me.classList.add('is-in'); }],
-    [5000, () => typing.classList.add('is-in')],
-    [5900, () => { typing.classList.remove('is-in'); bot.classList.add('is-in'); addS.classList.add('is-in'); }],
-    [6700, () => moveTo(addS, 0.5, 0.6)],
-    [7450, () => press(addS)],
-    [7600, () => {
-      story.classList.add('is-saved');
-      badge.textContent = 'Sale saved'; badge.classList.replace('is-live', 'is-saved');
-      count.textContent = '1'; add.textContent = 'Added ✓';
-      story.querySelector('.story__cart').classList.add('is-full');
-    }],
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const story = document.getElementById('shop-story');
+  const root = document.querySelector('.shopstory');
+  const scene = document.getElementById('shop-scene');
+  const web = document.getElementById('shop-web');
+  const lines = [...document.querySelectorAll('#lines li')];
+  const keeper = document.getElementById('keeper');
+  const orb = document.getElementById('shop-orb');
+  const QA = [
+    ['Will it fit me?', 'It runs true to size. Try S.'],
+    ['How long is delivery?', '4 to 7 days, free above ₹1,999.'],
+    ['Can I return it?', 'Yes, within 14 days of delivery.'],
+    ['Is this in M?', 'Yes, M is in stock in both colours.'],
+    ['Which colour is best?', 'Terracotta is the favourite.'],
+    ['Is it breathable?', 'Yes, it’s light viscose crepe.'],
   ];
-  let next = 0;
-  const paint = (t) => steps.forEach((li, k) => {
-    const [a, b] = SPANS[k];
-    li.classList.toggle('is-on', t >= a && t < b);
-    li.classList.toggle('is-done', t >= b);
-    bars[k].style.setProperty('--p', Math.max(0, Math.min(1, (t - a) / (b - a))).toFixed(4));
-  });
-  if (reduceMotion) { EVENTS.forEach(([, fn]) => fn()); cursor.hidden = true; paint(LOOP); return; }
-  const c = clock((t) => {
-    while (next < EVENTS.length && t >= EVENTS[next][0]) EVENTS[next++][1]();
-    if (t >= LOOP) { next = 0; t = 0; }
-    paint(t);
-    return t;
-  });
-  window.addEventListener('resize', () => { c.reset(); next = 0; });
-  whileVisible(story, c.play, c.pause, 0.2);
+  const PRICES = [2599, 3499, 1399, 2599];
+  const inr = (n) => (n >= 1e5 ? `₹${(n / 1e5).toFixed(1)}L` : `₹${n.toLocaleString('en-IN')}`);
+  const small = () => innerWidth <= 860;
+
+  // illustrated people
+  const SKIN = ['#F2C9A6', '#E0A982', '#B9794F', '#8A5536', '#F6D7BD'];
+  const HAIR = ['#2B1D16', '#4A2E1F', '#151515', '#7A4B2A', '#C9A06A'];
+  const TOP = ['#5B7FD1', '#E0796B', '#3FA57F', '#E5B04A', '#8C70D6', '#2F3A56', '#D45F8E'];
+  const BOTTOM = ['#2F3A56', '#1F2433', '#6B5B4E', '#3A4E7A', '#4B4B55'];
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const person = ({ skin, hair, top, bottom, long }) => `
+    <svg viewBox="0 0 40 100">
+      <path d="M14 62 L12 96 L18 96 L20 66 L22 96 L28 96 L26 62 Z" fill="${bottom}"/>
+      <rect x="11" y="95" width="8" height="4" rx="2" fill="#222"/><rect x="21" y="95" width="8" height="4" rx="2" fill="#222"/>
+      <path d="M11 34 Q20 28 29 34 L30 64 L10 64 Z" fill="${top}"/>
+      <path d="M11 35 L6 56 L9 57 L14 40 Z" fill="${top}"/><path d="M29 35 L34 56 L31 57 L26 40 Z" fill="${top}"/>
+      <circle cx="7.5" cy="57.5" r="2.4" fill="${skin}"/><circle cx="32.5" cy="57.5" r="2.4" fill="${skin}"/>
+      <g class="bag"><path d="M30 58 q2.5 -5 5 0" fill="none" stroke="#0E8A62" stroke-width="1.4"/><rect x="28" y="58" width="9" height="11" rx="1.5" fill="#10B981"/></g>
+      <rect x="17.5" y="26" width="5" height="6" fill="${skin}"/>
+      <ellipse cx="20" cy="18" rx="8" ry="9" fill="${skin}"/>
+      <path d="M11.5 18 Q11 8 20 8 Q29 8 28.5 18 Q26 12 20 12.5 Q14 12 11.5 18 Z" fill="${hair}"/>
+      ${long ? `<path d="M11.5 17 Q10 28 13 34 L15 22 Z M28.5 17 Q30 28 27 34 L25 22 Z" fill="${hair}"/>` : ''}
+    </svg>`;
+  keeper.innerHTML = `<svg viewBox="0 0 40 100"><path d="M11 34 Q20 28 29 34 L30 64 L10 64 Z" fill="#C2553F"/><path d="M11 35 L6 56 L9 57 L14 40 Z" fill="#C2553F"/><g class="wave"><path d="M29 35 L36 18 L33 16.5 L26 40 Z" fill="#C2553F"/><circle cx="35" cy="16" r="2.6" fill="#C68A62"/></g><circle cx="7.5" cy="57.5" r="2.4" fill="#C68A62"/><rect x="17.5" y="26" width="5" height="6" fill="#C68A62"/><ellipse cx="20" cy="18" rx="8" ry="9" fill="#C68A62"/><path d="M11.5 18 Q11 7 20 7 Q29 7 28.5 18 Q26 11 20 11.5 Q14 11 11.5 18 Z" fill="#2B1D16"/><rect x="14" y="44" width="12" height="20" rx="2" fill="#F3E3C8" opacity=".9"/></svg>`;
+
+  // products: dresses on hangers in the shop, product cards on the website
+  const slots = () => (small() ? [30] : [14, 30, 46, 62]);
+  const prodSlots = () => (small() ? [18, 44] : [14, 30, 46, 62]);
+  const HANGER = '<svg viewBox="0 0 34 22"><path d="M17 1 a3 3 0 1 1 0 5 v3 L2 20 h30 L17 9" fill="none" stroke="#8A6A4E" stroke-width="2" stroke-linejoin="round"/></svg>';
+  const build = () => {
+    const rail = document.getElementById('rail'); const cards = document.getElementById('cards');
+    rail.innerHTML = ''; cards.innerHTML = '';
+    prodSlots().forEach((x, i) => {
+      const h = document.createElement('div'); h.className = 'hang'; h.style.left = x + '%';
+      h.innerHTML = `${HANGER}<img src="assets/img/dress-cut.webp" alt="" width="267" height="249">`; rail.appendChild(h);
+      const c = document.createElement('div'); c.className = 'card'; c.style.left = x + '%';
+      c.innerHTML = `<div><img src="assets/img/dress-cut.webp" alt="" width="267" height="249"></div><b>Wrap Dress</b>${inr(PRICES[i % 4])}`; cards.appendChild(c);
+    });
+  };
+  build();
+  addEventListener('resize', build);
+
+  // scroll drives one continuous story: shop (0-0.24), wipe to web (0.24-0.38), web (-0.6), Sahaay arrives (0.6-0.72), with Sahaay
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  let mode = 'shop';
+  const onScroll = () => {
+    const r = story.getBoundingClientRect();
+    const p = reduce ? 1 : clamp(-r.top / (r.height - innerHeight));
+    const w = clamp((p - 0.24) / 0.14);
+    const s = clamp((p - 0.6) / 0.12);
+    root.style.setProperty('--w', w.toFixed(3));
+    root.style.setProperty('--s', s.toFixed(3));
+    mode = w < 0.5 ? 'shop' : s < 0.5 ? 'silent' : 'sahaay';
+    const k = { shop: 0, silent: 1, sahaay: 2 }[mode];
+    lines.forEach((li, i) => { li.classList.toggle('is-on', i === k); li.classList.toggle('is-seen', i < k); });
+    web.classList.toggle('is-silent', mode === 'silent');
+    document.getElementById('where').textContent = { shop: 'In the shop', silent: 'On the website', sahaay: 'On the website · with Sahaay' }[mode];
+    document.getElementById('shop-hint').hidden = p > 0.03;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  onScroll();
+
+  let lost = 0; let won = 0; let rupees = 0;
+  const tally = () => {
+    document.getElementById('t-lost').innerHTML = `<b>${lost}</b> left without buying`;
+    document.getElementById('t-won').innerHTML = `<b class="ok">${won}</b> sales saved · <b class="ok">${inr(rupees)}</b>`;
+  };
+
+  // Keep a bubble inside the scene.
+  const fit = (el) => {
+    const sr = scene.getBoundingClientRect(); const br = el.getBoundingClientRect();
+    const dx = br.left < sr.left + 8 ? sr.left + 8 - br.left : br.right > sr.right - 8 ? sr.right - 8 - br.right : 0;
+    if (dx) el.style.translate = `${dx}px 0`;
+  };
+  const say = (host, cls, who, text, style) => {
+    const s = document.createElement('div'); s.className = `say ${cls}`; s.innerHTML = `<small>${who}</small>${text}`;
+    if (style) Object.assign(s.style, style);
+    host.appendChild(s); fit(s); return s;
+  };
+  // The answer sits above whoever answers: the shopkeeper behind the counter, or Sahaay's orb.
+  const answerAt = (who) => {
+    const sr = scene.getBoundingClientRect();
+    const el = who === 'keeper' ? keeper : orb;
+    const r = el.getBoundingClientRect();
+    return { right: `${Math.max(8, sr.right - r.right - 6)}px`, bottom: `${sr.bottom - r.top + 10}px` };
+  };
+
+  // shoppers: many can browse, one conversation at a time so it's always clear who's talking
+  const busy = new Set();
+  let talking = false;
+  let active = false;
+  const later = (ms, fn) => setTimeout(fn, reduce ? 0 : ms);
+  const walk = (el, to, ms) => { el.classList.add('is-walking'); el.style.transitionDuration = `${ms}ms, .5s, .5s`; el.style.left = to + '%'; later(ms, () => el.classList.remove('is-walking')); };
+  const leave = (el, i, won, price) => {
+    const tg = document.createElement('span');
+    tg.className = 'tag ' + (won ? 'tag--won' : 'tag--lost'); tg.textContent = won ? `Bought · ${inr(price)}` : 'Left';
+    el.appendChild(tg);
+    el.classList.add(won ? 'is-won' : 'is-lost');
+    walk(el, won ? 108 : -8, 2800);
+    later(2800, () => { el.remove(); busy.delete(i); });
+  };
+  const converse = (el, i) => {
+    if (talking) { later(500, () => converse(el, i)); return; }
+    talking = true;
+    const m = mode;
+    const [q, a] = QA[Math.floor(Math.random() * QA.length)];
+    const price = PRICES[i % 4];
+    const qEl = say(el, 'say--q', 'Shopper', q);
+    if (m === 'silent') {
+      later(1100, () => qEl.classList.add('is-unanswered'));
+      later(2600, () => { qEl.remove(); talking = false; lost += 1; tally(); leave(el, i, false, price); });
+      return;
+    }
+    later(900, () => {
+      let aEl;
+      if (m === 'shop') {
+        keeper.classList.remove('is-waving'); void keeper.offsetWidth; keeper.classList.add('is-waving');
+        aEl = say(scene, 'say--keeper', '<span class="face"></span>Shopkeeper', 'Hello! ' + a, answerAt('keeper'));
+      } else {
+        orb.classList.remove('is-talking'); void orb.offsetWidth; orb.classList.add('is-talking');
+        aEl = say(scene, 'say--sahaay', '<span class="orb"><img src="assets/logo/sahaay-monogram-white.svg" alt="" width="7" height="9"></span>Sahaay', a, answerAt('orb'));
+      }
+      later(2300, () => {
+        qEl.remove(); aEl.remove(); talking = false;
+        if (m === 'sahaay') { won += 1; rupees += price; tally(); }
+        leave(el, i, true, price);
+      });
+    });
+  };
+  const spawn = () => {
+    if (!active) return;
+    const free = slots().map((_, i) => i).filter((i) => !busy.has(i));
+    if (!free.length) return;
+    const i = free[Math.floor(Math.random() * free.length)];
+    busy.add(i);
+    const x = slots()[i] + 3;
+    const el = document.createElement('div');
+    el.className = 'sh';
+    el.innerHTML = person({ skin: pick(SKIN), hair: pick(HAIR), top: pick(TOP), bottom: pick(BOTTOM), long: Math.random() < 0.5 });
+    el.style.left = '-5%';
+    scene.appendChild(el);
+    const t = 1200 + x * 22;
+    requestAnimationFrame(() => requestAnimationFrame(() => walk(el, x, t)));
+    later(t + 300, () => converse(el, i));
+  };
+  let timer = 0;
+  const start = () => { if (active) return; active = true; spawn(); timer = setInterval(spawn, 1700); };
+  const stop = () => { active = false; clearInterval(timer); };
+  new IntersectionObserver(([e]) => (e.isIntersecting && !document.hidden ? start() : stop()), { threshold: 0.2 }).observe(scene);
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
 })();
 
-/* ---------- 2 · Problem: 100 visitors, 97 leave ---------- */
+/* ---------- 5 · A day on your store (scroll through 24 hours) ---------- */
 (() => {
-  const card = $('crowd-card');
-  const crowd = $('crowd');
-  if (!card || !crowd) return;
-  crowd.innerHTML = '<i></i>'.repeat(100);
-  const people = [...crowd.children];
-  const BUYERS = new Set([23, 58, 86]);
-  // A fixed shuffle so the crowd thins out unevenly, like a real store.
-  const order = people.map((_, i) => i).filter((i) => !BUYERS.has(i)).sort((a, b) => ((a * 37) % 101) - ((b * 37) % 101));
-  const beats = [...document.querySelectorAll('#beats li')];
-  const paint = (p) => {
-    beats.forEach((li, k) => li.classList.toggle('is-on', p >= [0, 0.2, 0.45][k]));
-    card.classList.toggle('has-qs', p >= 0.2 && p < 0.5);
-    card.classList.toggle('is-leaving', p >= 0.5);
-    const gone = Math.round(Math.max(0, Math.min(1, (p - 0.5) / 0.38)) * 97);
-    order.forEach((idx, k) => people[idx].classList.toggle('is-gone', k < gone));
-    const bought = p >= 0.92;
-    BUYERS.forEach((idx) => people[idx].classList.toggle('is-buy', bought));
-    $('crowd-left').textContent = String(gone);
-    $('crowd-bought').textContent = bought ? '3' : '0';
-  };
-  if (reduceMotion) return paint(1);
-  paint(0);
-  let played = false;
-  const DUR = 6500;
-  const c = clock((t) => { paint(Math.min(1, t / DUR)); if (t >= DUR) { played = true; c.pause(); } return t; });
-  whileVisible(card, () => { if (!played) c.play(); }, c.pause, 0.45);
-})();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // hour: 9 = 9:00 AM, 33 = 9:00 AM next day
+  const EVENTS = [
+    [9.23, 'Asked about delivery to Pune. Answered in 1.4s.', 0],
+    [10.5, 'Lingered on the size chart. Sahaay helped pick M.', 2599],
+    [12.1, '“Is the fabric breathable?” Viscose crepe, light and airy.', 0],
+    [13.5, 'Lunch-break browser added a matching bag.', 1299],
+    [15.8, 'Compared two dresses for 3 minutes. Sahaay settled it.', 2599],
+    [18.4, 'Headed for the close tab at checkout. Cart saved.', 3499],
+    [19.6, 'Sale-night rush: 42 conversations in one hour.', 0, 40],
+    [21.2, '“Will this reach Jaipur by Friday?” Yes, with 2 days to spare.', 2599],
+    [23.6, 'You logged off for the night.', 0, 0, 'you'],
+    [25.2, '“Where’s my order?” Tracked in chat.', 0, 0, 'shopify'],
+    [26.23, '“Will it fit?” asked at 2:14 AM. Cart saved.', 2599],
+    [27.4, 'Night owl from Dubai, shipping question answered.', 3499],
+    [28.1, 'Return request with a photo. Verified, waiting for your OK.', 0, 0, 'shopify'],
+    [30.4, 'Early riser bought the Ink Blue dress.', 2599],
+    [32.7, 'You’re back. 1 return waits for your approval.', 0, 0, 'you'],
+  ];
+  const LINES = [[9, 'Your store opens. So does Sahaay.'], [12, 'Midday. Shoppers browse between meetings.'], [17.5, 'Evening. The busiest hours of the day.'], [22.5, 'Your team goes home.'], [24.5, 'Midnight. The store is still open.'], [28, 'Deep night. Somebody is always shopping.'], [31, 'Dawn. Almost time for you.']];
+  // sky keyframes: [hour, bg, sun color, text is light?]
+  const SKY = [[9, '#FFF6EA', '#FFD08A', 0], [13, '#FBFAFF', '#FFE6A6', 0], [17.5, '#FFE3CF', '#FFB27A', 0], [19.5, '#F4A6B8', '#FF8A6B', 0], [21, '#4E3F8F', '#C9C2FF', 1], [23.5, '#1A1838', '#E8E6FF', 1], [27, '#0E0D22', '#F1F0FF', 1], [30, '#2E2A6B', '#D9D6FF', 1], [31.6, '#F7C9B0', '#FFC28A', 0], [33, '#FFF6EA', '#FFD08A', 0]];
+  const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, k) => `rgb(${hex(a).map((v, i) => Math.round(v + (hex(b)[i] - v) * k)).join(',')})`;
+  const day = document.getElementById('day');
+  const sky = document.getElementById('sky');
+  const sun = document.getElementById('sun');
+  const track = document.getElementById('track');
+  const fmt = (h) => { const hh = Math.floor(h) % 24; const mm = Math.floor((h % 1) * 60); return [`${((hh + 11) % 12) + 1}:${String(mm).padStart(2, '0')}`, hh < 12 ? 'AM' : 'PM']; };
+  const inr = (n) => n >= 1e5 ? `₹${(n / 1e5).toFixed(2)}L` : `₹${n.toLocaleString('en-IN')}`;
+  let shown = 0;
 
-/* ---------- 2 · Calculator ---------- */
-(() => {
-  const calc = $('calc');
-  if (!calc) return;
-  const inr = (n) => {
-    if (n >= 1e7) return `₹${(n / 1e7).toFixed(n >= 1e8 ? 0 : 1)}Cr`;
-    if (n >= 1e5) return `₹${(n / 1e5).toFixed(n >= 1e6 ? 0 : 1)}L`;
-    return `₹${Math.round(n).toLocaleString('en-IN')}`;
+  const render = (h) => {
+    // sky
+    let i = 0; while (i < SKY.length - 2 && h > SKY[i + 1][0]) i++;
+    const [h0, b0, s0, l0] = SKY[i]; const [h1, b1, s1, l1] = SKY[i + 1];
+    const k = Math.max(0, Math.min(1, (h - h0) / (h1 - h0)));
+    sky.style.setProperty('--sky', mix(b0, b1, k));
+    const light = (k < .5 ? l0 : l1) === 1;
+    sky.style.setProperty('--fg', light ? '#F4F3FF' : '#111126');
+    sky.style.setProperty('--soft', light ? 'rgba(244,243,255,.66)' : 'rgba(17,17,38,.6)');
+    sky.style.setProperty('--card', light ? 'rgba(255,255,255,.1)' : 'rgba(255,255,255,.72)');
+    sky.style.setProperty('--cardline', light ? 'rgba(255,255,255,.18)' : 'rgba(255,255,255,.9)');
+    const night = h > 21 && h < 31 ? Math.min(1, Math.min(h - 21, 31 - h) / 1.5) : 0;
+    sky.style.setProperty('--stars', night.toFixed(2));
+    // sun by day (9-20), moon by night (20-32): an arc across the top
+    const isMoon = h >= 20 && h < 32;
+    const a = isMoon ? (h - 20) / 12 : ((h >= 32 ? h - 32 : h - 8) / 12);
+    sun.style.left = `${8 + a * 84}%`;
+    sun.style.top = `${42 - Math.sin(Math.PI * Math.max(0, Math.min(1, a))) * 30}%`;
+    sun.style.background = isMoon ? `radial-gradient(circle at 35% 35%, #fff, ${mix(s0, s1, k)})` : `radial-gradient(circle, ${mix(s0, s1, k)}, rgba(255,200,120,.0) 70%)`;
+    sun.style.boxShadow = isMoon ? '0 0 60px 10px rgba(201,194,255,.35)' : 'none';
+    // clock + line
+    const [t, ap] = fmt(h);
+    document.getElementById('clock').firstChild.nodeValue = t;
+    document.getElementById('ampm').textContent = ap;
+    let line = LINES[0][1]; LINES.forEach(([lh, txt]) => { if (h >= lh) line = txt; });
+    document.getElementById('line').textContent = line;
+    const asleep = h >= 23.6 && h < 32.7;
+    document.getElementById('you').classList.toggle('is-asleep', asleep);
+    document.getElementById('you-txt').textContent = asleep ? 'You: asleep' : h >= 32.7 ? 'You: back at work' : 'You: at work';
+    // events
+    const due = EVENTS.filter((e) => e[0] <= h);
+    if (due.length !== shown) {
+      track.innerHTML = '';
+      due.slice(-6).forEach(([eh, txt, amt, , kind]) => {
+        const el = document.createElement('div');
+        el.className = 'ev' + (kind === 'you' ? ' ev--you' : '');
+        const tag = kind === 'shopify' ? '<span class="ev__tag">Shopify</span>' : '';
+        el.innerHTML = `<span class="orb">${kind === 'you' ? '' : '<img src="assets/logo/sahaay-monogram-white.svg" alt="" width="11" height="14">'}</span><span><span class="ev__t">${fmt(eh).join(' ')}</span>${tag}<br><span class="ev__txt">${txt}</span></span>${amt ? `<span class="ev__amt">+${inr(amt)}</span>` : ''}`;
+        if (kind === 'you') el.querySelector('.orb').textContent = eh > 30 ? '☀' : '☾';
+        track.appendChild(el);
+      });
+      shown = due.length;
+    }
+    const conv = Math.round((h - 9) * 9) + due.reduce((n, e) => n + (e[3] || 0), 0);
+    const saved = due.filter((e) => e[2] > 0).length;
+    const rev = due.reduce((n, e) => n + e[2], 0);
+    document.getElementById('t-conv').textContent = String(Math.max(0, conv));
+    document.getElementById('t-saved').textContent = String(saved);
+    document.getElementById('t-rev').textContent = inr(rev);
+    const sleptRev = EVENTS.filter((e) => e[0] >= 23.6 && e[0] < 32.7).reduce((n, e) => n + e[2], 0);
+    document.getElementById('slept').textContent = inr(sleptRev);
+    document.getElementById('day-hint').hidden = h > 9.4;
   };
-  const num = (n) => Math.round(n).toLocaleString('en-IN');
-  const shown = { leave: 0, orders: 0, rev: 0 };
-  let anim = 0;
-  const update = () => {
-    const visitors = +$('c-visitors').value;
-    const aov = +$('c-aov').value;
-    const rate = +$('c-rate').value;
-    $('o-visitors').textContent = num(visitors);
-    $('o-aov').textContent = `₹${num(aov)}`;
-    $('o-rate').textContent = `${rate}%`;
-    const target = { leave: visitors * 0.97, orders: visitors * 0.97 * (rate / 100) };
-    target.rev = target.orders * aov;
-    $('r-year').textContent = `a month · ${inr(target.rev * 12)} a year`;
-    $('r-cta').textContent = inr(target.rev);
-    cancelAnimationFrame(anim);
-    const from = { ...shown };
-    const t0 = performance.now();
-    const step = (now) => {
-      const k = reduceMotion ? 1 : Math.min(1, (now - t0) / 450);
-      const e = 1 - Math.pow(1 - k, 3);
-      for (const key of Object.keys(target)) shown[key] = from[key] + (target[key] - from[key]) * e;
-      $('r-leave').textContent = num(shown.leave);
-      $('r-orders').textContent = num(shown.orders);
-      $('r-rev').textContent = inr(shown.rev);
-      if (k < 1) anim = requestAnimationFrame(step);
-    };
-    anim = requestAnimationFrame(step);
+  const onScroll = () => {
+    const r = day.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight)));
+    render(9 + p * 24);
   };
-  calc.querySelectorAll('input[type="range"]').forEach((r) => r.addEventListener('input', update));
-  update();
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  render(reduce ? 9 : 9);
+  onScroll();
+
 })();
 
 /* ---------- 3 · Questions band ---------- */
@@ -226,23 +347,6 @@ if ($('year')) $('year').textContent = new Date().getFullYear();
   track.addEventListener('mouseover', (e) => { const b = e.target.closest('.ask'); if (b) show(b); });
   track.addEventListener('focusin', (e) => { const b = e.target.closest('.ask'); if (b) show(b); });
   track.addEventListener('click', (e) => { const b = e.target.closest('.ask'); if (b) show(b); });
-})();
-
-/* ---------- 4 · Waiting vs speaking first ---------- */
-(() => {
-  const vs = $('vs');
-  if (!vs) return;
-  const PHASES = [[0, 0], [1400, 1], [2300, 2], [3500, 3], [4600, 4], [5800, 5]];
-  const LOOP = 9000;
-  if (reduceMotion) { vs.dataset.phase = '5'; return; }
-  const c = clock((t) => {
-    t %= LOOP;
-    let ph = 0;
-    for (const [at, n] of PHASES) if (t >= at) ph = n;
-    if (vs.dataset.phase !== String(ph)) vs.dataset.phase = String(ph);
-    return t;
-  });
-  whileVisible(vs, c.play, c.pause, 0.3);
 })();
 
 /* ---------- 5 · Sandbox: the visitor plays the shopper ---------- */
@@ -417,7 +521,7 @@ if ($('year')) $('year').textContent = new Date().getFullYear();
   });
 })();
 
-/* ---------- 7 · Pilot form -> lead saved -> kickoff call ---------- */
+/* ---------- 7 · Waitlist form -> lead saved -> optional demo ---------- */
 (() => {
   const form = $('pilot-form');
   if (!form) return;
@@ -439,20 +543,19 @@ if ($('year')) $('year').textContent = new Date().getFullYear();
     button.disabled = true;
     button.textContent = 'Saving…';
     try {
-      const out = await Sahaay.postJson('/api/lead', { intent: 'Pilot', store, email, company_site: form.company_site.value, source: 'pilot-form' });
+      const out = await Sahaay.postJson('/api/lead', { intent: 'Waitlist', store, email, company_site: form.company_site.value, source: 'waitlist-form' });
       const safe = email.replace(/[<>&"]/g, '');
       form.innerHTML = `
         <div class="form__done" role="status">
           <span class="tickbig" aria-hidden="true"></span>
-          <p class="form__title">Your spot is saved.</p>
-          <p>Last step: pick a time for a 20-minute kickoff call, and we’ll have Sahaay live on your store within 24 hours of it.</p>
-          <button type="button" class="btn btn--primary btn--block" id="pilot-book">Pick a kickoff time</button>
-          <p class="form__note">We’ve also noted ${safe}. No card needed.</p>
+          <p class="form__title">You’re on the waitlist.</p>
+          <p>We’ll email ${safe} before launch. Want to skip the queue? Book a 20-minute demo and see Sahaay on your own catalog.</p>
+          <button type="button" class="btn btn--primary btn--block" id="pilot-book">Book a 20-minute demo</button>
         </div>`;
       $('pilot-book').addEventListener('click', () => Sahaay.openBooking({ email, store }, { lead: out.lead }));
     } catch (err) {
       button.disabled = false;
-      button.textContent = 'Claim free pilot';
+      button.textContent = 'Join the waitlist';
       note.classList.add('is-err');
       note.textContent = err.status === 400 || err.status === 429 ? err.message : 'We couldn’t save that just now. Try again, or book a demo instead.';
     }
@@ -460,4 +563,17 @@ if ($('year')) $('year').textContent = new Date().getFullYear();
   form.addEventListener('input', (e) => {
     if (e.target.getAttribute('aria-invalid') === 'true' && e.target.value.trim()) e.target.setAttribute('aria-invalid', 'false');
   });
+})();
+
+/* ---------- Hide the chat bubble while a scroll story is on screen ---------- */
+(() => {
+  const stories = [document.getElementById('shop-story'), document.getElementById('day')].filter(Boolean);
+  if (!stories.length || !('IntersectionObserver' in window)) return;
+  const seen = new Map();
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => seen.set(e.target, e.isIntersecting));
+    const any = [...seen.values()].some(Boolean);
+    document.body.classList.toggle('in-story', any && !document.querySelector('.sw.is-open'));
+  }, { rootMargin: '-20% 0px -20% 0px' });
+  stories.forEach((s) => io.observe(s));
 })();
